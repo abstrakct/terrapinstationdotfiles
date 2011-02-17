@@ -1,0 +1,61 @@
+#!/bin/bash
+
+mname="Deadly Prey"
+mrip="VHSRip"
+myear="1985"
+mtags="[awesome]"
+mdir="."
+
+for filename in *; do
+        isdirectory="no"
+        echo
+        echo "Processing $filename"
+        echo "What's the name of the movie?"
+        read mname
+        if [ -z "$mname" ]; then
+                echo "OK, skipping $filename"
+        else
+                if [ -d "$filename" ]; then
+                        isdirectory="yes"
+                fi
+
+                echo "What kind of rip is it (Vhs,Dvd,Tv)?"
+                read whatrip
+                case $whatrip in
+                        v | V ) mrip="VHSRip"
+                                ;;
+                        d | D ) mrip="DVDRip"
+                                ;;
+                        t | T ) mrip="TVRip"
+                                ;;
+                        * )     mrip=$whatrip
+                                ;;
+                esac
+                echo "What year is it from?"
+                read myear
+                echo "Any other tags you want?"
+                read mtags
+
+                mdir="$mname ($myear) ($mrip) $mtags"
+                echo "OK, directory name will be"
+                echo $mdir
+
+                mkdir "$mdir"
+                mv "$filename" "$mdir"
+                cd "$mdir"
+                if [ $isdirectory = "yes" ]; then
+                        cd "$filename"
+                fi
+
+                echo "Generating thumbnails"
+                for tname in *; do
+                        vcs -c 3 -n 21 -u movefixerscript -q -q -j "$tname" &
+                done
+
+                echo "Done processing $filename ! Moving on!"
+                cd ..
+                if [ $isdirectory = "yes" ]; then
+                        cd ..
+                fi
+        fi
+done

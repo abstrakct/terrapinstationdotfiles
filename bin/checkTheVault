@@ -1,0 +1,4 @@
+#!/bin/bash
+
+
+df -h -t xfs -P | awk '/TheVault/ {print $4"/"$2}'

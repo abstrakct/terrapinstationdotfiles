@@ -1,0 +1,2 @@
+#!/bin/sh
+$(dmenu_path | dmenu -b -fn '-*-clean-*-*-*-*-12-*-*-*-*-*-*-*' -nb '#000000' -nf '#c9a34e' -sb '#000000' -sf '#00ff00')
