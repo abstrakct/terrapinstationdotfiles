@@ -1,0 +1,69 @@
+#hardstatus alwayslastline "%-w[%n %t]%+w%=%C %a"
+hardstatus alwayslastline
+#hardstatus string '%{= kw}[ %{= kb}%H%{= kw} ][%= %{= kw}%?%-Lw%?%{= kW}%n*%f %t%?%?%{= kw}%?%+Lw%?%?%= ][ %{r}%l%{w} ]%{w}[%{r} %d-%m-%Y %c %{w}]%{w}'
+
+hardstatus string '%{= kw}[%{= kb}%H%{= kw}]%= %{= w}%?%-w%?%{B}( %{W}%n*%t%?(%u)%?%{B} )%{w}%?%+w%?%?%=|%{G}%2`%{w}|%{c}M:%1`%{w}|%{G}Vault: %3`%{w}[%{r}%d-%m-%Y %c%{w}]'
+
+shelltitle ''
+startup_message off
+vbell off
+autodetach on
+
+# blankerprg cmatrix -sab -u2
+idle 300 blanker
+
+term screen-256color
+termcapinfo rxvt-unicode ti@:te@     #enable SHIFT-PGUP / SHIFT-PGDOWN scroll
+defutf8 on
+
+
+# bindkeys
+
+bindkey "Od" prev  # change window with ctrl-left
+bindkey "Oc" next  # change window with ctrl-right
+
+bindkey -k F1 select 1
+bindkey -k F2 select 2
+bindkey -k F3 select 3
+bindkey -k F4 select 4
+bindkey -k F5 select 5
+bindkey -k F6 select 6
+bindkey -k F7 select 7
+bindkey -k F8 select 8
+bindkey -k F9 select 9
+bindkey -k FA select 0
+
+nethack on
+
+# backticks
+backtick 1 60 60 $HOME/bin/get_gmail
+# backtick 2 10 10 $HOME/bin/cmscreen
+backtick 2 10 10 mpc current
+backtick 3 60 60 $HOME/bin/checkTheVault
+#backtick 4 60 60 $HOME/bin/getcputemp
+
+# "autostart"
+#screen -t system	9 htop
+#split
+#focus down
+#screen sudo iftop - wlan0
+#split
+#focus down
+#screen sudo tail -f /var/log/everything.log
+#screen -t torrent	7 rtorrent
+#screen -t cal		3 calcurse
+#screen -t mc	 	5 mc
+#screen -t netmon	8 netmonitor --dev wlan0
+#screen -t cal		7 wyrd
+#screen -t chat		6 finch
+#screen -t web 		4 elinks www.google.com
+
+screen -t log           9 sudo tail -n 60 -f /var/log/everything.log
+screen -t htop   	8 htop
+screen -t wifi          7 wicd-curses
+screen -t tx            6 watch "transmission-remote --auth rolf:torrenT -l"
+screen -t music		5 ncmpcpp
+screen -t mail          4 vmail
+screen -t sh		3
+screen -t sh		2
+screen -t sh		1
