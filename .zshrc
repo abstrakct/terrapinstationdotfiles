@@ -59,6 +59,7 @@ alias ....="cd ../../.."
 #alias c3="cal -3m"
 #alias cal="cal -m"
 #alias chat=weechat-curses
+alias beersmith="wine /home/rolf/wine/beersmith/BeerSmith.exe"
 alias df="df -h"
 alias diff=colordiff
 alias el=elinks

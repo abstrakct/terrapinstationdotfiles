@@ -10,7 +10,7 @@ vbell off
 autodetach on
 
 # blankerprg cmatrix -sab -u2
-idle 300 blanker
+#idle 300 blanker
 
 term screen-256color
 termcapinfo rxvt-unicode ti@:te@     #enable SHIFT-PGUP / SHIFT-PGDOWN scroll
@@ -60,8 +60,8 @@ backtick 3 60 60 $HOME/bin/checkTheVault
 
 screen -t log           9 sudo tail -n 60 -f /var/log/everything.log
 screen -t htop   	8 htop
-screen -t wifi          7 wicd-curses
-screen -t tx            6 watch "transmission-remote --auth rolf:torrenT -l"
+#screen -t wifi          7 wicd-curses
+screen -t tx            7 watch "transmission-remote --auth rolf:torrenT -l"
 screen -t music		5 ncmpcpp
 screen -t mail          4 vmail
 screen -t sh		3

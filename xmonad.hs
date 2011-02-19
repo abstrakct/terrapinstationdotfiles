@@ -89,7 +89,10 @@ myLayout = avoidStruts $ (tiled ||| Mirror tiled ||| Full)
 
 myManageHook = (composeAll
     [ className =? "Mplayer" --> doFloat,
-      className =? "Smplayer" --> doFloat
+      className =? "Smplayer" --> doFloat,
+      className =? "Firefox" --> doShift "II:web",
+      className =? "Namoroka" --> doShift "II:web",
+      className =? "Pentadactyl" --> doShift "II:web"
     ]) <+> manageDocks
 
 -- myEventHook = mempty
