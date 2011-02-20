@@ -2,7 +2,8 @@
 hardstatus alwayslastline
 #hardstatus string '%{= kw}[ %{= kb}%H%{= kw} ][%= %{= kw}%?%-Lw%?%{= kW}%n*%f %t%?%?%{= kw}%?%+Lw%?%?%= ][ %{r}%l%{w} ]%{w}[%{r} %d-%m-%Y %c %{w}]%{w}'
 
-hardstatus string '%{= kw}[%{= kb}%H%{= kw}]%= %{= w}%?%-w%?%{B}( %{W}%n*%t%?(%u)%?%{B} )%{w}%?%+w%?%?%=|%{G}%2`%{w}|%{c}M:%1`%{w}|%{G}Vault: %3`%{w}[%{r}%d-%m-%Y %c%{w}]'
+#hardstatus string '%{= kw}[%{= kb}%H%{= kw}]%= %{= w}%?%-w%?%{B}( %{W}%n*%t%?(%u)%?%{B} )%{w}%?%+w%?%?%=|%{G}%2`%{w}|%{c}M:%1`%{w}|%{G}Vault: %3`%{w}[%{r}%d-%m-%Y %c%{w}]'
+hardstatus string '%{= kw}[%{= kb}%H%{= kw}]%= %{= w}%?%-w%?%{B}( %{W}%n*%t%?(%u)%?%{B} )%{w}%?%+w%?%?%=|%{c}M:%1`%{w}|%{G}Vault: %3`%{w}[%{r}%d-%m-%Y %c%{w}]'
 
 shelltitle ''
 startup_message off
@@ -38,7 +39,7 @@ nethack on
 # backticks
 backtick 1 60 60 $HOME/bin/get_gmail
 # backtick 2 10 10 $HOME/bin/cmscreen
-backtick 2 10 10 mpc current
+#backtick 2 10 10 mpc current
 backtick 3 60 60 $HOME/bin/checkTheVault
 #backtick 4 60 60 $HOME/bin/getcputemp
 

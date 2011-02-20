@@ -75,7 +75,7 @@ alias nano="nano -w"
 alias nd="sudo ndiswrapper"
 alias netre="sudo /etc/rc.d/network restart"
 
-alias pac='sudo pacman'
+alias pac='sudo pacman-color'
 alias pico=nano
 #alias rbcl="cat ~/bin/cmus/rebuild-library | cmus-remote"
 #alias reload="source ~/.bashrc"
@@ -86,6 +86,7 @@ alias x=startx
 alias xxx="cd /home/rolf/TheVault/.data"
 
 PATH=$PATH:/home/rolf/bin
+export VMAIL_HTML_PART_READER='elinks -dump'
 
 SSH_ENV="$HOME/.ssh/environment"
 

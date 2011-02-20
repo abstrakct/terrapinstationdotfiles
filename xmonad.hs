@@ -65,6 +65,7 @@ myXPConfig = defaultXPConfig
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
           ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
+          ((modm, xK_x), spawn "xbmc"),
 --          ((modm, xK_p), spawn "dodmenu"),
         
           ((modm, xK_p), shellPrompt myXPConfig),
@@ -92,7 +93,8 @@ myManageHook = (composeAll
       className =? "Smplayer" --> doFloat,
       className =? "Firefox" --> doShift "II:web",
       className =? "Namoroka" --> doShift "II:web",
-      className =? "Pentadactyl" --> doShift "II:web"
+      className =? "Pentadactyl" --> doShift "II:web",
+      className =? "XBMC" --> doShift "IV:media"
     ]) <+> manageDocks
 
 -- myEventHook = mempty
