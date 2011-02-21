@@ -9,9 +9,11 @@
 # exec startxfce4
 # ...or the Window Manager of your choice
 
+exec xcompmgr -cC -t-5 -l-6 -r5 &
 feh --bg-fill ~/Pictures/Wallpapers/wallpaper-162180.jpg
 xsetroot -cursor_name left_ptr
 setxkbmap -layout no
+setxkbmap -option terminate:ctrl_alt_bksp
 xset +fp /usr/share/fonts/local
 xset fp rehash
 android-receiver &

@@ -73,6 +73,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           ((modm, xK_Tab), windows W.focusDown),
           ((modm, xK_j), windows W.focusDown),
           ((modm, xK_k), windows W.focusUp),
+          ((modm .|. shiftMask, xK_j), windows W.swapDown),
+          ((modm .|. shiftMask, xK_k), windows W.swapUp),
+          ((modm, xK_h), sendMessage Shrink),
+          ((modm, xK_l), sendMessage Expand),
+
           ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
           ((modm .|. shiftMask, xK_q), io (exitWith ExitSuccess))
         ]
@@ -86,7 +91,7 @@ myLayout = avoidStruts $ (tiled ||| Mirror tiled ||| Full)
     tiled = Tall nmaster delta ratio
     nmaster = 1
     ratio = 1/2
-    delta = 3/100
+    delta = 2/100
 
 myManageHook = (composeAll
     [ className =? "Mplayer" --> doFloat,
