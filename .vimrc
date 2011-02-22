@@ -48,7 +48,7 @@ highlight LineNr ctermfg=lightcyan
 " imap jj <Esc>
 
 filetype indent plugin on
-set cindent
+" set cindent
 
 "au BufWinLeave juleøltest.txt mkview
 "au BufWinEnter juleøltest.txt silent loadview

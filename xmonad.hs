@@ -24,7 +24,7 @@ import XMonad.Prompt.RunOrRaise
 import XMonad.Layout
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.Reflect
+import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.IM
 import XMonad.Layout.Tabbed
 import XMonad.Layout.PerWorkspace (onWorkspace)
@@ -42,10 +42,18 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:term","II:web","III:fs","IV:media", "V", "VI", "VII", "VIII", "IX"]
+myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI", "VII", "VIII", "IX"]
 
-myNormalBorderColor = "#333333"
-myFocusedBorderColor = "#306EFF"
+-- workspace variables
+mainWs  = (myWorkspaces !! 0)
+webWs   = (myWorkspaces !! 1)
+fmWs    = (myWorkspaces !! 2)
+mediaWs = (myWorkspaces !! 3)
+gimpWs  = (myWorkspaces !! 4)
+
+myNormalBorderColor = "#000000"
+-- myFocusedBorderColor = "#306EFF"
+myFocusedBorderColor = "#222222"
 
 
 myXPConfig = defaultXPConfig                                    
@@ -78,7 +86,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
           ((modm, xK_h), sendMessage Shrink),
           ((modm, xK_l), sendMessage Expand),
 
-          ((modm, xK_q), spawn "xmonad --recompile; xmonad --restart"),
+          ((modm, xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
           ((modm .|. shiftMask, xK_q), io (exitWith ExitSuccess))
         ]
         ++
@@ -86,12 +94,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
             | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
             , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
-myLayout = avoidStruts $ (tiled ||| Mirror tiled ||| Full)
-  where
-    tiled = Tall nmaster delta ratio
-    nmaster = 1
-    ratio = 1/2
-    delta = 2/100
+
+tiled x = Tall nmaster delta ratio
+    where
+        nmaster = x
+        ratio = 1/2
+        delta = 2/100
+
+fullLayout = noBorders $ Full
+gimpLayout = withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
+defaultLayout = (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
+
+myLayout = avoidStruts $ onWorkspace webWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
+
 
 myManageHook = (composeAll
     [ className =? "Mplayer" --> doFloat,
@@ -99,7 +114,9 @@ myManageHook = (composeAll
       className =? "Firefox" --> doShift "II:web",
       className =? "Namoroka" --> doShift "II:web",
       className =? "Pentadactyl" --> doShift "II:web",
-      className =? "XBMC" --> doShift "IV:media"
+      className =? "XBMC" --> doShift "IV:media",
+      className =? "Gimp" --> doShift "V:gimp",
+      className =? "pcmanfm" --> doShift "III:fm"
     ]) <+> manageDocks
 
 -- myEventHook = mempty
@@ -180,6 +197,8 @@ main = do
     d <- spawnDzen myTopBar
     spawnToDzen "conky -c ~/.dzen2conkyrcleft" myBottomLeftBar
     spawnToDzen "conky -c ~/.dzen2conkyrcright" myBottomRightBar
+--    myFm <- spawn "pcmanfm"
+--    terminal1 <- spawn myTerminal
     xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
         terminal = myTerminal,
         focusFollowsMouse = myFocusFollowsMouse,

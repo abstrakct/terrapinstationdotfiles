@@ -37,7 +37,7 @@ bindkey -k FA select 0
 nethack on
 
 # backticks
-backtick 1 60 60 $HOME/bin/get_gmail
+backtick 1 600 600 $HOME/bin/get_gmail
 # backtick 2 10 10 $HOME/bin/cmscreen
 #backtick 2 10 10 mpc current
 backtick 3 60 60 $HOME/bin/checkTheVault
