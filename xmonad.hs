@@ -42,7 +42,7 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI", "VII", "VIII", "IX"]
+myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI:music", "VII", "VIII", "IX"]
 
 -- workspace variables
 mainWs  = (myWorkspaces !! 0)
@@ -50,6 +50,7 @@ webWs   = (myWorkspaces !! 1)
 fmWs    = (myWorkspaces !! 2)
 mediaWs = (myWorkspaces !! 3)
 gimpWs  = (myWorkspaces !! 4)
+musicWs = (myWorkspaces !! 5)
 
 myNormalBorderColor = "#000000"
 -- myFocusedBorderColor = "#306EFF"
@@ -105,7 +106,7 @@ fullLayout = noBorders $ Full
 gimpLayout = withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
 defaultLayout = (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace webWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace webWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ onWorkspace musicWs fullLayout $ defaultLayout
 
 
 myManageHook = (composeAll
