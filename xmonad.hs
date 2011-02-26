@@ -115,9 +115,10 @@ myManageHook = (composeAll
       className =? "Firefox" --> doShift "II:web",
       className =? "Namoroka" --> doShift "II:web",
       className =? "Pentadactyl" --> doShift "II:web",
-      className =? "XBMC" --> doShift "IV:media",
+      className =? "XBMC Media Center" --> doShift "IV:media",
       className =? "Gimp" --> doShift "V:gimp",
-      className =? "pcmanfm" --> doShift "III:fm"
+      className =? "pcmanfm" --> doShift "III:fm",
+      className =? "Ardour" --> doShift "VI:music"
     ]) <+> manageDocks
 
 -- myEventHook = mempty
