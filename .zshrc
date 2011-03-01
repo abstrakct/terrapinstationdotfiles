@@ -77,6 +77,7 @@ alias netre="sudo /etc/rc.d/network restart"
 
 alias pac='sudo pacman-color'
 alias pico=nano
+alias psg="ps aux | grep"
 #alias rbcl="cat ~/bin/cmus/rebuild-library | cmus-remote"
 #alias reload="source ~/.bashrc"
 alias t=todo.sh
