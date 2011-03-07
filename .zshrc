@@ -70,6 +70,7 @@ alias ls='ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d 
 alias l='ls -l'
 alias la='ls -la'
 alias m="cd /home/rolf/TheVault/musikk"
+alias mv="mv -v"
 alias n="sudo /etc/rc.d/network"
 alias nano="nano -w"
 alias nd="sudo ndiswrapper"
