@@ -75,7 +75,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
           ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
           ((modm, xK_x), spawn "xbmc"),
-          ((modm, xK_w), spawn "firefox"),
+          ((modm, xK_w), spawn "firefox-beta-bin"),
         
           ((modm, xK_p), shellPrompt myXPConfig),
           ((modm, xK_space), sendMessage NextLayout),

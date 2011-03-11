@@ -6,6 +6,7 @@ nmap > <C-i>
 nmap ø :
 nmap <Left> <C-x>
 nmap <Right> <C-a>
+nmap ge <C-S-e>
 
 command -nargs=* g open google <args>
 set passkeys+='mail\.google\.com':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
