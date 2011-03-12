@@ -1,0 +1,12 @@
+# conkyrc file for dzen
+###
+
+background no
+out_to_console yes
+out_to_x no
+override_utf8_locale yes
+update_interval 1
+total_run_times 0
+
+TEXT
+Cpu: ^fg(\#909090)${cpu}%^fg() | Mem: ^fg(\#909090)${mem}^fg() | The Vault: ${fs_free /home/rolf/TheVault} | Root: ${fs_free /} | Net: ^fg(\#909090)${downspeedf ra0} / ${upspeedf ra0}^fg() | ${time %a %d %b %H:%M}
