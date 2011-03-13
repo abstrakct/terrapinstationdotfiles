@@ -106,7 +106,7 @@ fullLayout = noBorders $ Full
 gimpLayout = withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
 defaultLayout = (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace webWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ onWorkspace musicWs fullLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ onWorkspace musicWs fullLayout $ defaultLayout
 
 
 myManageHook = (composeAll
