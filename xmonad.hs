@@ -32,7 +32,7 @@ import XMonad.Layout.Grid
 
 import Dzen
 import XMonad.Hooks.DynamicLog hiding (dzen)
-import XMonad.Hooks.UrgencyHook
+-- import XMonad.Hooks.UrgencyHook
 
 --- CUSTOMIZATIONS
 
@@ -42,15 +42,16 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI:music", "VII", "VIII", "IX"]
+myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI:music", "VII", "VIII", "IX:virtual"]
 
 -- workspace variables
-mainWs  = (myWorkspaces !! 0)
-webWs   = (myWorkspaces !! 1)
-fmWs    = (myWorkspaces !! 2)
-mediaWs = (myWorkspaces !! 3)
-gimpWs  = (myWorkspaces !! 4)
-musicWs = (myWorkspaces !! 5)
+mainWs    = (myWorkspaces !! 0)
+webWs     = (myWorkspaces !! 1)
+fmWs      = (myWorkspaces !! 2)
+mediaWs   = (myWorkspaces !! 3)
+gimpWs    = (myWorkspaces !! 4)
+musicWs   = (myWorkspaces !! 5)
+virtualWs = (myWorkspaces !! 8)
 
 myNormalBorderColor = "#000000"
 -- myFocusedBorderColor = "#306EFF"
@@ -201,7 +202,8 @@ main = do
     spawnToDzen "conky -c ~/.dzen2conkyrcright" myBottomRightBar
 --    myFm <- spawn "pcmanfm"
 --    terminal1 <- spawn myTerminal
-    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+--    xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+    xmonad $ defaultConfig {
         terminal = myTerminal,
         focusFollowsMouse = myFocusFollowsMouse,
         borderWidth = myBorderWidth,
