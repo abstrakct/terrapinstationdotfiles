@@ -169,7 +169,7 @@ myTopBar :: DzenConf
 myTopBar = defaultDzen
     -- use the default as a base and override width and
     -- colors
-    { width       = Just 1200
+    { width       = Just 1260
     , fg_color    = Just "#909090"
     , bg_color    = Just "#202020"
 --    , Dzen.font   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
