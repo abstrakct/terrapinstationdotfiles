@@ -13,7 +13,7 @@ else
         colorscheme zenburn
 endif
 
-
+set nocompatible
 set laststatus=2
 set statusline=
 set statusline+=%-3.3n\                      " buffer number
@@ -45,7 +45,7 @@ set vb t_vb=  " turn off bell!
 set dir=~/.vim/tmp
 highlight LineNr ctermfg=lightcyan
 
-" imap jj <Esc>
+imap jj <Esc>
 
 filetype indent plugin on
 " set cindent
