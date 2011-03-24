@@ -32,7 +32,7 @@ import XMonad.Layout.Grid
 
 import Dzen
 import XMonad.Hooks.DynamicLog hiding (dzen)
--- import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.UrgencyHook
 
 --- CUSTOMIZATIONS
 
@@ -42,15 +42,16 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:main","II:web","III:fm","IV:media", "V:gimp", "VI:music", "VII", "VIII", "IX:virtual"]
+myWorkspaces = ["I:main","II:web","III:skrive", "IV:fm", "V:gimp", "VI:music", "VII", "VIII:media", "IX:virtual"]
 
 -- workspace variables
 mainWs    = (myWorkspaces !! 0)
 webWs     = (myWorkspaces !! 1)
-fmWs      = (myWorkspaces !! 2)
-mediaWs   = (myWorkspaces !! 3)
+skriveWs  = (myWorkspaces !! 2)
+fmWs      = (myWorkspaces !! 3)
 gimpWs    = (myWorkspaces !! 4)
 musicWs   = (myWorkspaces !! 5)
+mediaWs   = (myWorkspaces !! 7)
 virtualWs = (myWorkspaces !! 8)
 
 myNormalBorderColor = "#000000"
@@ -76,7 +77,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
           ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
           ((modm, xK_x), spawn "xbmc"),
-          ((modm, xK_w), spawn "firefox-beta-bin"),
+          ((modm, xK_w), spawn "firefox"),
         
           ((modm, xK_p), shellPrompt myXPConfig),
           ((modm, xK_space), sendMessage NextLayout),
@@ -107,19 +108,20 @@ fullLayout = noBorders $ Full
 gimpLayout = withIM (0.11) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.15) (Role "gimp-dock") Full
 defaultLayout = (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ onWorkspace musicWs fullLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace webWs defaultLayout $ onWorkspace skriveWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ onWorkspace musicWs fullLayout $ defaultLayout
 
 
 myManageHook = (composeAll
-    [ className =? "Mplayer" --> doFloat,
+    [ className =? "MPlayer" --> doFloat,
       className =? "Smplayer" --> doFloat,
-      className =? "Firefox" --> doShift "II:web",
-      className =? "Namoroka" --> doShift "II:web",
-      className =? "Pentadactyl" --> doShift "II:web",
-      className =? "XBMC Media Center" --> doShift "IV:media",
-      className =? "Gimp" --> doShift "V:gimp",
-      className =? "pcmanfm" --> doShift "III:fm",
-      className =? "Ardour" --> doShift "VI:music"
+      className =? "vlc" --> doFloat,
+      className =? "Firefox" --> doShift webWs,
+      className =? "chromium" --> doShift webWs,
+      className =? "xbmc.bin" --> doShift mediaWs,
+      className =? "Gimp" --> doShift gimpWs,
+      className =? "pcmanfm" --> doShift fmWs,
+      className =? "Ardour" --> doShift musicWs,
+      className =? "gvim" --> doShift skriveWs 
     ]) <+> manageDocks
 
 -- myEventHook = mempty
