@@ -12,7 +12,7 @@
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
 exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 
-feh --bg-fill ~/Pictures/Wallpapers/wallpaper-england-cornwall.jpg
+feh --bg-fill ~/Pictures/Wallpapers/wallpaper-13395.jpg
 xsetroot -cursor_name left_ptr
 setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp
