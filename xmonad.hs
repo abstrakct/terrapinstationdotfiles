@@ -16,7 +16,8 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
+import XMonad.Util.EZConfig
+import XMonad.Actions.CycleWS
 import XMonad.Actions.Promote
 
 import qualified XMonad.Prompt 		as P
@@ -53,7 +54,37 @@ myModMask = mod4Mask
 
 -- myWorkspaces = ["I:cli", "II:web", "III:skrive", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
 
-myWorkspaces    = ["一 じたく","二","三","四","五","六","七","八","九"]
+myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
+-- Japanese meanings {{{
+-- ws 1: su
+-- 1: nest; rookery; breeding place; hive;
+-- 2: den;
+-- 3: haunt;
+-- 4: (spider's) web
+--
+-- ws 2: kumo
+-- = spider
+--
+-- ws 3: arawasu
+-- = to write; to publish
+--
+-- ws 4: sanshou
+-- = reference; bibliographical reference; consultation; browsing (e.g. when selecting a file to upload on a computer); checking out 
+--
+-- ws 5:
+--
+-- ws 6: kyoku
+-- = tune; piece of music
+--
+-- ws 7: e (!)
+-- picture; drawing; painting; sketch
+--
+-- ws 8: eigakan
+-- cinema; movie theatre
+--
+-- ws 9: kasou
+-- 	imagination; supposition; virtual; potential (enemy)
+-- }}}
 
 -- workspace variables
 cliWs     = (myWorkspaces !! 0)
@@ -90,32 +121,56 @@ myXPConfig = defaultXPConfig
     }
 -- }}}
 
--- Keys {{{
+-- Key bindings {{{
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-        [ ((modm, xK_Return), spawn $ XMonad.terminal conf),
-          ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
-          ((modm, xK_x), spawn "xbmc"),
-          ((modm, xK_w), spawn "firefox"),
-        
-          ((modm, xK_p), shellPrompt myXPConfig),
-          ((modm, xK_space), sendMessage NextLayout),
-          ((modm, xK_Tab), windows W.focusDown),
-          ((modm, xK_j), windows W.focusDown),
-          ((modm, xK_k), windows W.focusUp),
-          ((modm .|. shiftMask, xK_j), windows W.swapDown),
-          ((modm .|. shiftMask, xK_k), windows W.swapUp),
-          ((modm, xK_h), sendMessage Shrink),
-          ((modm, xK_l), sendMessage Expand),
-          ((modm, xK_m), windows W.focusMaster),
-          ((modm .|. shiftMask, xK_m), windows W.swapMaster),
+    [
+    ((modm,               xK_Return), spawn $ XMonad.terminal conf),
+    ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
+    ((modm,               xK_x),      spawn "xbmc"),
+    ((modm,               xK_w),      spawn "firefox"),
 
-          ((modm, xK_q), spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
-          ((modm .|. shiftMask, xK_q), io (exitWith ExitSuccess))
-        ]
+    ((modm,               xK_p),      shellPrompt myXPConfig),
+    ((modm,               xK_space),  sendMessage NextLayout),
+    ((modm,               xK_Tab),    windows W.focusDown),
+    ((modm,               xK_j),      windows W.focusDown),
+    ((modm,               xK_k),      windows W.focusUp),
+    ((modm .|. shiftMask, xK_j),      windows W.swapDown),
+    ((modm .|. shiftMask, xK_k),      windows W.swapUp),
+    ((modm,               xK_h),      sendMessage Shrink),
+    ((modm,               xK_l),      sendMessage Expand),
+    ((modm,               xK_m),      windows W.focusMaster),
+    ((modm .|. shiftMask, xK_m),      windows W.swapMaster),
+    ((modm .|. shiftMask, xK_c),      kill),
+    ((modm,               xK_n),      refresh),
+    ((modm,               xK_Escape), toggleWS),
+
+    -- keybindings for controlling MPD
+    ((modm,               xK_Home),      spawn "mpc toggle"),
+    ((modm,               xK_Page_Up),   spawn "mpc next"),
+    ((modm,               xK_Page_Down), spawn "mpc prev"),
+    ((modm,               xK_Insert),    spawn "mpc volume +2"),
+    ((modm,               xK_Delete),    spawn "mpc volume -2"),
+
+    ((modm,               xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
+    ((modm .|. shiftMask, xK_q),      io (exitWith ExitSuccess))
+    ]
         ++
         [((m .|. modm, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
             , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+-- }}}
+
+-- Mouse bindings {{{
+--
+myMouseBindings conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
+    [
+    ((modm, button1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)),
+    ((modm, button2), (\w -> focus w >> windows W.shiftMaster)),
+    ((modm, button3), (\w -> focus w >> mouseResizeWindow w >> windows W.shiftMaster)),
+    ((modm, button4), (\w -> nextWS)),
+    ((modm, button5), (\w -> prevWS))
+    ]
+
 -- }}}
 
 -- Layout {{{
@@ -147,20 +202,20 @@ floatClickFocusHandler ButtonEvent { ev_window = w } = do
 floatClickFocusHandler _ = return (All True)
 -- }}}
 
--- ManageHook {{{
+-- ManageHook (rules for programs) {{{
 myManageHook = composeAll
-    [ className =? "MPlayer" --> doFloat,
-      className =? "Smplayer" --> doFloat,
-      className =? "Vlc" --> doFloat,
-      className =? "Firefox" --> doShift webWs,
-      className =? "Chromium" --> doShift webWs,
-      className =? "xbmc.bin" --> doShift mediaWs,
-      className =? "Gimp" --> doShift gimpWs,
-      className =? "Pcmanfm" --> doShift fmWs,
-      className =? "Ardour" --> doShift musicWs,
-      className =? "Gvim" --> doShift skriveWs,
-      className =? "VirtualBox" --> doShift virtualWs <+> doFullFloat,
-      className =? "feh" --> doFullFloat,
+    [ className =? "MPlayer"        --> doFloat,
+      className =? "Smplayer"       --> doFloat,
+      className =? "Vlc"            --> doFloat,
+      className =? "Firefox"        --> doShift webWs,
+      className =? "Chromium"       --> doShift webWs,
+      className =? "xbmc.bin"       --> doShift mediaWs,
+      className =? "Gimp"           --> doShift gimpWs,
+      className =? "Pcmanfm"        --> doShift fmWs,
+      className =? "Ardour"         --> doShift musicWs,
+      className =? "Gvim"           --> doShift skriveWs,
+      className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
+      className =? "feh"            --> doFullFloat,
       resource  =? "desktop_window" --> doIgnore
     ] <+> manageDocks
 -- }}}
@@ -247,9 +302,9 @@ myBottomRightBar = myTopBar
 -- main = xmonad =<< dzen defaults
 main = do
     d <- spawnDzen myTopBar
-    spawnToDzen "conky -c ~/.dzen2conkyrcleft" myBottomLeftBar
-    spawnToDzen "conky -c ~/.dzen2conkyrcright" myBottomRightBar
-    xmonad $ myUrgencyHook $ defaultConfig {
+    spawnToDzen "conky -c ~/.config/.dzen2conkyrcleft" myBottomLeftBar
+    spawnToDzen "conky -c ~/.config/.dzen2conkyrcright" myBottomRightBar
+    xmonad $ myUrgencyHook $ ewmh defaultConfig {
         terminal = myTerminal,
         focusFollowsMouse = myFocusFollowsMouse,
         borderWidth = myBorderWidth,
@@ -257,9 +312,8 @@ main = do
         workspaces = myWorkspaces,
         normalBorderColor = myNormalBorderColor,
         focusedBorderColor = myFocusedBorderColor,
-        -- keybindings
         keys = myKeys,
-        -- mouseBindings = myMouseBindings,
+        mouseBindings = myMouseBindings,
         layoutHook = myLayout,
         manageHook = myManageHook,
         handleEventHook = myEventHook,
