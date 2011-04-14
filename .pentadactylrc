@@ -1,5 +1,7 @@
 "2.1 (created: 2009/05/21 13:13:06)
 
+source /home/rolf/.pentadactyl/color/neverland.penta
+
 nmap gr gT
 nmap < <C-o>
 nmap > <C-i>
