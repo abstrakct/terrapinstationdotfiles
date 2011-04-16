@@ -52,9 +52,9 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
--- myWorkspaces = ["I:cli", "II:web", "III:skrive", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
+myWorkspaces = ["I:cli", "II:web", "III:skrive", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
 
-myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
+-- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
 -- ws 1: su
 -- 1: nest; rookery; breeding place; hive;
@@ -236,19 +236,23 @@ myStartupHook = return ()
 -- 
 myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     -- display current workspace as darkgrey on light grey (opposite of default colors)
-    { ppCurrent         = wrapFont myJapaneseFont . dzenColor "#306EFF" "#202020" . pad 
+--    { ppCurrent         = wrapFont myJapaneseFont . dzenColor "#306EFF" "#202020" . pad 
+    { ppCurrent         = dzenColor "#306EFF" "#202020" . pad 
 
     -- display other workspaces which contain windows as a brighter grey
-    , ppHidden          = wrapFont myJapaneseFont . dzenColor "#909090" "" . pad 
+    , ppHidden          = dzenColor "#909090" "" . pad 
+--    , ppHidden          = wrapFont myJapaneseFont . dzenColor "#909090" "" . pad 
 
     -- display other workspaces with no windows as a normal grey
-    , ppHiddenNoWindows = wrapFont myJapaneseFont . dzenColor "#606060" "" . pad 
+--    , ppHiddenNoWindows = wrapFont myJapaneseFont . dzenColor "#606060" "" . pad 
+    , ppHiddenNoWindows = dzenColor "#606060" "" . pad 
 
     -- display the current layout as a brighter grey
     , ppLayout          = dzenColor "#909090" "" . pad 
 
     -- if a window on a hidden workspace needs my attention, color it so
-    , ppUrgent          = wrapFont myJapaneseFont . dzenColor "#ff0000" "" . pad . dzenStrip
+    --, ppUrgent          = wrapFont myJapaneseFont . dzenColor "#ff0000" "" . pad . dzenStrip
+    , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
 
     -- shorten if it goes over 100 characters
     , ppTitle           = shorten 100  
