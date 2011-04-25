@@ -110,7 +110,8 @@ myJapaneseFont = myJapFontName ++ "-" ++ myJapFontSize
 myXPConfig = defaultXPConfig                                    
     { 
 	XMonad.Prompt.font  = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
-	,fgColor = "#0096d1"
+	--,fgColor = "#0096d1"
+	,fgColor = "#D37E2C"
 	, bgColor = "#000000"
 	, bgHLight    = "#000000"
 	, fgHLight    = "#FF0000"
@@ -237,7 +238,8 @@ myStartupHook = return ()
 myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     -- display current workspace as darkgrey on light grey (opposite of default colors)
 --    { ppCurrent         = wrapFont myJapaneseFont . dzenColor "#306EFF" "#202020" . pad 
-    { ppCurrent         = dzenColor "#306EFF" "#202020" . pad 
+--    { ppCurrent         = dzenColor "#306EFF" "#202020" . pad 
+    { ppCurrent         = dzenColor "#D37E2C" "#202020" . pad 
 
     -- display other workspaces which contain windows as a brighter grey
     , ppHidden          = dzenColor "#909090" "" . pad 
