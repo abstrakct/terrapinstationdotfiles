@@ -147,8 +147,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- keybindings for controlling MPD
     ((modm,               xK_Home),      spawn "mpc toggle"),
-    ((modm,               xK_Page_Up),   spawn "mpc next"),
-    ((modm,               xK_Page_Down), spawn "mpc prev"),
+    ((modm,               xK_Page_Down), spawn "mpc next"),
+    ((modm,               xK_Page_Up),   spawn "mpc prev"),
     ((modm,               xK_Insert),    spawn "mpc volume +2"),
     ((modm,               xK_Delete),    spawn "mpc volume -2"),
 
