@@ -129,3 +129,5 @@ function! TwiddleCase(str)
         return result
 endfunction
 vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
+
+noremap <C-s> <C-a>

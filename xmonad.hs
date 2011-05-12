@@ -238,8 +238,8 @@ myStartupHook = return ()
 myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     -- display current workspace as darkgrey on light grey (opposite of default colors)
 --    { ppCurrent         = wrapFont myJapaneseFont . dzenColor "#306EFF" "#202020" . pad 
---    { ppCurrent         = dzenColor "#306EFF" "#202020" . pad 
-    { ppCurrent         = dzenColor "#D37E2C" "#202020" . pad 
+    { ppCurrent         = dzenColor "#306EFF" "#202020" . pad 
+--    { ppCurrent         = dzenColor "#D37E2C" "#202020" . pad 
 
     -- display other workspaces which contain windows as a brighter grey
     , ppHidden          = dzenColor "#909090" "" . pad 
