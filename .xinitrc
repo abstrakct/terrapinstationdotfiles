@@ -13,8 +13,8 @@
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &
 
-feh --bg-fill ~/Pictures/Wallpapers/wallpaper-13395.jpg
-#feh --bg-fill ~/Pictures/Wallpapers/alley-stairs-dark.jpg
+feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
+#feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
 xsetroot -cursor_name left_ptr
 setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp
