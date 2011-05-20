@@ -1,6 +1,11 @@
+! {{{ URXVT shyamaladingdong
 ! font preference
 !urxvt*font:       -*-profont-*-*-*-*-*-*-*-*-*-*-*-*
-urxvt*font: xft:Inconsolata
+!urxvt*font: xft:Inconsolata
+
+URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+URxvt*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+
 !urxvt*font:      -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !urxvt*boldFont:  -*-terminus-*-*-*-*-*-*-*-*-*-*-*-*
 !initial size
@@ -15,6 +20,7 @@ urxvt*shading:            60
 !urxvt*tintColor:          grey
 !set to 32-bit for real transparency (compositing required)
 urxvt*depth:             32
+urxvt*buffered: true
 !save n lines of scrollback buffer
 !urxvt*saveLines:          32767
 !flash screen for attention
@@ -22,7 +28,7 @@ urxvt*depth:             32
 !jump to bottom (prompt) on keypress
 !urxvt*scrollTtyKeypress:  true
 !jump to bottom (prompt) when tty gets new lines
-urxvt*scrollWithBuffer:   true
+urxvt*scrollWithBuffer:   false
 !jump to bottom (prompt) on tty output
 urxvt*scrollTtyOutput:    true
 !toggle scrollbar
@@ -46,17 +52,41 @@ urxvt*scrollBar:          false
 !inhibit writing record into the system log file utmp
 !urxvt*utmpInhibit:        true
 !! BEGIN urlLauncher settings !!
-!urxvt*perl-lib:           /usr/lib/urxvt/perl/
-!urxvt*perl-ext-common:    default,matcher
-!urxvt*urlLauncher:        /usr/bin/firefox
-!urxvt*matcher.button:     1
+
+URxvt*intensityStyles: true
+URxvt*termName: rxvt-256color
+URxvt*urgentOnBell: true
+
+urxvt*perl-lib:           /usr/lib/urxvt/perl/
+urxvt*perl-ext-common:    default,matcher
+urxvt*urlLauncher:        /usr/bin/firefox
+urxvt*matcher.button:     1
 !! END urlLauncher settings !!
+! }}}
+
+! Fonts {{{
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.hintstyle: hintfull
+! }}}
+
+! Xterm {{{
+XTerm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+XTerm*scrollBar: false
+XTerm*termName: xterm-256color
+
+xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+xterm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+
+! }}}
 
 transparent=2222 opaque=ffff
 urxvt*background: rgba:0000/0000/0000/9999
 
 
-!Theme Sixteen
+! {{{ Theme Sixteen
 !*background: rgb:00/00/00
 !*foreground: rgb:be/be/be
 !*color0:     rgb:00/00/00
@@ -75,11 +105,12 @@ urxvt*background: rgba:0000/0000/0000/9999
 !*color13:    rgb:cf/9e/be
 !*color14:    rgb:71/be/be
 !*color15:    rgb:ff/ff/ff
-
+! }}}
 
 URxvt*background: #000000
 URxvt*foreground: #bfbdc0
 
+! {{{ color scheme
 !URxvt*color0: #000000
 !URxvt*color1: #8a110e
 !URxvt*color2: #669f3d
@@ -97,8 +128,9 @@ URxvt*foreground: #bfbdc0
 !URxvt*color13: #e151ff
 !URxvt*color14: #57ffec
 !URxvt*color15: #ffffff
+! }}}
 
-
+! {{{ color scheme
 !URxvt.color0: #333333
 !URxvt*color8: #666666
 !URxvt.color1: #d15517
@@ -115,8 +147,9 @@ URxvt*foreground: #bfbdc0
 !URxvt*color14: #17d1b2
 !URxvt*color7: #eeeeee
 !URxvt*color15: #ffffff
+! }}}
 
-
+! {{{ Current color scheme 
 *background: rgb:00/00/00
 *foreground: rgb:cf/cf/cf
 *color0:     rgb:00/00/00
@@ -135,7 +168,9 @@ URxvt*foreground: #bfbdc0
 *color13:    rgb:e6/28/ba
 *color14:    rgb:1c/f5/f5
 *color15:    rgb:ff/ff/ff
+! }}}
 
+! {{{ colro schermere
 !*background: rgb:be/be/be
 !*foreground: rgb:21/21/21
 !*color0:     rgb:00/00/00
@@ -154,4 +189,19 @@ URxvt*foreground: #bfbdc0
 !*color13:    rgb:ad/73/ba
 !*color14:    rgb:33/8e/aa
 !*color15:    rgb:f4/f4/f4
+! }}}
 
+! {{{ Settings for Xmonad terminal scratchpad
+
+URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
+scratchpad*internalBorder:     0
+!scratchpad*fading:             50
+!scratchpad*shading:            60
+scratchpad*depth:             32
+scratchpad*scrollWithBuffer:   false
+scratchpad*scrollTtyOutput:    true
+scratchpad*scrollBar:          false
+
+! }}}
+
+! vim: fdm=marker ts=4 sw=4 sts=4 et:

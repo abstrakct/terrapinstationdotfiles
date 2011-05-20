@@ -41,6 +41,9 @@ import XMonad.Hooks.UrgencyHook
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
+
+import XMonad.Util.Scratchpad
+
 -- import XMonad.Hooks.DynamicLog
 -- }}}
 
@@ -144,6 +147,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask, xK_c),      kill),
     ((modm,               xK_n),      refresh),
     ((modm,               xK_Escape), toggleWS),
+    ((modm,               xK_bar),    scratchpadSpawnActionTerminal myTerminal),
 
     -- keybindings for controlling MPD
     ((modm,               xK_Home),      spawn "mpc toggle"),
@@ -218,7 +222,18 @@ myManageHook = composeAll
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
       resource  =? "desktop_window" --> doIgnore
-    ] <+> manageDocks
+    ] <+> manageDocks <+> manageScratchPad
+-- }}}
+
+-- {{{ Scratchpad
+
+manageScratchPad :: ManageHook
+manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+    where
+        h = 0.1    -- terminal height, 10%
+        w = 1      -- terminal width, 100%
+        t = 1 - h  -- distance from top edge, 90%
+        l = 1 - w  -- distance from left edge, 0% 
 -- }}}
 
 -- Other hooks {{{
@@ -242,7 +257,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
 --    { ppCurrent         = dzenColor "#D37E2C" "#202020" . pad 
 
     -- display other workspaces which contain windows as a brighter grey
-    , ppHidden          = dzenColor "#909090" "" . pad 
+    , ppHidden          = dzenColor "#909090" "" . pad . noScratchPad
 --    , ppHidden          = wrapFont myJapaneseFont . dzenColor "#909090" "" . pad 
 
     -- display other workspaces with no windows as a normal grey
@@ -269,6 +284,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     }
     where
         wrapFont font = wrap ("^fn(" ++ font ++ ")") "^fn()"
+        noScratchPad ws = if ws == "NSP" then "" else ws
 -- }}}
 
 -- Statusbars {{{
@@ -302,9 +318,7 @@ myBottomRightBar = myTopBar
 -- }}}
 
 
--- LET'S GO!!!
---
-
+-- {{{ Main
 -- main = xmonad =<< dzen defaults
 main = do
     d <- spawnDzen myTopBar
@@ -339,6 +353,7 @@ main = do
 --                        , ppTitle = xmobarColor "green" "" . shorten 50
 --                        }
 --        } 
+-- }}}
 -- }}}
 --
 -- vim: fdm=marker ts=4 sw=4 sts=4 et:
