@@ -13,7 +13,8 @@
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &
 
-feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
+feh --bg-fill ~/pictures/norway-beauty.jpg
+#feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
 #feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
 xsetroot -cursor_name left_ptr
 setxkbmap -layout no
@@ -22,7 +23,7 @@ xset +fp /usr/share/fonts/local
 xset fp rehash
 android-receiver &
 
-(sleep 2s && trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
+(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
 
 #ck-launch-session xmonad
 #dbus-launch xmonad
