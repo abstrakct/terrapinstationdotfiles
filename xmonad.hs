@@ -187,11 +187,11 @@ tiled x = Tall nmaster delta ratio
         ratio = toRational ( 2 / (1 + sqrt 5 :: Double))
         delta = 3/100
 
-fullLayout = noBorders $ Full -- ||| Grid
+fullLayout = (noBorders $ Full) ||| Grid
 gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
 defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace webWs defaultLayout $ onWorkspace skriveWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace cliWs fullLayout $ onWorkspace webWs defaultLayout $ onWorkspace skriveWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
 
 -- }}}
 
