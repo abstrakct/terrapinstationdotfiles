@@ -55,7 +55,7 @@ myFocusFollowsMouse = True
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:cli", "II:web", "III:skrive", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
+myWorkspaces = ["I:cli", "II:web", "III:div", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -222,7 +222,7 @@ myManageHook = composeAll
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
       resource  =? "desktop_window" --> doIgnore
-    ] <+> manageDocks <+> manageScratchPad
+    ] <+> manageDocks <+> manageScratchPad <+> (isFullscreen --> doFullFloat)
 -- }}}
 
 -- {{{ Scratchpad
