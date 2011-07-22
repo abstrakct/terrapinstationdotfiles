@@ -12,7 +12,7 @@
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 #exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &
-exec xcompmgr -cC -o.55 &
+#exec xcompmgr -cC -o.55 &
 
 #feh --bg-center ~/pictures/wallpapers/bruce.jpg
 feh --bg-fill ~/pictures/norway-beauty.jpg
