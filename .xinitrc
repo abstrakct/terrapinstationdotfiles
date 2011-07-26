@@ -15,8 +15,8 @@
 #exec xcompmgr -cC -o.55 &
 
 #feh --bg-center ~/pictures/wallpapers/bruce.jpg
-feh --bg-fill ~/pictures/norway-beauty.jpg
-#feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
+#feh --bg-fill ~/pictures/norway-beauty.jpg
+feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
 #feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
 xsetroot -cursor_name left_ptr
 setxkbmap -layout no
