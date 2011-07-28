@@ -4,7 +4,7 @@
 
 -- IMPORTS {{{
 
-import XMonad
+import XMonad hiding ( (|||) )
 import List
 import Data.Monoid
 import System.Exit
@@ -26,7 +26,7 @@ import XMonad.Prompt.Shell
 import XMonad.Prompt.AppendFile (appendFilePrompt)
 import XMonad.Prompt.RunOrRaise
 
-import XMonad.Layout
+import XMonad.Layout hiding ( (|||) )
 import XMonad.Layout.NoBorders
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Reflect (reflectHoriz)
@@ -34,6 +34,7 @@ import XMonad.Layout.IM
 import XMonad.Layout.Tabbed
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Grid
+import XMonad.Layout.LayoutCombinators
 
 import Dzen
 import XMonad.Hooks.DynamicLog hiding (dzen)
@@ -119,9 +120,9 @@ myXPConfig = defaultXPConfig
 	, bgHLight    = "#000000"
 	, fgHLight    = "#FF0000"
 	, position = Bottom
-        , historySize = 512
-        , showCompletionOnTab = True
-        , historyFilter = deleteConsecutive
+    , historySize = 512
+    , showCompletionOnTab = True
+    , historyFilter = deleteConsecutive
     }
 -- }}}
 
@@ -155,6 +156,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,               xK_Page_Up),   spawn "mpc prev"),
     ((modm,               xK_Insert),    spawn "mpc volume +2"),
     ((modm,               xK_Delete),    spawn "mpc volume -2"),
+
+    -- multimedia keys etc. on my wireless keyboard
+
+    ((0, xF86XK_Back),       prevWS),
+    ((0, xF86XK_Forward),    nextWS),
+    ((0, xF86XK_Reload),     spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
+    ((0, xF86XK_MyComputer), spawn "urxvt -e ranger"),
+    ((0, xF86XK_Sleep),      io (exitWith ExitSuccess)),
+
 
     ((modm,               xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
     ((modm .|. shiftMask, xK_q),      io (exitWith ExitSuccess))
@@ -221,6 +231,7 @@ myManageHook = composeAll
       className =? "Gvim"           --> doShift skriveWs,
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
+      className =? "Xmessage"       --> doFloat,
       resource  =? "desktop_window" --> doIgnore
     ] <+> manageDocks <+> manageScratchPad <+> (isFullscreen --> doFullFloat)
 -- }}}
