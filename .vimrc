@@ -1,7 +1,10 @@
 syntax on
 
+set t_Co=256
+
 if &t_Co >= 256
-        colorscheme fu
+"        colorscheme fu
+        colorscheme tango
 else
         colorscheme zenburn
 endif

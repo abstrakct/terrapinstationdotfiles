@@ -131,6 +131,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
     ((modm,               xK_Return), spawn $ XMonad.terminal conf),
     ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
+    ((modm .|. controlMask, xK_Return), spawn "urxvt -e /home/rolf/bin/tm"),
     ((modm,               xK_x),      spawn "xbmc"),
     ((modm,               xK_w),      spawn "firefox"),
 
