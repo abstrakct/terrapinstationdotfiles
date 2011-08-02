@@ -83,6 +83,7 @@ map <up> :bnext<CR>
 
 " Convenient go-to-end-of-line-key on norwegian keyboard.
 map \ $
+vmap \ $
 
 " Put norwegian keys to use :)
 map ø :
