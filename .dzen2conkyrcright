@@ -9,4 +9,4 @@ update_interval 1
 total_run_times 0
 
 TEXT
-Cpu: ^fg(\#909090)${cpu}%^fg() | Mem: ^fg(\#909090)${mem}^fg() | The Vault: ${fs_free /home/rolf/TheVault} | Root: ${fs_free /} | Net: ^fg(\#909090)${downspeedf ra0} / ${upspeedf ra0}^fg() | ${time %a %d %b %H:%M}
+TX: ^fg(\#909090)${downspeed ra0} / ${upspeed ra0}^fg() | Cpu: ^fg(\#909090)${cpu}%^fg() | Mem: ^fg(\#909090)${mem}^fg() | The Vault: ${fs_free /home/rolf/TheVault} | Root: ${fs_free /} | ${time %a %d %b %H:%M}

@@ -136,6 +136,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,               xK_w),      spawn "firefox"),
 
     ((modm,               xK_p),      shellPrompt myXPConfig),
+    ((modm,               xK_o),      spawn "/home/rolf/bin/udsks"),
     ((modm,               xK_space),  sendMessage NextLayout),
     ((modm,               xK_Tab),    windows W.focusDown),
     ((modm,               xK_j),      windows W.focusDown),
