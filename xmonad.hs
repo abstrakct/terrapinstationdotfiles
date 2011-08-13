@@ -166,7 +166,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0, xF86XK_Reload),     spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
     ((0, xF86XK_AudioLowerVolume),spawn "amixer set Master 5%- unmute"),
     ((0, xF86XK_AudioRaiseVolume),spawn "amixer set Master 5%+ unmute"),
-    ((0, xF86XK_MyComputer), spawn "urxvt -e ranger"),
+    ((0, xF86XK_MyComputer), spawn "xdotool key super+1 alt+7"),
     ((0, xF86XK_Mail),       spawn "xdotool key super+1 alt+6"),
     ((0, xF86XK_Sleep),      io (exitWith ExitSuccess)),
 

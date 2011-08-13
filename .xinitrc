@@ -18,19 +18,27 @@
 #feh --bg-fill ~/pictures/norway-beauty.jpg
 feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
 #feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
+
 xsetroot -cursor_name left_ptr
+
+# sane keyboard settings for norwegian keyboard
 setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp
+xmodmap -e 'keycode 35 = 0x7e'
+# swap Caps Lock and CTRL!
+xmodmap /home/rolf/.config/swap-ctrl-caps.kmap
+
 xset +fp /usr/share/fonts/local
 xset fp rehash
+
 android-receiver &
 
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
 
-#ck-launch-session xmonad
-#dbus-launch xmonad
 xmonad
 
+#ck-launch-session xmonad
+#dbus-launch xmonad
 #exec awesome
 #exec subtle
 #urxvt -e screen
