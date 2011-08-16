@@ -26,7 +26,7 @@ setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp
 xmodmap -e 'keycode 35 = 0x7e'
 # swap Caps Lock and CTRL!
-xmodmap /home/rolf/.config/swap-ctrl-caps.kmap
+#xmodmap /home/rolf/.config/swap-ctrl-caps.kmap
 
 xset +fp /usr/share/fonts/local
 xset fp rehash
