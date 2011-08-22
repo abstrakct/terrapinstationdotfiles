@@ -4,7 +4,8 @@ set t_Co=256
 
 if &t_Co >= 256
 "        colorscheme fu
-        colorscheme tango
+"        colorscheme tango
+        colorscheme wombat256
 else
         colorscheme zenburn
 endif
