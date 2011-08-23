@@ -56,6 +56,10 @@ set vb t_vb=  " turn off bell!
 set dir=~/.vim/tmp
 highlight LineNr ctermfg=lightcyan
 
+" Cool tab completion stuff
+set wildmenu
+set wildmode=list:longest,full
+
 " imap jj <Esc>
 
 filetype indent plugin on
@@ -92,6 +96,10 @@ map æ @
 
 map gr gT
 map g> :%s/>/->/g<CR>
+
+" going to the next search hit centers the line
+map N Nzz
+map n nzz
 
 " Easy window navigation
 map <C-h> <C-w>h
@@ -135,7 +143,8 @@ function! SuperCleverTab()
         endif
 endfunction
 
-inoremap <Tab> <C-R>=SuperCleverTab()<cr>
+
+inoremap <Tab> <C-R>=SuperCleverTab()<CR>
 
 
 " Changing CaSe!
