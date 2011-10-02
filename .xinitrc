@@ -24,7 +24,12 @@ xsetroot -cursor_name left_ptr
 # sane keyboard settings for norwegian keyboard
 setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp
-xmodmap -e 'keycode 35 = 0x7e'
+
+if [ -f $HOME/.config/xmodmap ]; then
+    /usr/bin/xmodmap $HOME/.config/xmodmap
+fi
+
+#xmodmap -e 'keycode 35 = 0x7e'
 # swap Caps Lock and CTRL!
 #xmodmap /home/rolf/.config/swap-ctrl-caps.kmap
 
