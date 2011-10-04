@@ -10,7 +10,7 @@ else
         colorscheme zenburn
 endif
 
-let mapleader=","
+" let mapleader=","
 
 " Quickly edit/reload the vimrc file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
