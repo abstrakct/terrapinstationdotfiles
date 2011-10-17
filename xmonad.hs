@@ -129,35 +129,35 @@ myXPConfig = defaultXPConfig
 -- Key bindings {{{
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
-    ((modm,               xK_Return), spawn $ XMonad.terminal conf),
-    ((modm .|. shiftMask, xK_Return), spawn "urxvt -e screen"),
+    ((modm,                 xK_Return), spawn $ XMonad.terminal conf),
+    ((modm .|. shiftMask,   xK_Return), spawn "urxvt -e screen"),
     ((modm .|. controlMask, xK_Return), spawn "urxvt -e /home/rolf/bin/tm"),
-    ((modm,               xK_x),      spawn "xbmc"),
-    ((modm,               xK_w),      spawn "firefox"),
+    ((modm,                 xK_x),      spawn "xbmc"),
+    ((modm,                 xK_w),      spawn "firefox"),
 
-    ((modm,               xK_p),      shellPrompt myXPConfig),
-    ((modm,               xK_o),      spawn "/home/rolf/bin/dmenumount"),
-    ((modm,               xK_space),  sendMessage NextLayout),
-    ((modm,               xK_Tab),    windows W.focusDown),
-    ((modm,               xK_j),      windows W.focusDown),
-    ((modm,               xK_k),      windows W.focusUp),
-    ((modm .|. shiftMask, xK_j),      windows W.swapDown),
-    ((modm .|. shiftMask, xK_k),      windows W.swapUp),
-    ((modm,               xK_h),      sendMessage Shrink),
-    ((modm,               xK_l),      sendMessage Expand),
-    ((modm,               xK_m),      windows W.focusMaster),
-    ((modm .|. shiftMask, xK_m),      windows W.swapMaster),
-    ((modm .|. shiftMask, xK_c),      kill),
-    ((modm,               xK_n),      refresh),
-    ((modm,               xK_Escape), toggleWS),
-    ((modm,               xK_bar),    scratchpadSpawnActionTerminal myTerminal),
+    ((modm,                 xK_p),      shellPrompt myXPConfig),
+    ((modm,                 xK_o),      spawn "/home/rolf/bin/dmenumount"),
+    ((modm,                 xK_space),  sendMessage NextLayout),
+    ((modm,                 xK_Tab),    windows W.focusDown),
+    ((modm,                 xK_j),      windows W.focusDown),
+    ((modm,                 xK_k),      windows W.focusUp),
+    ((modm .|. shiftMask,   xK_j),      windows W.swapDown),
+    ((modm .|. shiftMask,   xK_k),      windows W.swapUp),
+    ((modm,                 xK_h),      sendMessage Shrink),
+    ((modm,                 xK_l),      sendMessage Expand),
+    ((modm,                 xK_m),      windows W.focusMaster),
+    ((modm .|. shiftMask,   xK_m),      windows W.swapMaster),
+    ((modm .|. shiftMask,   xK_c),      kill),
+    ((modm,                 xK_n),      refresh),
+    ((modm,                 xK_Escape), toggleWS),
+    ((modm,                 xK_bar),    scratchpadSpawnActionTerminal myTerminal),
 
     -- keybindings for controlling MPD
-    ((modm,               xK_Home),      spawn "mpc toggle"),
-    ((modm,               xK_Page_Down), spawn "mpc next"),
-    ((modm,               xK_Page_Up),   spawn "mpc prev"),
-    ((modm,               xK_Insert),    spawn "mpc volume +2"),
-    ((modm,               xK_Delete),    spawn "mpc volume -2"),
+    ((modm,                 xK_Home),      spawn "mpc toggle"),
+    ((modm,                 xK_Page_Down), spawn "mpc next"),
+    ((modm,                 xK_Page_Up),   spawn "mpc prev"),
+    ((modm,                 xK_Insert),    spawn "mpc volume +2"),
+    ((modm,                 xK_Delete),    spawn "mpc volume -2"),
 
     -- multimedia keys etc. on my wireless keyboard
 
@@ -236,7 +236,8 @@ myManageHook = composeAll
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
       className =? "Xmessage"       --> doFloat,
-      resource  =? "desktop_window" --> doIgnore
+      resource  =? "desktop_window" --> doIgnore,
+      className =? "Xmessage"       --> doFloat
     ] <+> manageDocks <+> manageScratchPad <+> (isFullscreen --> doFullFloat)
 -- }}}
 
@@ -287,7 +288,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
 
     -- shorten if it goes over 100 characters
-    , ppTitle           = shorten 100  
+    , ppTitle           = dzenColor "#306EFF" "#202020" . shorten 100
 
     -- no separator between workspaces
     , ppWsSep           = ""
