@@ -40,8 +40,9 @@ android-receiver &
 
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
 
-source /etc/X11/xinit/xinitrc.d/30-dbus
-exec ck-launch-session xmonad
+#source /etc/X11/xinit/xinitrc.d/30-dbus
+#exec ck-launch-session xmonad
+xmonad
 
 #ck-launch-session xmonad
 #dbus-launch xmonad
