@@ -16,8 +16,8 @@
 
 #feh --bg-center ~/pictures/wallpapers/bruce.jpg
 #feh --bg-fill ~/pictures/norway-beauty.jpg
-feh --bg-fill ~/pictures/Wallpapers/wallpaper-13395.jpg
 #feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
+feh --bg-center ~/pictures/Wallpapers/hd/wallpaper-1411581.png
 
 xsetroot -cursor_name left_ptr
 

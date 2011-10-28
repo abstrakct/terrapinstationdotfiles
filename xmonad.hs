@@ -309,7 +309,7 @@ myTopBar :: DzenConf
 myTopBar = defaultDzen
     -- use the default as a base and override width and
     -- colors
-    { width       = Just 1260
+    { width       = Just 1900
     , fg_color    = Just "#909090"
     , bg_color    = Just "#202020"
 --    , Dzen.font   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
@@ -318,17 +318,17 @@ myTopBar = defaultDzen
 myBottomLeftBar :: DzenConf
 myBottomLeftBar = myTopBar
 -- use Top Bar as base!
-    { y_position = Just 1024,
-      width      = Just 640,
+    { y_position = Just 1080,
+      width      = Just 960,
       alignment  = Just LeftAlign
     }
 
 myBottomRightBar :: DzenConf
 myBottomRightBar = myTopBar
 -- use Top Bar as base!
-    { y_position = Just 1024,
-      x_position = Just 640,
-      width      = Just 640,
+    { y_position = Just 1080,
+      x_position = Just 960,
+      width      = Just 960,
       alignment  = Just RightAlign
     }
 -- }}}
