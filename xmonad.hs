@@ -133,7 +133,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask,   xK_Return), spawn "urxvt -e screen"),
     ((modm .|. controlMask, xK_Return), spawn "urxvt -e /home/rolf/bin/tm"),
     ((modm,                 xK_x),      spawn "xbmc"),
-    ((modm,                 xK_w),      spawn "firefox"),
+    ((modm,                 xK_f),      spawn "firefox"),
 
     ((modm,                 xK_p),      shellPrompt myXPConfig),
     ((modm,                 xK_o),      spawn "/home/rolf/bin/dmenumount"),
@@ -177,6 +177,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         [((m .|. modm, k), windows $ f i)
             | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
             , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+        ++
+        [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
+            | (key, sc) <- zip [xK_w, xK_e] [0,1] -- was [0..] *** change to match your screen order ***
+            , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 -- }}}
 
 -- Mouse bindings {{{
@@ -228,7 +232,7 @@ myManageHook = composeAll
       className =? "Vlc"            --> doFloat,
       className =? "Firefox"        --> doShift webWs,
 --      className =? "Chromium"       --> doShift webWs,
-      className =? "xbmc.bin"       --> doShift mediaWs,
+      className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,
       className =? "Gimp"           --> doShift gimpWs,
       className =? "Pcmanfm"        --> doShift fmWs,
       className =? "Ardour"         --> doShift musicWs,
@@ -309,7 +313,7 @@ myTopBar :: DzenConf
 myTopBar = defaultDzen
     -- use the default as a base and override width and
     -- colors
-    { width       = Just 1900
+    { width       = Just 1920
     , fg_color    = Just "#909090"
     , bg_color    = Just "#202020"
 --    , Dzen.font   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
