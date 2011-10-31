@@ -4,45 +4,48 @@
 
 -- IMPORTS {{{
 
-import XMonad hiding ( (|||) )
-import List
 import Data.Monoid
+import List
 import System.Exit
 import System.IO
-
-import Graphics.X11.ExtraTypes.XF86
+import XMonad hiding ( (|||) )
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig
-import XMonad.Actions.CycleWS
-import XMonad.Actions.Promote
-
-import qualified XMonad.Prompt 		as P
-import XMonad.Prompt
-import XMonad.Prompt.Shell
-import XMonad.Prompt.AppendFile (appendFilePrompt)
-import XMonad.Prompt.RunOrRaise
-
-import XMonad.Layout hiding ( (|||) )
-import XMonad.Layout.NoBorders
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Reflect (reflectHoriz)
-import XMonad.Layout.IM
-import XMonad.Layout.Tabbed
-import XMonad.Layout.PerWorkspace (onWorkspace)
-import XMonad.Layout.Grid
-import XMonad.Layout.LayoutCombinators
+import qualified XMonad.Prompt 	 as P
 
 import Dzen
+import Graphics.X11.ExtraTypes.XF86
+
+import XMonad.Actions.CycleWS
+import XMonad.Actions.NoBorders
+import XMonad.Actions.OnScreen
+import XMonad.Actions.Promote
+import XMonad.Actions.TopicSpace
+import XMonad.Actions.WithAll
+
 import XMonad.Hooks.DynamicLog hiding (dzen)
-import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.UrgencyHook
 
+import XMonad.Layout.Grid
+import XMonad.Layout.IM
+import XMonad.Layout.LayoutCombinators
+import XMonad.Layout.NoBorders
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Reflect (reflectHoriz)
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Tabbed
+
+import XMonad.Prompt
+import XMonad.Prompt.AppendFile (appendFilePrompt)
+import XMonad.Prompt.RunOrRaise
+import XMonad.Prompt.Shell
+
+import XMonad.Util.EZConfig
+import XMonad.Util.Run(spawnPipe)
 import XMonad.Util.Scratchpad
 
 -- import XMonad.Hooks.DynamicLog
@@ -52,11 +55,11 @@ import XMonad.Util.Scratchpad
 
 myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:cli", "II:web", "III:div", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt"]
+myWorkspaces = ["I:cli", "II:web", "III:div", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt", "X"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -148,9 +151,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_m),      windows W.focusMaster),
     ((modm .|. shiftMask,   xK_m),      windows W.swapMaster),
     ((modm .|. shiftMask,   xK_c),      kill),
+    ((modm,                 xK_b),      withFocused toggleBorder),
     ((modm,                 xK_n),      refresh),
     ((modm,                 xK_Escape), toggleWS),
     ((modm,                 xK_bar),    scratchpadSpawnActionTerminal myTerminal),
+    ((modm .|. shiftMask,   xK_t),      sinkAll),
 
     -- keybindings for controlling MPD
     ((modm,                 xK_Home),      spawn "mpc toggle"),
@@ -173,14 +178,21 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,               xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
     ((modm .|. shiftMask, xK_q),      io (exitWith ExitSuccess))
     ]
-        ++
-        [((m .|. modm, k), windows $ f i)
-            | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+        -- ++
+        -- [((m .|. modm, k), windows $ f i)
+        --     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        --     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
         ++
         [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-            | (key, sc) <- zip [xK_w, xK_e] [0,1] -- was [0..] *** change to match your screen order ***
+            | (key, sc) <- zip [xK_w, xK_e] [0,1]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+        ++
+        [ ((m .|. modm, k), windows (f i))
+          | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+          , (f, m) <- [ (viewOnScreen 0, 0)
+                      , (viewOnScreen 1, controlMask)
+                      , (W.greedyView, 0), (W.shift, shiftMask) ]
+        ]
 -- }}}
 
 -- Mouse bindings {{{
@@ -336,7 +348,6 @@ myBottomRightBar = myTopBar
       alignment  = Just RightAlign
     }
 -- }}}
-
 
 -- {{{ Main
 -- main = xmonad =<< dzen defaults
