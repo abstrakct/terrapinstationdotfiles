@@ -59,7 +59,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["I:cli", "II:web", "III:div", "IV:fm", "V", "VI:musikk", "VII:gimp", "VIII:media", "IX:virtuelt", "X"]
+myWorkspaces = ["c&c", "web", "cash", "musikk", "5", "6", "gimp", "media", "virtuelt", "X"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -96,9 +96,8 @@ myWorkspaces = ["I:cli", "II:web", "III:div", "IV:fm", "V", "VI:musikk", "VII:gi
 -- workspace variables
 cliWs     = (myWorkspaces !! 0)
 webWs     = (myWorkspaces !! 1)
-skriveWs  = (myWorkspaces !! 2)
-fmWs      = (myWorkspaces !! 3)
-musicWs   = (myWorkspaces !! 5)
+cashWs    = (myWorkspaces !! 2)
+musicWs   = (myWorkspaces !! 3)
 gimpWs    = (myWorkspaces !! 6)
 mediaWs   = (myWorkspaces !! 7)
 virtualWs = (myWorkspaces !! 8)
@@ -218,10 +217,10 @@ tiled x = Tall nmaster delta ratio
         delta = 3/100
 
 fullLayout = (noBorders $ Full) ||| Grid
-gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
+-- gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
 defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace cliWs fullLayout $ onWorkspace webWs defaultLayout $ onWorkspace skriveWs fullLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace cliWs defaultLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ defaultLayout
 
 -- }}}
 
@@ -246,9 +245,9 @@ myManageHook = composeAll
 --      className =? "Chromium"       --> doShift webWs,
       className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,
       className =? "Gimp"           --> doShift gimpWs,
-      className =? "Pcmanfm"        --> doShift fmWs,
+--      className =? "Pcmanfm"        --> doShift fmWs,
       className =? "Ardour"         --> doShift musicWs,
-      className =? "Gvim"           --> doShift skriveWs,
+--      className =? "Gvim"           --> doShift skriveWs,
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
       className =? "Xmessage"       --> doFloat,
@@ -304,7 +303,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP -- the h here...
     , ppUrgent          = dzenColor "#ff0000" "" . pad . dzenStrip
 
     -- shorten if it goes over 100 characters
-    , ppTitle           = dzenColor "#306EFF" "#202020" . shorten 100
+    , ppTitle           = dzenColor "#306EFF" "#202020" . shorten 150
 
     -- no separator between workspaces
     , ppWsSep           = ""
