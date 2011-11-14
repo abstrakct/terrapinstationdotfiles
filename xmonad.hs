@@ -18,6 +18,7 @@ import Dzen
 import Graphics.X11.ExtraTypes.XF86
 
 import XMonad.Actions.CycleWS
+import XMonad.Actions.GridSelect
 import XMonad.Actions.NoBorders
 import XMonad.Actions.OnScreen
 import XMonad.Actions.Promote
@@ -131,30 +132,33 @@ myXPConfig = defaultXPConfig
 -- Key bindings {{{
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
-    ((modm,                 xK_Return), spawn $ XMonad.terminal conf),
-    ((modm .|. shiftMask,   xK_Return), spawn "urxvt -e screen"),
-    ((modm .|. controlMask, xK_Return), spawn "urxvt -e /home/rolf/bin/tm"),
-    ((modm,                 xK_x),      spawn "xbmc"),
-    ((modm,                 xK_f),      spawn "firefox"),
+    ((modm,                 xK_Return),    spawn $ XMonad.terminal conf),
+    ((modm .|. shiftMask,   xK_Return),    spawn "urxvt -e screen"),
+    ((modm .|. controlMask, xK_Return),    spawn "urxvt -e /home/rolf/bin/tm"),
+    ((modm,                 xK_x),         spawn "xbmc"),
+    ((modm,                 xK_f),         spawn "firefox"),
 
-    ((modm,                 xK_p),      shellPrompt myXPConfig),
-    ((modm,                 xK_o),      spawn "/home/rolf/bin/dmenumount"),
-    ((modm,                 xK_space),  sendMessage NextLayout),
-    ((modm,                 xK_Tab),    windows W.focusDown),
-    ((modm,                 xK_j),      windows W.focusDown),
-    ((modm,                 xK_k),      windows W.focusUp),
-    ((modm .|. shiftMask,   xK_j),      windows W.swapDown),
-    ((modm .|. shiftMask,   xK_k),      windows W.swapUp),
-    ((modm,                 xK_h),      sendMessage Shrink),
-    ((modm,                 xK_l),      sendMessage Expand),
-    ((modm,                 xK_m),      windows W.focusMaster),
-    ((modm .|. shiftMask,   xK_m),      windows W.swapMaster),
-    ((modm .|. shiftMask,   xK_c),      kill),
-    ((modm,                 xK_b),      withFocused toggleBorder),
-    ((modm,                 xK_n),      refresh),
-    ((modm,                 xK_Escape), toggleWS),
-    ((modm,                 xK_bar),    scratchpadSpawnActionTerminal myTerminal),
-    ((modm .|. shiftMask,   xK_t),      sinkAll),
+    ((modm,                 xK_p),         shellPrompt myXPConfig),
+    ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),
+--  ((modm,                 xK_o),         spawn "/home/rolf/bin/dmenumount"),
+    ((modm,                 xK_space),     sendMessage NextLayout),
+    ((modm,                 xK_Tab),       windows W.focusDown),
+    ((modm,                 xK_j),         windows W.focusDown),
+    ((modm,                 xK_k),         windows W.focusUp),
+    ((modm .|. shiftMask,   xK_j),         windows W.swapDown),
+    ((modm .|. shiftMask,   xK_k),         windows W.swapUp),
+    ((modm,                 xK_h),         sendMessage Shrink),
+    ((modm,                 xK_l),         sendMessage Expand),
+    ((modm,                 xK_m),         windows W.focusMaster),
+    ((modm .|. shiftMask,   xK_m),         windows W.swapMaster),
+    ((modm .|. shiftMask,   xK_c),         kill),
+    ((modm,                 xK_b),         withFocused toggleBorder),
+    ((modm,                 xK_n),         refresh),
+    ((modm,                 xK_Escape),    toggleWS),
+    ((modm,                 xK_bar),       scratchpadSpawnActionTerminal myTerminal),
+    ((modm .|. shiftMask,   xK_t),         sinkAll),
+    ((modm .|. shiftMask,   xK_g), goToSelected defaultGSConfig),
+    ((modm, xK_g), spawnSelected defaultGSConfig ["urxvt", "firefox", "gimp", "libreoffice", "gvim", "xcalc"]),
 
     -- keybindings for controlling MPD
     ((modm,                 xK_Home),      spawn "mpc toggle"),
@@ -164,18 +168,28 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_Delete),    spawn "mpc volume -2"),
 
     -- multimedia keys etc. on my wireless keyboard
+    ((0, xF86XK_Back),                     prevWS),
+    ((0, xF86XK_Forward),                  nextWS),
+    ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
+    ((0, xK_Cancel),                       spawn "xmessage cancel"),
+--  ((0, xK_Kana_Shift),                   spawn "luakit"),
 
-    ((0, xF86XK_Back),       prevWS),
-    ((0, xF86XK_Forward),    nextWS),
-    ((0, xF86XK_Reload),     spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
-    ((0, xF86XK_AudioLowerVolume),spawn "amixer set Master 5%- unmute"),
-    ((0, xF86XK_AudioRaiseVolume),spawn "amixer set Master 5%+ unmute"),
-    ((0, xF86XK_MyComputer), spawn "xdotool key super+1 alt+7"),
-    ((0, xF86XK_Mail),       spawn "xdotool key super+1 alt+6"),
-    ((0, xF86XK_Sleep),      io (exitWith ExitSuccess)),
+    ((0, xF86XK_AudioStop),                spawn "mpc stop"),
+    ((0, xF86XK_AudioPrev),                spawn "mpc prev"),
+    ((0, xF86XK_AudioNext),                spawn "mpc next"),
+    ((0, xF86XK_AudioPlay),                spawn "mpc toggle"),
+    ((0, xF86XK_AudioLowerVolume),         spawn "amixer set Master 5%- unmute"),
+    ((0, xF86XK_AudioRaiseVolume),         spawn "amixer set Master 5%+ unmute"),
+    ((0, xF86XK_AudioMedia),               spawn "xbmc"),
+    ((0, xF86XK_AudioMute),                spawn "amixer set Master mute"),
 
-    ((modm,               xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
-    ((modm .|. shiftMask, xK_q),      io (exitWith ExitSuccess))
+    ((0, xF86XK_MyComputer),               spawn "xdotool key super+1 alt+7"),
+    ((0, xF86XK_Calculator),               sinkAll),
+    ((0, xF86XK_Mail),                     spawn "xdotool key super+1 alt+6"),
+    ((0, xF86XK_Sleep),                    io (exitWith ExitSuccess)),
+
+    ((modm,               xK_q),           spawn "killall conky dzen2; xmonad --recompile; xmonad --restart"),
+    ((modm .|. shiftMask, xK_q),           io (exitWith ExitSuccess))
     ]
         -- ++
         -- [((m .|. modm, k), windows $ f i)
@@ -217,10 +231,10 @@ tiled x = Tall nmaster delta ratio
         delta = 3/100
 
 fullLayout = (noBorders $ Full) ||| Grid
--- gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
+gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
 defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace cliWs defaultLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ defaultLayout
+myLayout = avoidStruts $ onWorkspace cliWs defaultLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
 
 -- }}}
 
@@ -241,6 +255,7 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat,
       className =? "Smplayer"       --> doFloat,
       className =? "Vlc"            --> doFloat,
+      className =? "Gnucash"        --> doShift cashWs,
       className =? "Firefox"        --> doShift webWs,
 --      className =? "Chromium"       --> doShift webWs,
       className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,

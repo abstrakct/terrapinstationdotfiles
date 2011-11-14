@@ -76,12 +76,14 @@ filetype indent plugin on
 
 nnoremap <space> za
 
-map <F5> 5wiEurope '72 1972-0
 
 map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
-nmap <F3> o<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
+"imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
+"nmap <F3> o<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
 nmap <F4> g<C-G>
+
+map <F5> 5wiEurope '72 1972-05-
+map <F3> A -><Esc>
 
 map <left>  :tabprevious<CR>
 map <right> :tabnext<CR>

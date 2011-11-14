@@ -30,7 +30,9 @@ ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor root)
 HISTFILE=~/.histfile
 HISTSIZE=50000
 SAVEHIST=50000
-setopt appendhistory autocd
+#setopt appendhistory autocd
+setopt autocd
+
 unsetopt beep
 #bindkey -e
 bindkey -v
