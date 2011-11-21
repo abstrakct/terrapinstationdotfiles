@@ -83,7 +83,7 @@ map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 nmap <F4> g<C-G>
 
 map <F5> 5wiEurope '72 1972-05-
-map <F3> A -><Esc>
+map <F3> A -><Esc>j
 
 map <left>  :tabprevious<CR>
 map <right> :tabnext<CR>

@@ -118,7 +118,7 @@ myXPConfig = defaultXPConfig
     { 
 	XMonad.Prompt.font  = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
 	--,fgColor = "#0096d1"
-	,fgColor = "#D37E2C"
+	, fgColor = "#D37E2C"
 	, bgColor = "#000000"
 	, bgHLight    = "#000000"
 	, fgHLight    = "#FF0000"
@@ -234,7 +234,7 @@ fullLayout = (noBorders $ Full) ||| Grid
 gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
 defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ onWorkspace cliWs defaultLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
+myLayout = avoidStruts $ smartBorders $ onWorkspace cliWs defaultLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs gimpLayout $ defaultLayout
 
 -- }}}
 

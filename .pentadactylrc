@@ -3,8 +3,8 @@
 source /home/rolf/.pentadactyl/color/zenburn.penta
 
 nmap gr gT
-nmap < <C-o>
-nmap > <C-i>
+nmap < H
+nmap > L
 nmap ø :
 nmap <Left> <C-x>
 nmap <Right> <C-a>
