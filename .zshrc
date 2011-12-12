@@ -111,7 +111,6 @@ alias ls='ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d 
 alias l='ls -l'
 alias la='ls -la'
 alias lo=locate
-alias m="cd /home/rolf/TheVault/musikk"
 alias mv="mv -vni"
 alias movie=". /home/rolf/bin/choosemovie"
 alias n="sudo /etc/rc.d/network"
@@ -139,6 +138,12 @@ alias txstart="sudo /etc/rc.d/transmissiond start"
 alias vl="/usr/share/vim/vim73/macros/less.sh"
 alias x=startx
 alias xxx="cd /home/rolf/TheVault/.data"
+
+alias v='f -f -e vim' # quick opening files with vim
+alias m='f -f -e smplayer' # quick opening files with mplayer
+alias j='f -d -e cd' # quick cd into directories, mimicing autojump and z
+alias o='f -e xdg-open' # quick opening files with xdg-open
+
 
 PATH=$PATH:/home/rolf/bin:/opt/java/bin:.
 export VMAIL_HTML_PART_READER='elinks -dump'
@@ -208,6 +213,7 @@ export LS_COLORS="bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;32:do=38;5;127:ex=
 
 # source ~/.oh-my-zsh/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/zsh-history-substring-search.zsh
+source ~/bin/f.sh
 
 echo
 fortune
