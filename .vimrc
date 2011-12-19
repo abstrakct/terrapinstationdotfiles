@@ -53,6 +53,7 @@ set nowrap
 set linebreak " Wrap at word
 set number
 set vb t_vb=  " turn off bell!
+set novisualbell
 set dir=~/.vim/tmp
 highlight LineNr ctermfg=lightcyan
 
@@ -78,12 +79,10 @@ nnoremap <space> za
 
 
 map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-"imap <F3> <C-R>=strftime("%Y-%m-%d %H:%M")<CR>
-"nmap <F3> o<C-R>=strftime("%Y-%m-%d %H:%M")<CR><Esc>
-nmap <F4> g<C-G>
 
-map <F5> 5wiEurope '72 1972-05-
-map <F3> A -><Esc>j
+"map <F5> 5wiEurope '72 1972-05-
+"map <F3> A -><Esc>j
+map <F5> :make<CR>
 
 map <left>  :tabprevious<CR>
 map <right> :tabnext<CR>
@@ -91,8 +90,7 @@ map <down> :bprevious<CR>
 map <up> :bnext<CR>
 
 " Convenient go-to-end-of-line-key on norwegian keyboard.
-map \ $
-vmap \ $
+map 0 $
 
 " Put norwegian keys to use :)
 map ø :
@@ -113,6 +111,11 @@ map <C-l> <C-w>l
 
 noremap <C-s> <C-a>
 nmap <silent> ,l :nohlsearch<CR>
+
+" programming shortcuts/stuff
+inoremap { {<CR>}<ESC>O
+inoremap {<CR> {
+inoremap (<CR> ()<Left>
 
 " Autocommands
 " " Read-only .doc through antiword
@@ -147,7 +150,6 @@ function! SuperCleverTab()
         endif
 endfunction
 
-
 inoremap <Tab> <C-R>=SuperCleverTab()<CR>
 
 
@@ -165,3 +167,56 @@ function! TwiddleCase(str)
 endfunction
 vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
 
+function FunctionHeading()
+  let s:line=line(".")
+  call setline(s:line,"/*********************************************")
+  call append(s:line,"* Description - ")
+  call append(s:line+1,"* Author - RK")
+  call append(s:line+2,"* Date - ".strftime("%b %d %Y"))
+  call append(s:line+3,"* *******************************************/")
+  unlet s:line
+endfunction
+
+imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
+nmap <F4> mz:execute FunctionHeading()<CR>`zjA
+
+
+" Help delete character if it is 'empty space'
+" stolen from Vim manual
+" function! Eatchar()
+"   let c = nr2char(getchar())
+"   return (c =~ '\s') ? '' : c
+" endfunction
+" 
+" " Replace abbreviation if we're not in comment or other unwanted places
+" " stolen from Luc Hermitte's excellent http://hermitte.free.fr/vim/
+" function! MapNoContext(key, seq)
+"   let syn = synIDattr(synID(line('.'),col('.')-1,1),'name')
+"   if syn =~? 'comment\|string\|character\|doxygen'
+"     return a:key
+"   else
+"     exe 'return "' .
+"     \ substitute( a:seq, '\\<\(.\{-}\)\\>', '"."\\<\1>"."', 'g' ) . '"'
+"   endif
+" endfunction
+" 
+" " Create abbreviation suitable for MapNoContext
+" function! Iab (ab, full)
+"   exe "iab <silent> <buffer> ".a:ab." <C-R>=MapNoContext('".
+"     \ a:ab."', '".escape (a:full.'<C-R>=Eatchar()<CR>', '<>\"').
+"     \"')<CR>"
+" endfunction
+" 
+" call Iab('#d', '#define ')
+" call Iab('#i', '#include <><Left>')
+" call Iab('#I', '#include ""<Left>')
+" call Iab('printf', 'printf("\n");<C-O>?\<CR>')
+" call Iab('if', 'if() {<CR>}<Left><C-O>?)<CR>')
+" call Iab('for', 'for(;;) {<CR>}<C-O>?;;<CR>')
+" call Iab('while', 'while() {<CR>}<C-O>?)<CR>')
+" call Iab('else', 'else {<CR>x;<CR>}<C-O>?x;<CR><Del><Del>')
+" call Iab('ifelse', 'if() {<CR>} else {<CR>}<C-O>?)<CR>')
+" call Iab('intmain', 'int main (int argc, char **argv)<CR>'.
+"  \ '{<CR>x;<CR>return 0;<CR>}<CR><C-O>?x;<CR><Del><Del>')
+
+nmap _if ofprintf(0<C-d>stderr, "DEBUG: %s:%d - \n", __FILE__, __LINE__);<Esc>F\i
