@@ -140,6 +140,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. controlMask, xK_Return),    spawn "urxvt -e /home/rolf/bin/tm"),
     ((modm,                 xK_x),         spawn "xbmc"),
     ((modm,                 xK_f),         spawn "firefox"),
+    ((modm,                 xK_v),         spawn "gvim"),
+    ((modm,                 xK_c),         spawn "crawl-tiles"),
 
     ((modm,                 xK_p),         shellPrompt myXPConfig),
     ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),
