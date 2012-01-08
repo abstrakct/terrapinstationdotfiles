@@ -21,13 +21,14 @@ feh --bg-center ~/pictures/wallpapers/hd/wallpaper-1411581.png pictures/wallpape
 
 xsetroot -cursor_name left_ptr
 
-# sane keyboard settings for norwegian keyboard
-setxkbmap -layout no
-setxkbmap -option terminate:ctrl_alt_bksp
 
 if [ -f $HOME/.config/xmodmap ]; then
     /usr/bin/xmodmap $HOME/.config/xmodmap
 fi
+
+# sane keyboard settings for norwegian keyboard
+setxkbmap -layout no
+setxkbmap -option terminate:ctrl_alt_bksp
 
 #xmodmap -e 'keycode 35 = 0x7e'
 # swap Caps Lock and CTRL!
@@ -36,11 +37,11 @@ fi
 xset +fp /usr/share/fonts/local
 xset fp rehash
 
-android-receiver &
+#android-receiver &
 
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
-wicd-gtk &
-transmission-remote-gtk &
+#wicd-gtk &
+#transmission-remote-gtk &
 
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad
