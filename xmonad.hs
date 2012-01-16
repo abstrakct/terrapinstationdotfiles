@@ -60,7 +60,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 1
 myModMask = mod4Mask
 
-myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gimp", "media", "virtuelt", "TX"]
+myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gimp", "media", "virtual", "TX"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -119,7 +119,7 @@ myJapaneseFont = myJapFontName ++ "-" ++ myJapFontSize
 -- XPConfig {{{
 myXPConfig = defaultXPConfig                                    
     { 
-	XMonad.Prompt.font  = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
+	XMonad.Prompt.font  = "-*-terminus-*-*-*-*-13-*-*-*-*-*-*-u" 
 	--,fgColor = "#0096d1"
 	, fgColor = "#D37E2C"
 	, bgColor = "#000000"
@@ -202,7 +202,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         --     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
         ++
         [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-            | (key, sc) <- zip [xK_w, xK_e] [0,1]
+            | (key, sc) <- zip [xK_e, xK_w] [0,1]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
         ++
         [ ((m .|. modm, k), windows (f i))
@@ -211,6 +211,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                       , (viewOnScreen 1, controlMask)
                       , (W.greedyView, 0), (W.shift, shiftMask) ]
         ]
+        -- ++
+        --[ ((m .|. modm, k), windows (f i))
+        --  | (i, k) <- zip (workspaces conf) ([xK_KP_1 .. xK_KP_9] ++ [xK_KP_0])
+        --  , (f, m) <- [ (viewOnScreen 0, 0)
+        --              , (viewOnScreen 1, controlMask)
+        --              , (W.greedyView, 0), (W.shift, shiftMask) ]
+        --]
 -- }}}
 
 -- Mouse bindings {{{
@@ -345,10 +352,11 @@ myTopBar :: DzenConf
 myTopBar = defaultDzen
     -- use the default as a base and override width and
     -- colors
-    { width       = Just 1920
-    , fg_color    = Just "#909090"
-    , bg_color    = Just "#202020"
---    , Dzen.font   = "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
+    { width       = Just 1920,
+      x_position  = Just 1280,
+      fg_color    = Just "#909090",
+      bg_color    = Just "#202020",
+      dz_font   = Just "-*-terminus-*-*-*-*-14-*-*-*-*-*-*-u" 
     }
 
 myBottomLeftBar :: DzenConf
@@ -356,16 +364,19 @@ myBottomLeftBar = myTopBar
 -- use Top Bar as base!
     { y_position = Just 1080,
       width      = Just 960,
-      alignment  = Just LeftAlign
+      x_position = Just 1280,
+      alignment  = Just LeftAlign,
+      dz_font   = Just "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
     }
 
 myBottomRightBar :: DzenConf
 myBottomRightBar = myTopBar
 -- use Top Bar as base!
     { y_position = Just 1080,
-      x_position = Just 960,
+      x_position = Just 2240,
       width      = Just 960,
-      alignment  = Just RightAlign
+      alignment  = Just RightAlign,
+      dz_font   = Just "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
     }
 -- }}}
 

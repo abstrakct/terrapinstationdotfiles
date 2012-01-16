@@ -38,10 +38,10 @@ xset +fp /usr/share/fonts/local
 xset fp rehash
 
 #android-receiver &
-
-(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --width 5 --height 12 --transparent true --tint 0x000000) &
 #wicd-gtk &
-#transmission-remote-gtk &
+
+(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
+transmission-remote-gtk &
 
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad
