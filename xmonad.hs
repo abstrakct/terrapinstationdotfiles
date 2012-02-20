@@ -142,6 +142,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_f),         spawn "firefox"),
     ((modm,                 xK_v),         spawn "gvim"),
     ((modm,                 xK_c),         spawn "crawl-tiles"),
+    ((modm,                 xK_o),         spawn "libreoffice"),
 
     ((modm,                 xK_p),         shellPrompt myXPConfig),
     ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),
@@ -269,18 +270,19 @@ myManageHook = composeAll
       className =? "Vlc"            --> doFloat,
       className =? "Gnucash"        --> doShift officeWs,
       className =? "Firefox"        --> doShift webWs,
---      className =? "Chromium"       --> doShift webWs,
       className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,
       className =? "Gimp"           --> doShift gimpWs,
---      className =? "Pcmanfm"        --> doShift fmWs,
       className =? "Ardour"         --> doShift musicWs,
---      className =? "Gvim"           --> doShift skriveWs,
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
+      className =? "Mcomix"         --> doFullFloat,
       className =? "Xmessage"       --> doFloat,
       resource  =? "desktop_window" --> doIgnore,
       className =? "Xmessage"       --> doFloat,
       className =? "Transmission-remote-gtk" --> doShift txWs
+--    className =? "Gvim"           --> doShift skriveWs,
+--    className =? "Pcmanfm"        --> doShift fmWs,
+--    className =? "Chromium"       --> doShift webWs,
     ] <+> manageDocks <+> manageScratchPad <+> (isFullscreen --> doFullFloat)
 -- }}}
 

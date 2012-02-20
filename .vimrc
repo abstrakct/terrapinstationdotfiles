@@ -2,13 +2,20 @@ syntax on
 
 set t_Co=256
 
-if &t_Co >= 256
+"if &t_Co >= 256
 "        colorscheme fu
 "        colorscheme tango
-        colorscheme wombat256
-else
-        colorscheme zenburn
+if has("gui_running")
+        colorscheme nucolors
 endif
+
+if !has("gui_running")
+        colorscheme wombat256
+endif
+
+"else
+"        colorscheme zenburn
+"endif
 
 " let mapleader=","
 
@@ -113,9 +120,9 @@ noremap <C-s> <C-a>
 nmap <silent> ,l :nohlsearch<CR>
 
 " programming shortcuts/stuff
-inoremap { {<CR>}<ESC>O
-inoremap {<CR> {
-inoremap (<CR> ()<Left>
+" inoremap { {<CR>}<ESC>O
+" inoremap {<CR> {
+" inoremap (<CR> ()<Left>
 
 " Autocommands
 " " Read-only .doc through antiword
