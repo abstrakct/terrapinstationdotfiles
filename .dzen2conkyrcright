@@ -9,4 +9,4 @@ update_interval 1
 total_run_times 0
 
 TEXT
-TX: ^fg(\#909090)${downspeed eth0} / ${upspeed eth0}^fg() | Cpu: ^fg(\#909090)${cpu}%^fg() | Mem: ^fg(\#909090)${mem}^fg() | The Vault: ${fs_free /home/rolf/TheVault} | ~ ${fs_free /mnt/oldroot} | / ${fs_free /} | Mail: ${execi 486 get_gmail} | ${time %a %d %b %H:%M}
+TX: ^fg(\#909090)${downspeed eth0} / ${upspeed eth0}^fg() | Cpu: ^fg(\#909090)${cpu}%^fg() | Mem: ^fg(\#909090)${mem}^fg() | The Vault: ${fs_free /home/rolf/TheVault} | ~ ${fs_free /mnt/oldroot} | / ${fs_free /} | Mail: ${execi 486 get_gmail} | Up: ${uptime_short} | ${TIme %a %d %b %H:%M}
