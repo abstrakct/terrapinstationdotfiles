@@ -5,7 +5,7 @@
 -- IMPORTS {{{
 
 import Data.Monoid
-import List
+-- import List
 import System.Exit
 import System.IO
 import XMonad hiding ( (|||) )
@@ -279,8 +279,8 @@ myManageHook = composeAll
       className =? "Xmessage"       --> doFloat,
       resource  =? "desktop_window" --> doIgnore,
       className =? "Xmessage"       --> doFloat,
-      className =? "Transmission-remote-gtk" --> doShift txWs
---    className =? "Gvim"           --> doShift skriveWs,
+      className =? "Transmission-remote-gtk" --> doShift txWs,
+      className =? "Gvim"           --> doShift codeWs
 --    className =? "Pcmanfm"        --> doShift fmWs,
 --    className =? "Chromium"       --> doShift webWs,
     ] <+> manageDocks <+> manageScratchPad <+> (isFullscreen --> doFullFloat)
@@ -355,7 +355,7 @@ myTopBar = defaultDzen
     -- use the default as a base and override width and
     -- colors
     { width       = Just 1920,
-      x_position  = Just 1280,
+      -- x_position  = Just 1280,
       fg_color    = Just "#909090",
       bg_color    = Just "#202020",
       dz_font   = Just "-*-terminus-*-*-*-*-14-*-*-*-*-*-*-u" 
@@ -366,7 +366,7 @@ myBottomLeftBar = myTopBar
 -- use Top Bar as base!
     { y_position = Just 1080,
       width      = Just 960,
-      x_position = Just 1280,
+      -- x_position = Just 1280,
       alignment  = Just LeftAlign,
       dz_font   = Just "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
     }
@@ -375,7 +375,8 @@ myBottomRightBar :: DzenConf
 myBottomRightBar = myTopBar
 -- use Top Bar as base!
     { y_position = Just 1080,
-      x_position = Just 2240,
+      -- x_position = Just 2240,
+      x_position = Just 960,
       width      = Just 960,
       alignment  = Just RightAlign,
       dz_font   = Just "-*-terminus-*-*-*-*-12-*-*-*-*-*-*-u" 
