@@ -90,6 +90,7 @@ map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 "map <F5> 5wiEurope '72 1972-05-
 "map <F3> A -><Esc>j
 map <F5> :make<CR>
+map <F6> :Dox<CR>
 
 map <left>  :tabprevious<CR>
 map <right> :tabnext<CR>
