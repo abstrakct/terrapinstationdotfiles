@@ -57,7 +57,7 @@ import XMonad.Util.Scratchpad
 myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = False
-myBorderWidth = 1
+myBorderWidth = 0
 myModMask = mod4Mask
 
 myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gimp", "media", "virtual", "TX"]
@@ -143,6 +143,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_v),         spawn "gvim"),
     ((modm,                 xK_c),         spawn "crawl-tiles"),
     ((modm,                 xK_o),         spawn "libreoffice"),
+    ((modm,                 xK_s),         spawn "grsync"),
 
     ((modm,                 xK_p),         shellPrompt myXPConfig),
     ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),
