@@ -17,7 +17,9 @@
 #feh --bg-center ~/pictures/wallpapers/bruce.jpg
 #feh --bg-fill ~/pictures/norway-beauty.jpg
 #feh --bg-fill ~/pictures/Wallpapers/alley-stairs-dark.jpg
-feh --bg-center ~/pictures/wallpapers/hd/wallpaper-1411581.png pictures/wallpapers/wallpaper-663431.jpg
+#feh --bg-center ~/pictures/wallpapers/hd/wallpaper-1411581.png pictures/wallpapers/wallpaper-663431.jpg
+feh --bg-center pictures/wallpapers/asoiaf/stark.jpg pictures/wallpapers/asoiaf/targaryen.jpg 
+
 
 xsetroot -cursor_name left_ptr
 
