@@ -204,7 +204,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         --     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
         ++
         [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f))
-            | (key, sc) <- zip [xK_e, xK_w] [0,1]
+            | (key, sc) <- zip [xK_w, xK_e] [0,1]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
         ++
         [ ((m .|. modm, k), windows (f i))
@@ -213,6 +213,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
                       , (viewOnScreen 1, controlMask)
                       , (W.greedyView, 0), (W.shift, shiftMask) ]
         ]
+        ++
+        [((m .|. controlMask, k), windows $ f i)
+            | (i, k) <- zip (workspaces conf) numPadKeys
+            , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+        ]
+        
         -- ++
         --[ ((m .|. modm, k), windows (f i))
         --  | (i, k) <- zip (workspaces conf) ([xK_KP_1 .. xK_KP_9] ++ [xK_KP_0])
@@ -221,6 +227,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         --              , (W.greedyView, 0), (W.shift, shiftMask) ]
         --]
 -- }}}
+
+-- Non-numeric num pad keys, sorted by number 
+numPadKeys = [ xK_KP_End,  xK_KP_Down,  xK_KP_Page_Down -- 1, 2, 3
+             , xK_KP_Left, xK_KP_Begin, xK_KP_Right     -- 4, 5, 6
+             , xK_KP_Home, xK_KP_Up,    xK_KP_Page_Up   -- 7, 8, 9
+             , xK_KP_Insert] -- 0
 
 -- Mouse bindings {{{
 --
