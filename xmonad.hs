@@ -144,6 +144,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_c),         spawn "crawl-tiles"),
     ((modm,                 xK_o),         spawn "libreoffice"),
     ((modm,                 xK_s),         spawn "grsync"),
+    ((modm,                 xK_oslash),    spawn "beersmith2"),
 
     ((modm,                 xK_p),         shellPrompt myXPConfig),
     ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),

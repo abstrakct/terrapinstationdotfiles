@@ -106,6 +106,7 @@ alias foobar="wine ~/.wine/drive_c/users/rolf/Desktop/foobar2000/foobar2000.exe"
 #alias goleia="sudo mount -v -t nfs4 10.0.0.23:/ /mnt/leia"
 alias fuck="wget -qO - rage.thewaffleshop.net"
 alias grep="grep --color=always"
+alias git="nocorrect git"
 alias jackardour="jackd -R -dalsa -Phw:2,0 -r48000 -p128 -n2 -D -Chw:2,1"
 alias ls='ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d %H:%M"' 
 alias l='ls -l'
@@ -135,6 +136,7 @@ alias tx="transmission-remote --auth rolf:torrenT -l"
 alias txa="tx | grep Down"
 alias txstop="sudo /etc/rc.d/transmissiond stop"
 alias txstart="sudo /etc/rc.d/transmissiond start"
+alias vim="nocorrect vim"
 alias vl="/usr/share/vim/vim73/macros/less.sh"
 alias x=startx
 alias xxx="cd /home/rolf/TheVault/.data"
