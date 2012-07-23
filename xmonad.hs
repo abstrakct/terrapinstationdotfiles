@@ -60,7 +60,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 0
 myModMask = mod4Mask
 
-myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gimp", "media", "virtual", "TX"]
+myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gfx", "media", "virtual", "TX"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
