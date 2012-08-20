@@ -43,10 +43,12 @@ xset fp rehash
 #wicd-gtk &
 
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
+
 transmission-remote-gtk &
 
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad
+
 xmonad
 
 #ck-launch-session xmonad
