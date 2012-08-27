@@ -112,6 +112,7 @@ alias ls='ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d 
 alias l='ls -l'
 alias la='ls -la'
 alias lo=locate
+alias loi='locate -i'
 alias mv="mv -vni"
 alias movie=". /home/rolf/bin/choosemovie"
 alias n="sudo /etc/rc.d/network"
