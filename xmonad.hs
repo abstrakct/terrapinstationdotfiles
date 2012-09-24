@@ -132,7 +132,7 @@ myXPConfig = defaultXPConfig
     }
 -- }}}
 
--- Key bindings {{{
+-- Keybindings {{{
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [
     ((modm,                 xK_Return),    spawn $ XMonad.terminal conf),
@@ -144,6 +144,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 --    ((modm,                 xK_o),         spawn "libreoffice"),
     ((modm,                 xK_s),         spawn "grsync"),
     ((modm,                 xK_v),         spawn "gvim"),
+    ((modm,                 xK_w),         spawn "vimprobable2"),
     ((modm,                 xK_x),         spawn "xbmc"),
     ((modm,                 xK_oslash),    spawn "beersmith2"),
 
