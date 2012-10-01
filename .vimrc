@@ -6,11 +6,12 @@ set t_Co=256
 "        colorscheme fu
 "        colorscheme tango
 if has("gui_running")
-        colorscheme nucolors
+        colorscheme candycode
+        "colorscheme nucolors
 endif
 
 if !has("gui_running")
-        colorscheme wombat256
+        colorscheme candycode " wombat256
 endif
 
 "else
@@ -82,48 +83,6 @@ filetype indent plugin on
 " au BufRead,BufNewFile *.nanowrimo set filetype=nanowrimo
 " au! Syntax nanowrimo source /home/rolf/.vim/syntax/nanowrimo.vim
 
-nnoremap <space> za
-
-
-map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-
-"map <F5> 5wiEurope '72 1972-05-
-"map <F3> A -><Esc>j
-map <F5> :make<CR>
-map <F6> :Dox<CR>
-
-map <left>  :tabprevious<CR>
-map <right> :tabnext<CR>
-map <down> :bprevious<CR>
-map <up> :bnext<CR>
-
-" Convenient go-to-end-of-line-key on norwegian keyboard.
-map 0 $
-
-" Put norwegian keys to use :)
-map ø :
-map æ @
-
-map gr gT
-map g> :%s/>/->/g<CR>
-
-" going to the next search hit centers the line
-map N Nzz
-map n nzz
-
-" Easy window navigation
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-noremap <C-s> <C-a>
-nmap <silent> ,l :nohlsearch<CR>
-
-" programming shortcuts/stuff
-" inoremap { {<CR>}<ESC>O
-" inoremap {<CR> {
-" inoremap (<CR> ()<Left>
 
 " Autocommands
 " " Read-only .doc through antiword
@@ -185,9 +144,72 @@ function FunctionHeading()
   unlet s:line
 endfunction
 
+
+" **** KEYMAPPINGS ****
+nnoremap <space> za
+
+" Put norwegian keys to use :)
+map ø :
+map æ @
+
+" tab navigation made easier
+map gr gT
+
+" for live show text files
+map g> :%s/>/->/g<CR>
+
+" going to the next search hit centers the line
+map N Nzz
+map n nzz
+
+" Easy window navigation
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" noremap <C-s> <C-a>
+nmap <silent> ,l :nohlsearch<CR>
+
+
+" *** FUNCTION KEYS ***
+
+" not perfect, but functional way of opening corresponding .c/.h file in a new
+" tab
+map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+
 imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
 nmap <F4> mz:execute FunctionHeading()<CR>`zjA
+map <F5> :make<CR>
+map <F6> :Dox<CR>
+" Toggle taglist window
+nnoremap <silent> <F8> :TlistToggle<CR>
 
+" remember that F12 = toggle project window
+
+map <left>  :tabprevious<CR>
+map <right> :tabnext<CR>
+map <down> :bprevious<CR>
+map <up> :bnext<CR>
+
+"map <F5> 5wiEurope '72 1972-05-
+"map <F3> A -><Esc>j
+
+" Convenient go-to-end-of-line-key on norwegian keyboard.
+" map 0 $
+
+" programming shortcuts/stuff
+" inoremap { {<CR>}<ESC>O
+" inoremap {<CR> {
+" inoremap (<CR> ()<Left>
+" taglist options
+let Tlist_Use_Right_Window = 1
+let Tlist_WinWidth = 60
+let Tlist_Use_SingleClick = 1
+let Tlist_Show_Menu = 1
+
+" settings for plugin "project"
+let g:proj_flags="imstgS"
 
 " Help delete character if it is 'empty space'
 " stolen from Vim manual
