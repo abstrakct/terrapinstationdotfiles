@@ -56,8 +56,8 @@ import XMonad.Util.Scratchpad
 
 myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = False
-myBorderWidth = 0
+myFocusFollowsMouse = True
+myBorderWidth = 2
 myModMask = mod4Mask
 
 myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gfx", "media", "virtual", "TX"]
@@ -229,13 +229,13 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
         --              , (viewOnScreen 1, controlMask)
         --              , (W.greedyView, 0), (W.shift, shiftMask) ]
         --]
--- }}}
 
 -- Non-numeric num pad keys, sorted by number 
 numPadKeys = [ xK_KP_End,  xK_KP_Down,  xK_KP_Page_Down -- 1, 2, 3
              , xK_KP_Left, xK_KP_Begin, xK_KP_Right     -- 4, 5, 6
              , xK_KP_Home, xK_KP_Up,    xK_KP_Page_Up   -- 7, 8, 9
              , xK_KP_Insert] -- 0
+-- }}}
 
 -- Mouse bindings {{{
 --

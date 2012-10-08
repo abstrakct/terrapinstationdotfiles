@@ -100,6 +100,7 @@ alias beersmith="wine /home/rolf/wine/beersmith/BeerSmith.exe"
 alias df="df -h"
 alias diff=colordiff
 alias el=elinks
+alias feh="feh -F"
 alias flexget='nocorrect flexget'
 alias foobar="wine ~/.wine/drive_c/users/rolf/Desktop/foobar2000/foobar2000.exe"
 #alias futurama="echo && curl -Is slashdot.org | sed -ne '/^X-[FBL]/s/^X-//p' && echo"
