@@ -56,7 +56,7 @@ import XMonad.Util.Scratchpad
 
 myTerminal = "urxvt"
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 myBorderWidth = 2
 myModMask = mod4Mask
 
