@@ -1,0 +1,111 @@
+GT2=~/src/gt2/ CD=. flags=r {
+
+ Makefile
+ Source=. CD=. filter="*.c *.h" {
+  actor.c
+  actor.h
+  cards.c
+  cards.h
+  commands.h
+  datafiles.c
+  datafiles.h
+  debug.c
+  debug.h
+  fractmod.c
+  fractmod.h
+  gt.c
+  gt.h
+  io.h
+  io_libtcod.c
+  io_libtcod.h
+  io_ncurses.c
+  io_ncurses.h
+  monsters.c
+  monsters.h
+  npc.c
+  npc.h
+  o_effects.c
+  o_effects.h
+  objects.c
+  objects.h
+  player.c
+  player.h
+  quest.c
+  quest.h
+  saveload.c
+  saveload.h
+  utils.c
+  utils.h
+  world.c
+  world.h
+ }
+ Data=. filter="data/*" {
+  data/armor.cfg
+  data/config.cfg
+  data/data.cfg
+  data/jewelry.cfg
+  data/monsters.cfg
+  data/potion.cfg
+  data/weapon.cfg
+ }
+ Other=. filter="README TODO" {
+  README
+  TODO
+ }
+
+}
+
+DSRL=~/src/dsrl/ CD=. flags=r {
+
+ Makefile
+ Source=. CD=. filter="*.c *.h" {
+  actor.c
+  actor.h
+  commands.c
+  commands.h
+  datafiles.c
+  datafiles.h
+  debug.c
+  debug.h
+  display.c
+  display.h
+  dsrl.c
+  dsrl.h
+  dstime.c
+  dstime.h
+  fractmod.c
+  fractmod.h
+  monsters.c
+  monsters.h
+  npc-names.c
+  npc-names.h
+  npc.c
+  npc.h
+  o_effects.c
+  o_effects.h
+  objects.c
+  objects.h
+  player.c
+  player.h
+  saveload.c
+  saveload.h
+  utils.c
+  utils.h
+  world.c
+  world.h
+ }
+ Data=. filter="data/*" {
+  data/armor.cfg
+  data/config.cfg
+  data/data.cfg
+  data/jewelry.cfg
+  data/monsters.cfg
+  data/template.simple
+  data/weapon.cfg
+ }
+ Other=. filter="design-plan.txt README" {
+  README
+  design-plan.txt
+ }
+
+}
