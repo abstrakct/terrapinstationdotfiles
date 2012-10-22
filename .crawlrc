@@ -84,14 +84,14 @@ lua_file = lua/wield.lua
 lua_file = lua/runrest.lua
 lua_file = lua/gearset.lua
 lua_file = lua/trapwalk.lua
-lua_file = lua/pickup.lua
+#lua_file = lua/pickup.lua
 
 # kills.lua yields more information at the cost of huge dumps.
 # lua_file = lua/kills.lua
 
 # autofight.lua allows binding both movement and attack a single key.
 # Use at your own discretion! See options_guide.txt for details.
-# lua_file = lua/autofight.lua
+lua_file = lua/autofight.lua
 
 ##### 4-  Interface #################################################
 #
@@ -102,7 +102,7 @@ autopickup = $?!+"/%
 # There is a long list of autopickup exceptions in
 include = autopickup_exceptions.txt
 
-drop_filter = useless_item
+drop_filter += useless_item
 
 # default_autopickup = false
 # autopickup_no_burden = true
@@ -113,7 +113,7 @@ drop_filter = useless_item
 #
 # drop_mode = (multi | single)
 pickup_mode = (single | multi | auto:2)
-# drop_filter = skeleton, rotting, corpse
+drop_filter += skeleton, rotting, corpse
 # default_friendly_pickup = (none | friend | player | all)
 
 ##### 4-b	Targetting ############################
@@ -150,7 +150,7 @@ pickup_mode = (single | multi | auto:2)
 ##### 4-f	Viewport Options  ###################
 #
 view_max_width   = 81
-view_max_height  = 63
+view_max_height  = 60
 # view_lock_x      = false
 # view_lock_y      = false
 # view_lock        = false
@@ -162,8 +162,8 @@ view_max_height  = 63
 
 ##### 4-g	Travel and Exploration #################
 #
-# travel_delay = 20
-# explore_delay = -1
+travel_delay = -1
+explore_delay = 20
 # travel_avoid_terrain = shallow water
 #
 # explore_greedy   = false
@@ -172,7 +172,7 @@ view_max_height  = 63
 # explore_improved = true
 #
 # explore_stop_pickup_ignore = curare
-auto_exclude = oklob plant,statue,curse skull,roxanne, hyperactive
+auto_exclude += oklob plant,statue,curse skull,roxanne, hyperactive
 
 # tc_reachable      = blue
 # tc_dangerous      = cyan
@@ -182,7 +182,7 @@ auto_exclude = oklob plant,statue,curse skull,roxanne, hyperactive
 
 # runrest options (require runrest.lua to be included above)
 runrest_ignore_poison  = 2:30
-runrest_ignore_monster = butterfly:1
+runrest_ignore_monster += butterfly:1
 # runrest_ignore_monster = swamp worm:3
 
 # The file runrest_messages.txt contains a list of default
@@ -203,9 +203,9 @@ trapwalk_safe_hp = dart:20,needle:15,arrow:35,bolt:45,spear:40,axe:45,blade:95
 # 14 filters out corpses
 # stash_filter = 14
 
-stash_filter = scroll of curse armour, scroll of curse weapon, scroll of noise
+stash_filter = scroll of curse armour, scroll of curse weapon, scroll of noise, scroll of detect curse
 stash_filter = scroll of immolation, scroll of random uselessness
-stash_filter = scroll of paper
+#stash_filter = scroll of paper
 
 stash_filter = ring of hunger, amulet of inaccuracy
 
@@ -217,26 +217,32 @@ stash_filter = ring of hunger, amulet of inaccuracy
 # auto_list     = false
 # easy_open     = false
 # easy_unequip  = false
-# equip_unequip = true
+equip_unequip = true
 # easy_confirm  = (none | safe)
 # allow_self_target      = (yes | no | prompt)
 # easy_butcher           = false
 # always_confirm_butcher = true
 # prefer_safe_chunks     = false
-# easy_eat_chunks        = true
-# easy_eat_gourmand      = true
+easy_eat_chunks        = true
+easy_eat_gourmand      = true
+confirm_butcher = never
+auto_drop_chunks = yes
+auto_eat_chunks = true
 # easy_eat_contaminated  = true
 # prompt_for_swap        = false
 # easy_quit_item_prompts = false
 # easy_exit_menu         = false
 # sort_menus = pickup: true : art, ego, basename, qualname, curse, qty
-sort_menus = inv: true : equipped, freshness, charged
+#sort_menus = inv: true : equipped, freshness, charged
+sort_menus = true : identified, equipped, art, ego, basename, qualname, freshness, charged
 # menu_cursor            = true
+
+auto_sacrifice = true
 
 ##### 4-j	Messages and Display Enhancements #####
 #
-# hp_warning = 30
-# mp_warning = 0
+hp_warning = 50
+mp_warning = 30
 # hp_colour = 50:yellow, 25:red
 # mp_colour = 50:yellow, 25:red
 # stat_colour = 1:lightred, 3:red
@@ -244,17 +250,19 @@ sort_menus = inv: true : equipped, freshness, charged
 # status_caption_colour        = yellow
 # classic_hud                  = true
 # mlist_min_height             = 4
-# msg_min_height               = 7
-# msg_max_height               = 10
+msg_min_height               = 15
+msg_max_height               = 20
 # mlist_allow_alternate_layout = true
 # messages_at_top              = true
 # mlist_targetting             = true
-# show_gold_turns              = true
+show_gold_turns              = true
+show_game_turns              = true
+default_manual_training       = true
 
 # clear_messages             = true
 # small_more                 = true
 # show_more                  = false
-# show_inventory_weights     = true
+show_inventory_weights     = true
 # item_stack_summary_minimum = 5
 # list_rotten                = false
 # show_beam                  = false
@@ -287,11 +295,11 @@ include = food_colouring.txt
 include = menu_colours.txt
 
 # Colouring of autoinscribed god gifts
-menu_colour = pickup:green:god gift
+menu_colour += pickup:green:god gift
 
 # Highlight (partly) selected items
-menu_colour = inventory:white:\w \+\s
-menu_colour = inventory:white:\w \#\s
+menu_colour += inventory:white:\w \+\s
+menu_colour += inventory:white:\w \#\s
 
 # Colouring of messages
 # Messages are colour coded in standard_colours.txt as follows:
@@ -304,7 +312,7 @@ menu_colour = inventory:white:\w \#\s
 include = messages.txt
 
 # Colouring for the notes
-menu_colour = notes:white:Reached XP level
+menu_colour += notes:white:Reached XP level
 
 # These lines will suppress extra feedback messages from travel/shift-running.
 #
@@ -322,10 +330,10 @@ menu_colour = notes:white:Reached XP level
 # force_more_message = There are no visible monsters within range
 # force_more_message = This wand has no charges
 
-force_more_message = You have reached level
-force_more_message = Your scales start
-force_more_message = You fall through a shaft
-force_more_message = You are starting to lose your buoyancy
+force_more_message += You have reached level
+force_more_message += Your scales start
+force_more_message += You fall through a shaft
+force_more_message += You are starting to lose your buoyancy
 
 ##### 4-k	Firing Commands #######################
 #
@@ -356,7 +364,11 @@ force_more_message = You are starting to lose your buoyancy
 ##### 4-t	Tile related Options ##################
 
 # All tiles specific options are in the external file
-include = tiles_options.txt
+#include = tiles_options.txt
+
+tile_full_screen = false
+tile_window_width = 1920
+tile_window_height = 1080
 
 ##### 5-  Dump File #################################################
 #
@@ -364,9 +376,9 @@ include = tiles_options.txt
 #
 # kill_map = friend:you, other:you
 # dump_kill_places = (single | all | none)
-# dump_item_origins = all,artifacts,ego_arm,ego_weap,jewellery,runes
+dump_item_origins = all,artifacts,ego_arm,ego_weap,jewellery,runes
 # dump_item_origin_price = -1
-# dump_message_count = 20
+dump_message_count = 30
 # dump_order  = header, hiscore, stats, misc, notes, inventory,
 # dump_order += turns_by_place, skills, spells, overview, mutations,
 # dump_order += messages, screenshot, monlist, kills_by_place, kills
@@ -374,21 +386,21 @@ include = tiles_options.txt
 
 ##### 5-b	Notes #################################
 #
-# user_note_prefix=@@@
-ood_interesting = 8
-note_hp_percent = 5
-note_skill_levels = 1,5,10,15,27
-#note_all_skill_levels = true
+user_note_prefix=Note to self:
+ood_interesting = 5
+note_hp_percent = 10
+note_skill_levels = 1,5,10,15,20,21,24,27
+note_all_skill_levels = true
 #note_skill_max  = false
 #note_all_spells = false
 #note_xom_effects = false
-note_items    = rod of, acquirement, preservation, running, of Zot
-note_messages = You pass through the gate
-note_messages = cast .* Abyss
-note_messages = Your scales start
-note_messages = protects you from harm
-note_messages = You fall through a shaft
-note_monsters = orb of fire, ancient lich, Sigmund
+note_items    += rod of, acquirement, preservation, running, of Zot
+note_messages += You pass through the gate
+note_messages += cast .* Abyss
+note_messages += Your scales start
+note_messages += protects you from harm
+note_messages += You fall through a shaft
+note_monsters += orb of fire, ancient lich, Sigmund
 
 ##### 6-  Miscellaneous #############################################
 #
@@ -405,7 +417,7 @@ note_monsters = orb of fire, ancient lich, Sigmund
 # colour.lightcyan = cyan
 # colour.yellow    = brown
 #
-# pizza            = Sausage
+pizza            = Salmon
 
 # See options_guide.txt for the options
 # cset_ascii, cset_ibm, cset_dec, cset_unicode, cset_any,
@@ -427,3 +439,139 @@ note_monsters = orb of fire, ancient lich, Sigmund
 #
 # Override the vi movement keys with a non-command.
 # include = no_vi_command_keys.txt
+#
+#
+# CUSTOM STUFF
+default_manual_training = true
+skill_focus = true
+
+
+
+# fra annen dude
+###########
+## Prompts #
+############
+more := force_more_message
+
+# Important features
+: if you.god() == "Ashenzari" then
+more += You have a vision of.*gates?
+: else
+more += interdimensional caravan
+more += distant snort
+more += Found a gateway leading out of the Abyss
+: end
+
+more += Found .* abyssal rune of Zot
+more += .* weight on your shoulders
+
+# Interrupts
+more += You don't.* that spell
+more += You fail to use your ability
+more += You miscast Controlled Blink
+more += You can't (read|drink) that
+more += That item cannot be evoked
+more += This wand has no charges
+more += You are held in a net
+more += You have disarmed
+more += You don't have any such object
+more += do not work when you're silenced
+
+# Bad things
+more += Your surroundings flicker
+more += sense of stasis
+more += Your amulet of stasis
+more += You cannot teleport right now
+more += The writing blurs in front of your eyes
+more += You fall through a shaft
+more += A huge blade swings out and slices into you!
+more += (blundered into a|invokes the power of) Zot
+more += Ouch! That really hurt!
+more += dispelling energy hits you
+more += You convulse
+more += You are (blasted|electrocuted)!
+more += You are.*(confused|poisoned)
+stop += flesh start
+more += (starving|devoid of blood)
+more += wrath finds you
+more += lose consciousness
+more += You are too injured to fight blindly
+more += Green shoots are pushing up through the earth
+# more = poison
+
+# Hell effects
+more += "You will not leave this place."
+more += "Die, mortal!"
+more += "We do not forgive those who trespass against us!"
+more += "Trespassers are not welcome here!"
+more += "You do not belong in this place!"
+more += "Leave now, before it is too late!"
+more += "We have you now!"
+more += You smell brimstone.
+more += Brimstone rains from above.
+more += You feel lost and a long, long way from home...
+more += You shiver with fear.
+more += You feel a terrible foreboding...
+more += Something frightening happens.   
+more += You sense an ancient evil watching you...
+more += You suddenly feel all small and vulnerable.
+more += You sense a hostile presence.
+more += A gut-wrenching scream fills the air!
+more += You hear words spoken in a strange and terrible language...
+more += You hear diabolical laughter!
+
+# Expiring effects
+more += You feel yourself slow down
+more += less insulated
+more += You are starting to lose your buoyancy
+
+more += You lose control over your flight
+more += Your hearing returns
+more += Your transformation is almost over
+more += You have a feeling this form
+more += You feel yourself come back to life
+more += uncertain
+more += time is quickly running out
+more += life is in your own hands
+more += is no longer charmed
+more += shroud falls apart
+
+# Monsters with torment
+more += mummy priest comes into view
+more += greater mummy comes into view
+more += Khufu comes into view
+more += Menkaure comes into view
+more += Brimstone Fiend comes into view
+more += Ice Fiend comes into view
+more += Gloorx Vloq comes into view
+more += Shadow Fiend comes into view
+more += Ereshkigal comes into view
+more += tormentor comes into view
+more += curse skull comes into view
+more += curse toe comes into view
+
+# Others
+more += You have reached level
+more += Your scales start
+more += You feel monstrous
+more += Jiyva alters your body
+: if you.god() == "Xom" then
+more += god:
+: end
+
+hp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
+mp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
+stat_colour = 3:red, 7:lightred
+
+{
+add_autopickup_func(function(it, name)
+        if it.class(true) == "armour" then
+                local good_slots = {cloak="Cloak", helmet="Helmet", gloves="Gloves", boots="Boots"}
+                st, _ = it.subtype()
+                if good_slots[st] ~= nil and items.equipped_at(good_slots[st]) == nil then
+                        return true
+                end
+        end
+        return false
+end)
+}
