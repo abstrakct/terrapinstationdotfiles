@@ -1,0 +1,14 @@
+#!/bin/bash
+
+szMusicRoot="/TheVault"
+filelistA=/home/rolf/tmp/flacfiles-delete
+filelistB=/home/rolf/tmp/flacfiles-donotdelete
+
+
+# find all flac files
+find "$szMusicRoot" -type f -name "*.flac" > $filelistA
+
+# remove those we know have errors
+grep -v "live.shows.with.errors" $filelistA > $filelistB
+
+rm $filelistA

@@ -1,0 +1,17 @@
+#!/bin/sh
+szDate=`/bin/date`
+# szMusicRoot='/mnt/media/Music'
+szMusicRoot="$1"
+szErrFile="./$szMusicRoot-flac_errors.txt"
+
+echo Recursively testing flacs in $szMusicRoot
+echo Flac decoding errors logged to $szErrFile
+echo Flac test of $szMusicRoot started at $szDate >"$szErrFile"
+echo Errors were found in the following flac files: >>"$szErrFile"
+
+find "$szMusicRoot/" -name '*.flac' -type f -not -exec /usr/bin/flac -t --totally-silent '{}' \; -and -print >>"$szErrFile" 
+
+szDate=`/bin/date`
+echo Flac tests of $szMusicRoot compleated at $szDate >>"$szErrFile"
+
+echo Done!

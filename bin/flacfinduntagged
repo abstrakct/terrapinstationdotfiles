@@ -1,0 +1,46 @@
+#!/bin/bash
+
+flac=/usr/bin/metaflac
+filelist=/home/rolf/tmp/flacfiles-donotdelete
+
+# set the number of seconds to run
+# -h [hours]
+# -m [minutes]
+# -s [seconds]
+
+while getopts "h:m:s:" OPTION
+do
+        case $OPTION in
+                h)
+                        (( seconds_to_run= $OPTARG * 3600 ))
+                        ;;
+                m)
+                        (( seconds_to_run= $OPTARG * 60 ))
+                        ;;
+                s)
+                        (( seconds_to_run= $OPTARG ))
+                        ;;
+        esac
+done
+
+if [[ -z $seconds_to_run ]]
+then
+        echo "Bad arguments."
+        exit 1
+fi
+
+echo "Run duration:       $seconds_to_run seconds"
+echo "Files to process:  " $(wc -l $filelist)
+
+while [ -s $filelist -a $SECONDS -lt $seconds_to_run ] ; do
+    file=$(head -1 $filelist)
+    tagged=$($flac --list "$file" | grep -L -i ARTIST)
+    if [[ $tagged ]] ; then
+        echo $file >> /home/rolf/UNTAGGED-FLAC-FILES
+        echo Untagged: $file
+    fi
+    # remove current file from list
+    sed -i.prev '1d' $filelist
+done
+
+exit 0

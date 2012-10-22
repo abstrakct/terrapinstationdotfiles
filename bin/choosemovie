@@ -1,0 +1,22 @@
+#!/bin/bash
+
+echo "Alright, let's watch a movie!"
+ALLGOOD="no"
+
+while [ $ALLGOOD = "no" ]; do
+        echo "How about:"
+        MOVIE="$(find /home/rolf/TheVault/film/complete -maxdepth 2 -type d | shuf | tail -n 1)"
+        echo $MOVIE
+
+        read answer
+        case $answer in
+                y | Y ) ALLGOOD="yes"
+                        ;;
+                n | N ) ALLGOOD="no"; echo "OK, then..."; echo
+                        ;;
+        esac
+done
+
+echo "Alright, have a blast!"
+cd "$MOVIE"
+ls -l

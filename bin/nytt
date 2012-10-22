@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Options:
+# -l live recordings
+# -o official releases
+# -d [days]
+# -w [weeks]
+# -m [months]
+
+while getopts "d:w:m:lo" OPTION
+do
+        case $OPTION in
+                l)
+                        DIR="/TheVault/musikk/live"
+                        FTYPE=0
+                        ;;
+                o)
+                        DIR="/TheVault/musikk/offisielle"
+                        FTYPE=1
+                        ;;
+                d)
+                        (( MTIME= $OPTARG ))
+                        ;;
+                w)
+                        (( MTIME= $OPTARG * 7 ))
+                        ;;
+                m)
+                        (( MTIME= $OPTARG * 30 ))
+                        ;;
+        esac
+done
+
+if [[ -z $MTIME ]]
+then
+        echo "Please specify -d, -w or -m and number of days, weeks or months."
+        exit 1
+fi
+
+if [[ -z $DIR ]]
+then
+        echo "Please specify -l for live recordings, or -o for official releases."
+        exit 1
+fi
+
+echo "Here are the additions (changes) for the last $MTIME days:"
+
+if [[ -z $FTYPE ]]
+then
+        find $DIR -daystart -mtime -$MTIME -name "*flac16*"
+else
+        find $DIR -daystart -mtime -$MTIME
+fi

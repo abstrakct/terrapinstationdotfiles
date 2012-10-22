@@ -14,12 +14,13 @@ for filename in *; do
         read mname
         if [ -z "$mname" ]; then
                 echo "OK, skipping $filename"
+                echo "**************************************************************"
         else
                 if [ -d "$filename" ]; then
                         isdirectory="yes"
                 fi
 
-                echo "What kind of rip is it (Vhs,Dvd,Tv)?"
+                echo "What kind of rip is it (Vhs,Dvd,Tv,Bluray,Netflix)?"
                 read whatrip
                 case $whatrip in
                         v | V ) mrip="VHSRip"
@@ -27,6 +28,10 @@ for filename in *; do
                         d | D ) mrip="DVDRip"
                                 ;;
                         t | T ) mrip="TVRip"
+                                ;;
+                        b | B ) mrip="Blurayrip"
+                                ;;
+                        n | N ) mrip="Netflixrip"
                                 ;;
                         * )     mrip=$whatrip
                                 ;;
@@ -36,7 +41,13 @@ for filename in *; do
                 echo "Any other tags you want?"
                 read mtags
 
-                mdir="$mname ($myear) ($mrip) $mtags"
+                if [ -z "$mtags" ]; then
+                        mdir="$mname ($myear) ($mrip)"
+                else
+                        mdir="$mname ($myear) ($mrip) $mtags"
+                fi
+
+                echo
                 echo "OK, directory name will be"
                 echo $mdir
 
@@ -49,10 +60,10 @@ for filename in *; do
 
                 echo "Generating thumbnails"
                 for tname in *; do
-                        vcs -c 3 -n 21 -u movefixerscript -q -q -j "$tname" &
+                        vcs -c 3 -n 21 -u Moviefixerscript -q -q -j "$tname" &
                 done
 
-                echo "Done processing $filename ! Moving on!"
+                echo "Done processing \"$filename\" - moving on!"
                 cd ..
                 if [ $isdirectory = "yes" ]; then
                         cd ..
