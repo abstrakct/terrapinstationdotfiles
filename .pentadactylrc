@@ -6,6 +6,7 @@ nmap gr gT
 nmap < H
 nmap > L
 nmap ø :
+nmap å odb 
 nmap <Left> <C-x>
 nmap <Right> <C-a>
 nmap ge <C-S-e>
