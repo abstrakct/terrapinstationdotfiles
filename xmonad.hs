@@ -162,7 +162,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask,   xK_m),         windows W.swapMaster),
     ((modm,                 xK_n),         refresh),
     ((modm .|. shiftMask,   xK_o),         goToSelected defaultGSConfig),
-    ((modm,                 xK_o),         spawnSelected defaultGSConfig ["urxvt", "firefox", "gimp", "libreoffice", "gvim", "xcalc", "gnucash", "beersmith2", "truecrypt", "xbmc"]),
+    ((modm,                 xK_o),         spawnSelected defaultGSConfig ["urxvt", "firefox", "gimp", "libreoffice", "gvim", "xcalc", "gnucash", "beersmith2", "truecrypt", "xbmc", "ardour2"]),
 --  ((modm,                 xK_o),         spawn "/home/rolf/bin/dmenumount"),
     ((modm,                 xK_p),         shellPrompt myXPConfig),
     ((modm .|. shiftMask,   xK_p),         runOrRaisePrompt myXPConfig),
