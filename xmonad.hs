@@ -60,7 +60,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 2
 myModMask = mod4Mask
 
-myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gfx", "media", "virtual", "TX"]
+myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "office", "gfx", "media", "virtual", "TX"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -98,7 +98,7 @@ myWorkspaces = ["c&c", "web", "code", "music", "misc", "office", "gfx", "media",
 cliWs     = (myWorkspaces !! 0)
 webWs     = (myWorkspaces !! 1)
 codeWs    = (myWorkspaces !! 2)
-musicWs   = (myWorkspaces !! 3)
+skriveWs  = (myWorkspaces !! 3)
 miscWs    = (myWorkspaces !! 4)
 officeWs  = (myWorkspaces !! 5)
 gimpWs    = (myWorkspaces !! 6)
@@ -141,6 +141,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_c),         spawn "crawl-tiles"),
     ((modm,                 xK_f),         spawn "firefox"),
     ((modm,                 xK_g),         spawn "gnucash"),
+    ((modm,                 xK_i),         spawn "focuswriter"),
 --    ((modm,                 xK_o),         spawn "libreoffice"),
     ((modm,                 xK_s),         spawn "grsync"),
     ((modm,                 xK_v),         spawn "gvim"),
@@ -263,7 +264,7 @@ fullLayout = (noBorders $ Full) ||| Grid
 -- gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
 defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
 
-myLayout = avoidStruts $ smartBorders $ onWorkspace cliWs fullLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ defaultLayout
+myLayout = avoidStruts $ smartBorders $ onWorkspace cliWs fullLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ onWorkspace skriveWs fullLayout $ defaultLayout
 
 -- }}}
 
@@ -288,7 +289,7 @@ myManageHook = composeAll
       className =? "Firefox"        --> doShift webWs,
       className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,
       className =? "Gimp"           --> doShift gimpWs,
-      className =? "Ardour"         --> doShift musicWs,
+      --className =? "Ardour"         --> doShift musicWs,
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
       className =? "feh"            --> doFullFloat,
       className =? "Mcomix"         --> doFullFloat,
