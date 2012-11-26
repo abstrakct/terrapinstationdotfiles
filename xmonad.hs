@@ -38,6 +38,7 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Reflect (reflectHoriz)
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.SimpleFloat
 import XMonad.Layout.Tabbed
 
 import XMonad.Prompt
@@ -60,7 +61,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 2
 myModMask = mod4Mask
 
-myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "office", "gfx", "media", "virtual", "TX"]
+myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "office", "gfx", "xbmc", "virtual", "TX"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -144,6 +145,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm,                 xK_i),         spawn "focuswriter"),
 --    ((modm,                 xK_o),         spawn "libreoffice"),
     ((modm,                 xK_s),         spawn "grsync"),
+    ((modm .|. controlMask, xK_t),         spawn "urxvt -e /home/rolf/bin/transmission-queue"),
     ((modm,                 xK_v),         spawn "gvim"),
     ((modm,                 xK_w),         spawn "vimprobable2"),
     ((modm,                 xK_x),         spawn "xbmc"),
@@ -262,9 +264,11 @@ tiled x = Tall nmaster delta ratio
 
 fullLayout = (noBorders $ Full) ||| Grid
 -- gimpLayout = withIM (0.14) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.22) (Role "gimp-dock") Full
-defaultLayout = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout
+defaultLayout   = Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| fullLayout ||| simpleFloat
+fullfirstLayout = fullLayout ||| Grid ||| (tiled 1) ||| Mirror (tiled 1) ||| simpleFloat
 
-myLayout = avoidStruts $ smartBorders $ onWorkspace cliWs fullLayout $ onWorkspace webWs defaultLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ onWorkspace skriveWs fullLayout $ defaultLayout
+
+myLayout = avoidStruts $ smartBorders $ onWorkspace cliWs fullLayout $ onWorkspace webWs fullfirstLayout $ onWorkspace mediaWs fullLayout $ onWorkspace gimpWs fullLayout $ onWorkspace skriveWs fullLayout $ defaultLayout
 
 -- }}}
 

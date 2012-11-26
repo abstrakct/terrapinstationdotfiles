@@ -12,4 +12,4 @@ mpd_port 6600
 
 TEXT
 #[${mpd_status}${if_mpd_playing} - ${mpd_elapsed}/${mpd_length}$endif] ^fg(\#D37E2C)${mpd_title}^fg() by ^fg(\#d37e2c)${mpd_artist}^fg() from ^fg(\#d37e2c)${mpd_album}^fg()
-[${mpd_status}${if_mpd_playing} - ${mpd_elapsed}/${mpd_length}$endif] ^fg(\#306EFF)${mpd_title}^fg() by ^fg(\#306EFF)${mpd_artist}^fg() from ^fg(\#306EFF)${mpd_album}^fg()
+${if_mpd_playing}[${mpd_status} - ${mpd_elapsed}/${mpd_length}] ^fg(\#559EFF)${mpd_title}^fg() by ^fg(\#407EFF)${mpd_artist}^fg() from ^fg(\#306EFF)${mpd_album}^fg() (^fg(\#116611)${mpd_bitrate} kbps^fg())$else ^fg(\#AA0000)No music! :($endif

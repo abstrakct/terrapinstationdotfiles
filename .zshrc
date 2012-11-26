@@ -142,6 +142,7 @@ alias vim="nocorrect vim"
 alias vl="/usr/share/vim/vim73/macros/less.sh"
 alias x=startx
 alias xxx="cd /home/rolf/TheVault/.data"
+alias yao=yaourt
 
 alias v='f -f -e vim' # quick opening files with vim
 #alias m='f -f -e smplayer' # quick opening files with mplayer
