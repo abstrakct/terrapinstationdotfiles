@@ -9,6 +9,9 @@
 # exec startxfce4
 # ...or the Window Manager of your choice
 
+#run systemd as user intsance
+systemd --user &
+
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 #exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &

@@ -61,7 +61,7 @@ myFocusFollowsMouse = False
 myBorderWidth = 2
 myModMask = mod4Mask
 
-myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "office", "gfx", "xbmc", "virtual", "TX"]
+myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "rec", "gfx", "xbmc", "virtual", "TX"]
 
 -- myWorkspaces    = ["一 巣","二 くも","三 著す","四 参照","五","六 曲","七 絵","八 映画館","九 仮想"]
 -- Japanese meanings {{{
@@ -101,7 +101,7 @@ webWs     = (myWorkspaces !! 1)
 codeWs    = (myWorkspaces !! 2)
 skriveWs  = (myWorkspaces !! 3)
 miscWs    = (myWorkspaces !! 4)
-officeWs  = (myWorkspaces !! 5)
+recWs     = (myWorkspaces !! 5)
 gimpWs    = (myWorkspaces !! 6)
 mediaWs   = (myWorkspaces !! 7)
 virtualWs = (myWorkspaces !! 8)
@@ -289,7 +289,7 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat,
       className =? "Smplayer"       --> doFloat,
       className =? "Vlc"            --> doFloat,
-      className =? "Gnucash"        --> doShift officeWs,
+      className =? "Gnucash"        --> doShift recWs,
       className =? "Firefox"        --> doShift webWs,
       className =? "xbmc.bin"       --> doShift mediaWs <+> doFullFloat,
       className =? "Gimp"           --> doShift gimpWs,
