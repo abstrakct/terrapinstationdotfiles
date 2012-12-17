@@ -79,11 +79,11 @@
 
 ##### 3-  Lua Files #################################################
 #
-lua_file = lua/stash.lua
-lua_file = lua/wield.lua
-lua_file = lua/runrest.lua
-lua_file = lua/gearset.lua
-lua_file = lua/trapwalk.lua
+#lua_file = lua/stash.lua
+#lua_file = lua/wield.lua
+#lua_file = lua/runrest.lua
+#lua_file = lua/gearset.lua
+#lua_file = lua/trapwalk.lua
 #lua_file = lua/pickup.lua
 
 # kills.lua yields more information at the cost of huge dumps.
@@ -91,7 +91,7 @@ lua_file = lua/trapwalk.lua
 
 # autofight.lua allows binding both movement and attack a single key.
 # Use at your own discretion! See options_guide.txt for details.
-lua_file = lua/autofight.lua
+#lua_file = lua/autofight.lua
 
 ##### 4-  Interface #################################################
 #
@@ -100,7 +100,7 @@ lua_file = lua/autofight.lua
 autopickup = $?!+"/%
 
 # There is a long list of autopickup exceptions in
-include = autopickup_exceptions.txt
+#include = autopickup_exceptions.txt
 
 drop_filter += useless_item
 
@@ -190,7 +190,7 @@ runrest_ignore_monster += butterfly:1
 # later settings.
 # runrest_stop_message = You hear a.* slurping noise
 # runrest_ignore_message = Jiyva's power touches on your attributes
-include = runrest_messages.txt
+#include = runrest_messages.txt
 
 # trap_prompt = false
 trapwalk_safe_hp = dart:20,needle:15,arrow:35,bolt:45,spear:40,axe:45,blade:95
@@ -275,7 +275,7 @@ show_inventory_weights     = true
 # menu_colour_shops = false
 
 # Food is colour coded in standard_colours.txt as follows:
-include = standard_colours.txt
+#include = standard_colours.txt
 #
 #   yellow     = preferred food                    ($preferred)
 #   darkgrey   = cannot be eaten at all            ($inedible)
@@ -288,11 +288,11 @@ include = standard_colours.txt
 # You can change colours by using something like
 # $contaminated := magenta
 
-include = food_colouring.txt
+#include = food_colouring.txt
 
 # There is elaborate colouring of items in the inventory (and other menus)
 # depending on their usefulness, taking species and other criteria into account.
-include = menu_colours.txt
+#include = menu_colours.txt
 
 # Colouring of autoinscribed god gifts
 menu_colour += pickup:green:god gift
@@ -309,7 +309,7 @@ menu_colour += inventory:white:\w \#\s
 #   lightred   = item damaged/destroyed     ($item_dmg [same as $danger])
 #   darkgrey   = boring, message clutter    ($boring)
 #
-include = messages.txt
+#include = messages.txt
 
 # Colouring for the notes
 menu_colour += notes:white:Reached XP level
