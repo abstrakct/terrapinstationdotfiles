@@ -295,6 +295,7 @@ myManageHook = composeAll
       className =? "Gimp"           --> doShift gimpWs,
       --className =? "Ardour"         --> doShift musicWs,
       className =? "VirtualBox"     --> doShift virtualWs <+> doFullFloat,
+      className =? "t-engine"       --> doFullFloat,
       className =? "feh"            --> doFullFloat,
       className =? "Mcomix"         --> doFullFloat,
       className =? "Xmessage"       --> doFloat,
