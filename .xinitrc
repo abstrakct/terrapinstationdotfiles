@@ -55,6 +55,7 @@ transmission-remote-gtk &
 xmonad
 #exec openbox-session
 #herbstluftwm
+#wmfs
 
 #ck-launch-session xmonad
 #dbus-launch xmonad
