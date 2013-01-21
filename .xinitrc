@@ -12,6 +12,7 @@
 #run systemd as user intsance
 systemd --user &
 
+
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 #exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &
@@ -51,12 +52,13 @@ xset fp rehash
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
 (sleep 2s && trayer --edge bottom --align left --SetDockType true --expand true --widthtype pixel --width 48 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
 transmission-remote-gtk &
+thunar --daemon &
 
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad
 
-#xmonad
-exec dbus-launch --sh-syntax --exit-with-session /usr/bin/xmonad
+xmonad
+#exec dbus-launch --sh-syntax --exit-with-session /usr/bin/xmonad
 #exec openbox-session
 #herbstluftwm
 #wmfs #-C /etc/xdg/wmfs/wmfsrc

@@ -168,7 +168,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["c&c", "web", "code", "skrive", "misc", "rec", "gfx", "xbmc", "virt", "tx"]
+myWorkspaces = ["c&c", "web", "code", "skriv", "misc", "rec", "gfx", "xbmc", "virt", "tx"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ allLayouts
 	where
 		allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM
-		webLayouts  = myFull ||| myTabs ||| myTabM
+		webLayouts  = myFull ||| myTabs ||| myTabM ||| myObig
 		codeLayouts = myTabM ||| myTile
 		gimpLayouts = myGimp
 		fullscreenLayout = myFullscreen ||| myFull
@@ -226,7 +226,7 @@ manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     where
         h = 0.15   -- terminal height, 10%
         w = 1      -- terminal width, 100%
-        t = 1 - h  -- distance from top edge, 90%
+        t = 1 - h - 0.02  -- distance from top edge, 90%
         l = 1 - w  -- distance from left edge, 0% 
 -- }}}
 
@@ -235,9 +235,10 @@ myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
 	[ [resource     =? r     --> doIgnore                             | r <- myIgnores] --ignore desktop
 	, [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myCodeS  ]
 	, [className    =? c     --> doShift (myWorkspaces !! 6)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
 	, [className    =? c     --> doFullFloat                          | c <- myFullscreen ]
-	, [className    =? c     --> doShiftAndGo (myWorkspaces !! 9)     | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift
+	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
       --, [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
 	, [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
@@ -251,10 +252,11 @@ myManageHook = (composeAll . concat $
 		myIgnores       = ["desktop","desktop_window"]
 		myWebS          = ["Chromium", "Firefox"]
 		myGfxS          = ["Gimp", "gimp", "GIMP"]
+		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["pacmanxg", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFullscreen    = ["xbmc"]
@@ -390,11 +392,16 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask ,                xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
 	, ((modMask ,                xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
 	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
-        , ((modMask,                 xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    , ((modMask,                 xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
-      --, ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
-      --, ((modMask .|. shiftMask,   xK_f),      fullFloatFocused)                                        --Push window into full screen
-      --, ((modMask,                 xK_comma),  sendMessage (IncMasterN 1))                                        --Increment the number of windows in the master area
+	 
+	 -- dmenus
+    , ((modMask,                 xK_o),      spawn "/home/rolf/bin/dmenu-mpd -a")
+    , ((modMask .|. shiftMask,   xK_o),      spawn "/home/rolf/bin/dmenu-mpd -l")
+    , ((modMask .|. controlMask, xK_o),      spawn "/home/rolf/bin/dmenu-mpd -j")
+  --, ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
+  --, ((modMask .|. shiftMask,   xK_f),      fullFloatFocused)                                        --Push window into full screen
+  --, ((modMask,                 xK_comma),  sendMessage (IncMasterN 1))                                        --Increment the number of windows in the master area
 
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
@@ -404,18 +411,18 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
 	, ((modMask,                 xK_v),      spawn "vimprobable2")
 
-        -- keybindings for controlling MPD
-        , ((modMask,                 xK_Home),      spawn "mpc toggle")
-        , ((modMask,                 xK_Page_Down), spawn "mpc next")
-        , ((modMask,                 xK_Page_Up),   spawn "mpc prev")
-      --, ((modMask,                 xK_Insert),    spawn "mpc volume +2")
-      --, ((modMask,                 xK_Delete),    spawn "mpc volume -2")
+     -- keybindings for controlling MPD
+    , ((modMask,                 xK_Home),      spawn "mpc toggle")
+    , ((modMask,                 xK_Page_Down), spawn "mpc next")
+    , ((modMask,                 xK_Page_Up),   spawn "mpc prev")
+  --, ((modMask,                 xK_Insert),    spawn "mpc volume +2")
+  --, ((modMask,                 xK_Delete),    spawn "mpc volume -2")
 
-	--, ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
-	--, ((modMask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
-	--, ((modMask .|. controlMask, xK_Right), nextWS)
-        , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
-        , ((0, xF86XK_AudioMedia),               spawn "xbmc")
+  --, ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
+  --, ((modMask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
+  --, ((modMask .|. controlMask, xK_Right), nextWS)
+    , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    , ((0, xF86XK_AudioMedia),               spawn "/home/rolf/bin/launch-xbmc")
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
