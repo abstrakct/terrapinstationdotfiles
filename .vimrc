@@ -182,6 +182,10 @@ imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
 nmap <F4> mz:execute FunctionHeading()<CR>`zjA
 map <F5> :make<CR>
 map <F6> :Dox<CR>
+
+" auto-fix charlie miller's text files for personal preference! ;)
+map <F7> wwxxhxi<CR><Esc>/charliemiller<CR>J/Encore<CR>kdd
+
 " Toggle taglist window
 nnoremap <silent> <F8> :TlistToggle<CR>
 

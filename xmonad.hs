@@ -250,13 +250,13 @@ myManageHook = (composeAll . concat $
 		role            = stringProperty "WM_WINDOW_ROLE"
 		name            = stringProperty "WM_NAME"
 		myIgnores       = ["desktop","desktop_window"]
-		myWebS          = ["Chromium", "Firefox"]
+		myWebS          = ["Firefox"]
 		myGfxS          = ["Gimp", "gimp", "GIMP"]
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["pacmanxg", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFullscreen    = ["xbmc"]
@@ -439,7 +439,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((0, xF86XK_AudioStop), spawn "ncmpcpp stop")                                            --stop song
 	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
 	, ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
-	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_$wx$h.png'")                                      --Take a screenshot
+	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
 	]
 	++
 	[((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
