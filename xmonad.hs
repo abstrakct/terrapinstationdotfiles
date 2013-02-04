@@ -392,7 +392,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask ,                xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
 	, ((modMask ,                xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
 	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
-    , ((modMask,                 xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    --, ((modMask,                 xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+    , ((modMask , xK_q),         spawn "killall dzen2; killall conky; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
 	 
 	 -- dmenus
@@ -426,19 +427,20 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
-	, ((0, xF86XK_AudioRaiseVolume), spawn "sh /home/rolf/bin/voldzen.sh + -d")              --Raise volume
-	, ((mod1Mask, xK_Up), spawn "sh /home/rolf/bin/voldzen.sh + -d")
-	, ((0, xF86XK_AudioLowerVolume), spawn "sh /home/rolf/bin/voldzen.sh - -d")              --Lower volume
-	, ((mod1Mask, xK_Down), spawn "sh /home/rolf/bin/voldzen.sh - -d")
+	, ((0, xF86XK_AudioRaiseVolume), spawn "sh /home/rolf/bin/voldzen.sh + -d")                --Raise volume
+	, ((0, xF86XK_AudioLowerVolume), spawn "sh /home/rolf/bin/voldzen.sh - -d")                --Lower volume
+	, ((0, xF86XK_AudioMute),        spawn "sh /home/rolf/bin/voldzen.sh t -d")                --Toggle mute
 	, ((0, xF86XK_AudioNext), spawn "ncmpcpp next")                                            --next song
-	, ((mod1Mask, xK_Right), spawn "ncmpcpp next")
 	, ((0, xF86XK_AudioPrev), spawn "ncmpcpp prev")                                            --prev song
-	, ((mod1Mask, xK_Left), spawn "ncmpcpp prev")
 	, ((0, xF86XK_AudioPlay), spawn "ncmpcpp toggle")                                          --toggle song
-	, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
 	, ((0, xF86XK_AudioStop), spawn "ncmpcpp stop")                                            --stop song
+	, ((mod1Mask, xK_Up), spawn "sh /home/rolf/bin/voldzen.sh + -d")
+	, ((mod1Mask, xK_Down), spawn "sh /home/rolf/bin/voldzen.sh - -d")
+	, ((mod1Mask, xK_Right), spawn "ncmpcpp next")
+	, ((mod1Mask, xK_Left), spawn "ncmpcpp prev")
+	, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
 	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
-	, ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
+	--, ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
 	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
 	]
 	++
