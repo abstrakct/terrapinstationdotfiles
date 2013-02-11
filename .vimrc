@@ -132,7 +132,6 @@ function! TwiddleCase(str)
         endif
         return result
 endfunction
-vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
 
 function FunctionHeading()
   let s:line=line(".")
@@ -181,6 +180,7 @@ map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
 nmap <F4> mz:execute FunctionHeading()<CR>`zjA
 map <F5> :make<CR>
+vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
 map <F6> :Dox<CR>
 
 " auto-fix charlie miller's text files for personal preference! ;)
