@@ -29,6 +29,7 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Minimize
+import XMonad.Layout.SimpleFloat
 
 import XMonad.StackSet (RationalRect (..), currentTag)
 
@@ -180,12 +181,15 @@ myMirr = named "MT" $ smartBorders $ Mirror myTile
 myMosA = named "M"  $ smartBorders $ MosaicAlt M.empty
 myObig = named "O"  $ smartBorders $ OneBig 0.75 0.65
 myTabs = named "TS" $ smartBorders $ tabbed shrinkText myTabTheme
---myFull = named "TS" $ smartBorders $ tabbedAlways shrinkText myTabTheme
 myTabM = named "TM" $ smartBorders $ mastered 0.01 0.4 $ tabbed shrinkText myTabTheme
 myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") myMosA
 myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
 myFull = named "F"  $ smartBorders $ Full
-myFullscreen = named "FS" $ avoidStruts $ smartBorders $ Full 
+
+myFloat = named "FL" $ smartBorders $ simpleFloat
+myFullscr = named "FS" $ avoidStruts $ smartBorders $ Full 
+
+--myFull = named "TS" $ smartBorders $ tabbedAlways shrinkText myTabTheme
 
 -- Transformers (W+f)
 data TABBED = TABBED deriving (Read, Show, Eq, Typeable)
@@ -200,18 +204,19 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ mkToggle (single MIRROR)
 	$ mkToggle (single REFLECTX)
 	$ mkToggle (single REFLECTY)
-	$ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 1 layouts
-	$ onWorkspace (myWorkspaces !! 2) codeLayouts --Workspace 2 layouts
-	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 3 layouts
-	$ onWorkspace (myWorkspaces !! 7) fullscreenLayout
+	$ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 2 layouts
+	$ onWorkspace (myWorkspaces !! 2) codeLayouts --Workspace 3 layouts
+	$ onWorkspace (myWorkspaces !! 4) allLayouts  --Workspace 5 layouts
+	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 7 layouts
+	$ onWorkspace (myWorkspaces !! 7) fullscreenLayout --Workspace 8 (xbmc)
 	-- $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
 	$ allLayouts
 	where
-		allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM
+		allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
 		webLayouts  = myFull ||| myTabs ||| myTabM ||| myObig
 		codeLayouts = myTabM ||| myTile
 		gimpLayouts = myGimp
-		fullscreenLayout = myFullscreen ||| myFull
+		fullscreenLayout = myFullscr ||| myFull
 		--chatLayouts = myChat
 -- }}}
 
@@ -237,13 +242,13 @@ myManageHook = (composeAll . concat $
 	, [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
 	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myCodeS  ]
 	, [className    =? c     --> doShift (myWorkspaces !! 6)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
-	, [className    =? c     --> doFullFloat                          | c <- myFullscreen ]
+	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
 	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
-      --, [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
 	, [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
 	, [className    =? c     --> doF W.focusDown                      | c <- myFocusDC] --dont focus on launching by classname
 	, [isFullscreen          --> doFullFloat]
+  --, [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
 	]) <+> manageScratchPad
 	where
 		doShiftAndGo ws = doF (W.greedyView ws) <+> doShift ws
@@ -256,10 +261,10 @@ myManageHook = (composeAll . concat $
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
-		myFullscreen    = ["xbmc"]
+		myFullscr       = ["xbmc"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -309,30 +314,31 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		layoutText "Minimize C"  = "Mirror"
 		layoutText "Minimize F"  = "Full"
 		layoutText "Minimize FS" = "Fullscreen"
-		layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
-		layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
-		layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
-		layoutText "Minimize ReflectX TM" = "^fg(" ++ colorGreen ++ ")Master X^fg()"
-		layoutText "Minimize ReflectX M"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		layoutText "Minimize ReflectX MT" = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		layoutText "Minimize ReflectX G"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		layoutText "Minimize ReflectX C"  = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		layoutText "Minimize ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall Y^fg()"
-		layoutText "Minimize ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig Y^fg()"
-		layoutText "Minimize ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed Y^fg()"
-		layoutText "Minimize ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master Y^fg()"
-		layoutText "Minimize ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		layoutText "Minimize ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		layoutText "Minimize ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		layoutText "Minimize ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		layoutText "Minimize ReflectX ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall XY^fg()"
-		layoutText "Minimize ReflectX ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig XY^fg()"
-		layoutText "Minimize ReflectX ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed XY^fg()"
-		layoutText "Minimize ReflectX ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master XY^fg()"
-		layoutText "Minimize ReflectX ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		layoutText "Minimize ReflectX ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
-		layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
+		layoutText "Minimize FL" = "Float"
+		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
+		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
+		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
+		--layoutText "Minimize ReflectX TM" = "^fg(" ++ colorGreen ++ ")Master X^fg()"
+		--layoutText "Minimize ReflectX M"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
+		--layoutText "Minimize ReflectX MT" = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
+		--layoutText "Minimize ReflectX G"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
+		--layoutText "Minimize ReflectX C"  = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
+		--layoutText "Minimize ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall Y^fg()"
+		--layoutText "Minimize ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig Y^fg()"
+		--layoutText "Minimize ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed Y^fg()"
+		--layoutText "Minimize ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master Y^fg()"
+		--layoutText "Minimize ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
+		--layoutText "Minimize ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
+		--layoutText "Minimize ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
+		--layoutText "Minimize ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
+		--layoutText "Minimize ReflectX ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
 		layoutText x = "^fg(" ++ colorGreen ++ ")" ++ x ++ "^fg()"
 		--clickable config
 		wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
@@ -389,11 +395,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
-	, ((modMask ,                xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
-	, ((modMask ,                xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
+	, ((modMask,                 xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
+	, ((modMask,                 xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
+    , ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
+    , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
 	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
-    --, ((modMask,                 xK_q),      spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
-    , ((modMask , xK_q),         spawn "killall dzen2; killall conky; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
 	 
 	 -- dmenus

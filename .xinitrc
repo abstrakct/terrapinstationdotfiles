@@ -17,7 +17,7 @@ systemd --user &
 #exec xcompmgr -cCfF -t-5 -l-5 -r4.2 -o.55 -D5 &
 #exec xcompmgr -cC -t-5 -l-5 -r4.2 -o.55 &
 #exec xcompmgr -cC -o.55 &
-xcompmgr -c &
+#xcompmgr -c &
 
 #feh --bg-center ~/pictures/wallpapers/bruce.jpg
 #feh --bg-fill ~/pictures/norway-beauty.jpg
@@ -57,7 +57,8 @@ thunar --daemon &
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad
 
-xmonad
+exec xmonad
+
 #exec dbus-launch --sh-syntax --exit-with-session /usr/bin/xmonad
 #exec openbox-session
 #herbstluftwm
