@@ -53,6 +53,7 @@ xset fp rehash
 (sleep 2s && trayer --edge bottom --align left --SetDockType true --expand true --widthtype pixel --width 48 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
 transmission-remote-gtk &
 thunar --daemon &
+unclutter &
 
 #source /etc/X11/xinit/xinitrc.d/30-dbus
 #exec ck-launch-session xmonad

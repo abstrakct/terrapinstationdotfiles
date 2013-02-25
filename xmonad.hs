@@ -184,7 +184,7 @@ myTabs = named "TS" $ smartBorders $ tabbed shrinkText myTabTheme
 myTabM = named "TM" $ smartBorders $ mastered 0.01 0.4 $ tabbed shrinkText myTabTheme
 myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") myMosA
 myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
-myFull = named "F"  $ smartBorders $ Full
+myFull = named "F"  $ noBorders $ Full
 
 myFloat = named "FL" $ smartBorders $ simpleFloat
 myFullscr = named "FS" $ avoidStruts $ smartBorders $ Full 
@@ -212,7 +212,7 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	-- $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
 	$ allLayouts
 	where
-		allLayouts  = myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
+		allLayouts  = myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
 		webLayouts  = myFull ||| myTabs ||| myTabM ||| myObig
 		codeLayouts = myTabM ||| myTile
 		gimpLayouts = myGimp
@@ -433,17 +433,17 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
-	, ((0, xF86XK_AudioRaiseVolume), spawn "sh /home/rolf/bin/voldzen.sh + -d")                --Raise volume
-	, ((0, xF86XK_AudioLowerVolume), spawn "sh /home/rolf/bin/voldzen.sh - -d")                --Lower volume
-	, ((0, xF86XK_AudioMute),        spawn "sh /home/rolf/bin/voldzen.sh t -d")                --Toggle mute
+	, ((0, xF86XK_AudioRaiseVolume), spawn "sh /home/rolf/bin/dzen/dzen_vol.sh + -d")                --Raise volume
+	, ((0, xF86XK_AudioLowerVolume), spawn "sh /home/rolf/bin/dzen/dzen_vol.sh - -d")                --Lower volume
+	, ((0, xF86XK_AudioMute),        spawn "sh /home/rolf/bin/dzen/dzen_vol.sh t -d")                --Toggle mute
 	, ((0, xF86XK_AudioNext), spawn "ncmpcpp next")                                            --next song
 	, ((0, xF86XK_AudioPrev), spawn "ncmpcpp prev")                                            --prev song
 	, ((0, xF86XK_AudioPlay), spawn "ncmpcpp toggle")                                          --toggle song
 	, ((0, xF86XK_AudioStop), spawn "ncmpcpp stop")                                            --stop song
-	, ((mod1Mask, xK_Up), spawn "sh /home/rolf/bin/voldzen.sh + -d")
-	, ((mod1Mask, xK_Down), spawn "sh /home/rolf/bin/voldzen.sh - -d")
-	, ((mod1Mask, xK_Right), spawn "ncmpcpp next")
-	, ((mod1Mask, xK_Left), spawn "ncmpcpp prev")
+	, ((mod1Mask, xK_Up),     spawn "sh /home/rolf/bin/dzen/dzen_vol.sh + -d")
+	, ((mod1Mask, xK_Down),   spawn "sh /home/rolf/bin/dzen/dzen_vol.sh - -d")
+	, ((mod1Mask, xK_Right),  spawn "ncmpcpp next")
+	, ((mod1Mask, xK_Left),   spawn "ncmpcpp prev")
 	, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
 	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
 	--, ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
