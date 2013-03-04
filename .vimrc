@@ -99,25 +99,25 @@ au FileType help nnoremap <buffer><bs> <C-T> " Backspace to go back
 autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Super Tab Completion stuff
-function! SuperCleverTab()
-        if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
-                return "\<Tab>"
-        else
-                if &omnifunc != ''
-                        if &filetype == "c" || &filetype == "cpp"
-                            return "\<C-N>"
-                        else
-                            return "\<C-X>\<C-O>"
-                        endif
-                elseif &dictionary != ''
-                        return "\<C-K>"
-                else
-                        return "\<C-N>"
-                endif
-        endif
-endfunction
+"function! SuperCleverTab()
+"        if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
+"                return "\<Tab>"
+"        else
+"                if &omnifunc != ''
+"                        if &filetype == "c" || &filetype == "cpp"
+"                            return "\<C-N>"
+"                        else
+"                            return "\<C-X>\<C-O>"
+"                        endif
+"                elseif &dictionary != ''
+"                        return "\<C-K>"
+"                else
+"                        return "\<C-N>"
+"                endif
+"        endif
+"endfunction
 
-inoremap <Tab> <C-R>=SuperCleverTab()<CR>
+" inoremap <Tab> <C-R>=SuperCleverTab()<CR>
 
 
 " Changing CaSe!
@@ -184,7 +184,7 @@ vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
 map <F6> :Dox<CR>
 
 " auto-fix charlie miller's text files for personal preference! ;)
-map <F7> wwxxhxi<CR><Esc>/charliemiller<CR>J/Encore<CR>kdd
+nmap <F7> wwxxhxi<CR><Esc>/charliemiller<CR>J/Encore<CR>kdd
 
 " Toggle taglist window
 nnoremap <silent> <F8> :TlistToggle<CR>
@@ -196,6 +196,8 @@ map <right> :tabnext<CR>
 map <down> :bprevious<CR>
 map <up> :bnext<CR>
 
+nmap <S-left> :tabm -1<CR>
+nmap <S-right> :tabm +1<CR>
 "map <F5> 5wiEurope '72 1972-05-
 "map <F3> A -><Esc>j
 
@@ -253,4 +255,17 @@ let g:proj_flags="imstgS"
 " call Iab('intmain', 'int main (int argc, char **argv)<CR>'.
 "  \ '{<CR>x;<CR>return 0;<CR>}<CR><C-O>?x;<CR><Del><Del>')
 
-nmap _if ofprintf(0<C-d>stderr, "DEBUG: %s:%d - \n", __FILE__, __LINE__);<Esc>F\i
+" nmap _if ofprintf(0<C-d>stderr, "DEBUG: %s:%d - \n", __FILE__, __LINE__);<Esc>F\i
+
+
+
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
+"
+" Note: Must allow nesting of autocmds to enable any customizations for quickfix
+" buffers.
+" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
+" (but not if it's already open). However, as part of the autocmd, this doesn't
+" seem to happen.
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
