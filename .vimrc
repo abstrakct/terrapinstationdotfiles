@@ -6,7 +6,7 @@ set t_Co=256
 "        colorscheme fu
 "        colorscheme tango
 if has("gui_running")
-        colorscheme candycode
+        colorscheme candycode-custom
         "colorscheme nucolors
 endif
 
