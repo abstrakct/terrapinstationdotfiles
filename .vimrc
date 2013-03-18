@@ -69,7 +69,7 @@ highlight LineNr ctermfg=lightcyan
 set wildmenu
 set wildmode=list:longest,full
 
-" imap jj <Esc>
+imap jj <Esc>
 
 filetype indent plugin on
 " set cindent
@@ -180,8 +180,10 @@ map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
 nmap <F4> mz:execute FunctionHeading()<CR>`zjA
 map <F5> :make<CR>
+nmap <F6> :make<CR>:!heritage<CR>
+imap <F6> <ESC>:make<CR>:!heritage<CR>
 vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv
-map <F6> :Dox<CR>
+"map <F6> :Dox<CR>
 
 " auto-fix charlie miller's text files for personal preference! ;)
 nmap <F7> wwxxhxi<CR><Esc>/charliemiller<CR>J/Encore<CR>kdd
