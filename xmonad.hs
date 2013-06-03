@@ -142,9 +142,10 @@ myXPConfig = defaultXPConfig
 	, promptBorderWidth   = 1
 	, height              = 16
 	, position            = Top
-	, historySize         = 100
+	--, historySize         = 100
 	, historyFilter       = deleteConsecutive
 	, autoComplete        = Nothing
+	--, completionKey       = xK_Return
 	}
 -- }}}
 
