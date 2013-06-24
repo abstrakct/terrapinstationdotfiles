@@ -25,7 +25,8 @@ systemd --user &
 #feh --bg-center ~/pictures/wallpapers/hd/wallpaper-1411581.png pictures/wallpapers/wallpaper-663431.jpg
 #feh --bg-center pictures/wallpapers/asoiaf/stark.jpg pictures/wallpapers/asoiaf/targaryen.jpg 
 #feh --bg-scale pictures/wallpapers/winter/o1027033.jpg pictures/wallpapers/rain/o1027636.jpg
-feh --bg-center pictures/Porn/husøya.natt.jpg 
+#feh --bg-center pictures/Porn/husøya.natt.jpg 
+feh --bg-scale pictures/wallpapers/wallpaper-lighthouse-445739.jpg
 
 
 xsetroot -cursor_name left_ptr

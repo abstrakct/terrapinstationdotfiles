@@ -103,6 +103,7 @@ alias el=elinks
 alias feh="feh -F"
 alias flexget='nocorrect flexget'
 alias foobar="wine ~/.wine/drive_c/users/rolf/Desktop/foobar2000/foobar2000.exe"
+alias fort="cd /opt/df_linux-ih/; dfhack"
 #alias futurama="echo && curl -Is slashdot.org | sed -ne '/^X-[FBL]/s/^X-//p' && echo"
 #alias goleia="sudo mount -v -t nfs4 10.0.0.23:/ /mnt/leia"
 alias fuck="wget -qO - rage.thewaffleshop.net"
