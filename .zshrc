@@ -60,6 +60,7 @@ setopt completealiases
 export EDITOR=vim
 export VISUAL=vim
 export LESS="-R"
+export PAGER="most"
 #export LS_COLORS="di=94:fi=0:ln=36:pi=90:so=35:bd=33:cd=33:or=5;31:mi=5;31:ex=0;32:*.jpg=35:*.gif=35:*.png=35:*.mp3=30;41:*.m4a=30;41:*.ogg=0;41:*.flac=30;42:*.wav=30;42:*.c=91:*.h=93:*.cc=91:*.cpp=91:*.hpp=93:*.hs=91"
 
 
@@ -124,6 +125,7 @@ alias netre="sudo /etc/rc.d/network restart"
 alias p1="vlc http://lyd.nrk.no/nrk_radio_p1_ostlandssendingen_mp3_h &"
 alias p2="vlc http://lyd.nrk.no/nrk_radio_p2_mp3_h &"
 alias pac='sudo pacman'
+alias paca=pacaur
 alias pacman='sudo pacman'
 alias pico=nano
 alias pinfo="pacman -Qi"
