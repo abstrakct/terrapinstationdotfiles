@@ -51,7 +51,7 @@ xset fp rehash
 #wicd-gtk &
 
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
-(sleep 2s && trayer --edge bottom --align left --SetDockType true --expand true --widthtype pixel --width 48 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
+(sleep 2s && trayer --edge bottom --align right --SetDockType true --expand true --widthtype pixel --width 60 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
 transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o
@@ -94,11 +94,11 @@ urxvtd -q -f -o
 #                ;;
 #
 #        bspwm|*)
-#export PANEL_FIFO=/tmp/panel-fifo
-#sxhkd &
-#[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
-#mkfifo "$PANEL_FIFO"
-#exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
+export PANEL_FIFO=/tmp/panel-fifo
+sxhkd &
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
 #                ;;
 #esac
-exec xmonad
+3exec xmonad
