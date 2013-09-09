@@ -101,4 +101,4 @@ mkfifo "$PANEL_FIFO"
 exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
 #                ;;
 #esac
-3exec xmonad
+#exec xmonad
