@@ -94,11 +94,11 @@ urxvtd -q -f -o
 #                ;;
 #
 #        bspwm|*)
-export PANEL_FIFO=/tmp/panel-fifo
-sxhkd &
-[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
-mkfifo "$PANEL_FIFO"
-exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
+#export PANEL_FIFO=/tmp/panel-fifo
+#sxhkd &
+#[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+#mkfifo "$PANEL_FIFO"
+#exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
 #                ;;
 #esac
-#exec xmonad
+exec xmonad
