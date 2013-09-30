@@ -304,7 +304,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		--display config
 		orderText (ws:l:t:_) = [ws,l,t]
 		titleText [] = "Desktop " ++ myArrow
-		titleText x = (shorten 82 x) ++ " " ++ myArrow
+		titleText x = (shorten 120 x) ++ " " ++ myArrow
 		layoutText "Minimize T"  = "ReTall"
 		layoutText "Minimize O"  = "OneBig"
 		layoutText "Minimize TS" = "Tabbed"
