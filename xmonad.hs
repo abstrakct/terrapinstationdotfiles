@@ -262,7 +262,7 @@ myManageHook = (composeAll . concat $
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFullscr       = ["xbmc"]
@@ -414,10 +414,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
 	, ((modMask .|. shiftMask,   xK_Return), spawn "urxvt -e /home/rolf/bin/tm")                 --Launch a terminal with tmux
-	, ((modMask,                 xK_f),      spawn "firefox")
-	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
+	, ((modMask,                 xK_e),      spawn "eclipse")
+	, ((modMask,                 xK_f),      spawn "firefox")
 	, ((modMask,                 xK_v),      spawn "vimprobable2")
+	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
 
      -- keybindings for controlling MPD
     , ((modMask,                 xK_Home),      spawn "mpc toggle")
@@ -454,10 +455,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	[((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
 		| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
 		, (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-	++
-	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
-		| (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-		, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+	-- ++
+	-- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
+	--	| (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+	--	, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 	where
 		fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
 		rectFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery (doRectFloat $ RationalRect 0.05 0.05 0.9 0.9) f
