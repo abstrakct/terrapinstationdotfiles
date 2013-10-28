@@ -26,7 +26,8 @@ systemd --user &
 #feh --bg-center pictures/wallpapers/asoiaf/stark.jpg pictures/wallpapers/asoiaf/targaryen.jpg 
 #feh --bg-scale pictures/wallpapers/winter/o1027033.jpg pictures/wallpapers/rain/o1027636.jpg
 #feh --bg-center pictures/Porn/husøya.natt.jpg 
-feh --bg-scale pictures/wallpapers/wallpaper-lighthouse-445739.jpg
+#feh --bg-scale pictures/wallpapers/wallpaper-lighthouse-445739.jpg
+feh --bg-scale pictures/wallpapers/blade_runner_tokyo.jpg
 
 
 xsetroot -cursor_name left_ptr
@@ -51,7 +52,7 @@ xset fp rehash
 #wicd-gtk &
 
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
-(sleep 2s && trayer --edge bottom --align right --SetDockType true --expand true --widthtype pixel --width 60 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
+(sleep 2s && trayer --edge bottom --align right --SetDockType true --expand true --widthtype pixel --width 72 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
 transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o

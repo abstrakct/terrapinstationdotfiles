@@ -466,7 +466,7 @@ more += Found .* abyssal rune of Zot
 more += .* weight on your shoulders
 
 # Interrupts
-more += You don't.* that spell
+#more += You don't.* that spell
 more += You fail to use your ability
 more += You miscast Controlled Blink
 more += You can't (read|drink) that
