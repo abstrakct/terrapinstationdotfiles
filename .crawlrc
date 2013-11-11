@@ -162,7 +162,7 @@ view_max_height  = 60
 
 ##### 4-g	Travel and Exploration #################
 #
-travel_delay = -1
+travel_delay = 20
 explore_delay = 20
 # travel_avoid_terrain = shallow water
 #
@@ -379,10 +379,10 @@ tile_window_height = 1080
 dump_item_origins = all,artifacts,ego_arm,ego_weap,jewellery,runes
 # dump_item_origin_price = -1
 dump_message_count = 30
-# dump_order  = header, hiscore, stats, misc, notes, inventory,
-# dump_order += turns_by_place, skills, spells, overview, mutations,
-# dump_order += messages, screenshot, monlist, kills_by_place, kills
-# dump_book_spells = false
+dump_order  = header, hiscore, stats, misc, notes, inventory,
+dump_order += turns_by_place, skills, spells, overview, mutations,
+dump_order += messages, screenshot, monlist, kills_by_place, kills
+dump_book_spells = true
 
 ##### 5-b	Notes #################################
 #
