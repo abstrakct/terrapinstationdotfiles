@@ -13,6 +13,7 @@ nmap ge <C-S-e>
 
 command -nargs=* g open google <args>
 set passkeys+='mail\.google\.com':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
+set passkeys+='*\.facebook\.*':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
 
 set runtimepath=/home/rolf/.pentadactyl
 " source! /home/rolf/.vimperatorrc.local

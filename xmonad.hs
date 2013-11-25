@@ -344,7 +344,8 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		--clickable config
 		wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
 		wrapClickTitle content = "^ca(1,xdotool key super+j)" ++ content ++ "^ca()"                                                                --clickable title
-		wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo "w;" ++ xdo index ++ ")" ++ "^ca(3," ++ xdo "e;" ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
+		--wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo "w;" ++ xdo index ++ ")" ++ "^ca(3," ++ xdo "e;" ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
+		wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo index ++ ")" ++ "^ca(3," ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
 			where
 				wsIdxToString Nothing = "1"
 				wsIdxToString (Just n) = show (n+1)
