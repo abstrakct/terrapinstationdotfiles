@@ -101,7 +101,7 @@ dzenFont             = "-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 colorBlack           = "#020202" --Background (Dzen_BG)
 colorBlackAlt        = "#1c1c1c" --Black Xdefaults
 colorGray            = "#444444" --Gray       (Dzen_FG2)
-colorGrayAlt         = "#161616" --Gray dark
+colorGrayAlt         = "#222222" --Gray dark
 colorWhite           = "#a9a6af" --Foreground (Shell_FG)
 colorWhiteAlt        = "#9d9d9d" --White dark (Dzen_FG)
 colorMagenta         = "#8e82a2"
@@ -227,12 +227,12 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 -- {{{ Scratchpad
 manageScratchPad :: ManageHook
 --manageScratchPad = scratchpadManageHook (W.RationalRect (0.15) (1/50) (1) (3/4))
-scratchPad = scratchpadSpawnActionCustom "urxvt -name scratchpad"
+scratchPad = scratchpadSpawnActionCustom "urxvtc -name scratchpad -bg black"
 manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
     where
         h = 0.15   -- terminal height, 10%
         w = 1      -- terminal width, 100%
-        t = 1 - h - 0.02  -- distance from top edge, 90%
+        t = 1 - h  -- distance from top edge, 90%
         l = 1 - w  -- distance from left edge, 0% 
 -- }}}
 
@@ -294,7 +294,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	, ppWsSep           = ""
 	, ppCurrent         = dzenColor colorBlue     colorBlack . pad
 	, ppUrgent          = dzenColor colorGreen    colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-	, ppVisible         = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppVisible         = dzenColor colorGrayAlt  colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppHidden          = dzenColor colorWhiteAlt colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppHiddenNoWindows = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppLayout          = dzenColor colorBlue     colorBlack . pad . wrapClickLayout . layoutText
@@ -456,10 +456,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	[((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
 		| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
 		, (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-	-- ++
-	-- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
-	--	| (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-	--	, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+	++
+	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
+	    -- | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
+	    | (key, sc) <- zip [xK_e, xK_w] [0..]
+		, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 	where
 		fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
 		rectFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery (doRectFloat $ RationalRect 0.05 0.05 0.9 0.9) f
