@@ -278,7 +278,7 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 
 -- {{{ StatusBars
 myWorkspaceBar, myBottomStatusBar, myTopStatusBar :: String
-myWorkspaceBar    = "dzen2 -x '0' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
+myWorkspaceBar    = "dzen2 -x '1280' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
 myBottomStatusBar = "/home/rolf/bin/bottomstatusbar.dude.sh"
 myTopStatusBar    = "/home/rolf/bin/topstatusbar.dude.sh"
 -- }}}
@@ -294,9 +294,9 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	, ppWsSep           = ""
 	, ppCurrent         = dzenColor colorBlue     colorBlack . pad
 	, ppUrgent          = dzenColor colorGreen    colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-	, ppVisible         = dzenColor colorGrayAlt  colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppVisible         = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppHidden          = dzenColor colorWhiteAlt colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-	, ppHiddenNoWindows = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppHiddenNoWindows = dzenColor colorGrayAlt  colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppLayout          = dzenColor colorBlue     colorBlack . pad . wrapClickLayout . layoutText
 	, ppTitle           = dzenColor colorWhiteAlt colorBlack . pad . wrapClickTitle . titleText . dzenEscape
 	}

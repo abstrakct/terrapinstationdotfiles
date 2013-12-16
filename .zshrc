@@ -136,6 +136,7 @@ alias psg="ps aux | grep"
 alias rc="sudo rc.d"
 #alias reload="source ~/.bashrc"
 alias sm=smplayer2
+alias sudo='nocorrect sudo'
 alias t=todo.sh
 alias tv="cd /TheVault/teve/teve"
 alias tx="transmission-remote --auth rolf:torrenT -l"
