@@ -262,7 +262,7 @@ myManageHook = (composeAll . concat $
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFullscr       = ["xbmc"]
@@ -397,7 +397,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
-	, ((modMask,                 xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
+--	, ((modMask,                 xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
 	, ((modMask,                 xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
     , ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
     , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
@@ -416,6 +416,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
 	, ((modMask .|. shiftMask,   xK_Return), spawn "urxvt -e /home/rolf/bin/tm")                 --Launch a terminal with tmux
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
+	, ((modMask,                 xK_d),      spawn "dogecoin-qt")
 	, ((modMask,                 xK_e),      spawn "eclipse")
 	, ((modMask,                 xK_f),      spawn "firefox")
 	, ((modMask,                 xK_v),      spawn "vimprobable2")
