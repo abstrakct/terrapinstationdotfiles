@@ -35,7 +35,7 @@ urxvt*scrollWithBuffer:   false
 !jump to bottom (prompt) on tty output
 urxvt*scrollTtyOutput:    true
 !toggle scrollbar
-urxvt*scrollBar:          false
+URxvt*scrollBar:          false
 !scrollbar styles: rxvt, plain, next or xterm
 !urxvt*scrollstyle:        plain
 !scrollbar alignment
@@ -175,14 +175,6 @@ URxvt*foreground: #bfbdc0
 ! {{{ Settings for Xmonad terminal scratchpad
 
 !URxvt*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-scratchpad*internalBorder:     0
-!scratchpad*fading:             50
-!scratchpad*shading:            60
-scratchpad*depth:             32
-scratchpad*scrollWithBuffer:   false
-scratchpad*scrollTtyOutput:    true
-scratchpad*scrollBar:          false
-
 ! }}}
 
 ! {{{ colorscheme reddit paulrouget
@@ -253,5 +245,17 @@ URxvt.color15: #d4d4d4
 !URxvt.color15:    #FFFFFF
 
 ! }}}
+
+scratchpad*internalBorder:     0
+!scratchpad*fading:             50
+!scratchpad*shading:            60
+scratchpad*depth:             32
+scratchpad*scrollWithBuffer:   false
+scratchpad*scrollTtyOutput:    true
+scratchpad*scrollBar:          false
+
+musicscratch*scrollBar: false
+musicscratch*background: rgba:0000/0000/0000/dddd
+
 
 ! vim: fdm=marker ts=4 sw=4 sts=4 et ft=xdefaults:

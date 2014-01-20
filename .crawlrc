@@ -521,8 +521,8 @@ more += You hear words spoken in a strange and terrible language...
 more += You hear diabolical laughter!
 
 # Expiring effects
-more += You feel yourself slow down
-more += less insulated
+#more += You feel yourself slow down
+#more += less insulated
 more += You are starting to lose your buoyancy
 
 more += You lose control over your flight

@@ -47,7 +47,6 @@ import XMonad.Prompt.XMonad
 import XMonad.Util.Replace
 import XMonad.Util.Cursor
 import XMonad.Util.Run (spawnPipe)
-import XMonad.Util.Scratchpad (scratchpadManageHook, scratchpadSpawnActionCustom)
 import XMonad.Util.NamedScratchpad
 
 import XMonad.Actions.CycleWS (nextWS, prevWS, toggleWS, toggleOrView)
@@ -66,15 +65,21 @@ import qualified Data.Map as M
 import qualified XMonad.Actions.FlexibleResize as Flex
 -- }}}
 
+-- {{{ Variables
+myTerminal = "urxvtc"
+-- }}}
+
 -- {{{ Main
 main :: IO ()
 main = do
 	workspaceBar            <- spawnPipe myWorkspaceBar
 	bottomStatusBar         <- spawnPipe myBottomStatusBar
 	topStatusBar            <- spawnPipe myTopStatusBar
+	leftTopStatusBar        <- spawnPipe myLeftTopBar
+	leftBottomStatusBar     <- spawnPipe myLeftBottomBar
 	replace
 	xmonad $ myUrgencyHook $ defaultConfig
-		{ terminal           = "urxvt"
+		{ terminal           = "urxvtc"
 		, modMask            = mod4Mask
 		, focusFollowsMouse  = True
 		, borderWidth        = 1
@@ -142,7 +147,7 @@ myXPConfig = defaultXPConfig
 	, promptBorderWidth   = 1
 	, height              = 16
 	, position            = Top
-	--, historySize         = 100
+	, historySize         = 100
 	, historyFilter       = deleteConsecutive
 	, autoComplete        = Nothing
 	--, completionKey       = xK_Return
@@ -224,16 +229,49 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 --------------------------------------------------------------------------------------------
 -- MANAGEHOOK CONFIG                                                                     --
 --------------------------------------------------------------------------------------------
--- {{{ Scratchpad
-manageScratchPad :: ManageHook
---manageScratchPad = scratchpadManageHook (W.RationalRect (0.15) (1/50) (1) (3/4))
-scratchPad = scratchpadSpawnActionCustom "urxvtc -name scratchpad -bg black"
-manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+-- {{{ Scratchpads
+
+myScratchPads = [ NS "ncmpcpp"  spawnNcmpcpp findNcmpcpp manageNcmpcpp
+                , NS "terminal" spawnTerm    findTerm    manageTerm
+                ]
     where
-        h = 0.15   -- terminal height, 10%
-        w = 1      -- terminal width, 100%
-        t = 1 - h  -- distance from top edge, 90%
-        l = 1 - w  -- distance from left edge, 0% 
+                spawnNcmpcpp  = myTerminal ++ " -name musicscratch -e ncmpcpp"
+                findNcmpcpp   = resource =? "musicscratch"
+                manageNcmpcpp = customFloating $ W.RationalRect l t w h
+                    where
+                        h = 0.8
+                        w = 0.8
+                        t = (1 - h) / 2
+                        l = (1 - w) / 2
+
+                spawnTerm  = myTerminal ++ " -name scratchpad -bg black"
+                findTerm   = resource =? "scratchpad"
+                manageTerm = customFloating $ W.RationalRect l t w h
+                    where
+                        h = 0.15   -- terminal height, 10%
+                        w = 1      -- terminal width, 100%
+                        t = 0.98 - h  -- distance from top edge, 90%
+                        l = 1 - w  -- distance from left edge, 0% 
+
+
+--manageScratchPad :: ManageHook
+----manageScratchPad = scratchpadManageHook (W.RationalRect (0.15) (1/50) (1) (3/4))
+--scratchPad = scratchpadSpawnActionCustom "urxvtc -name scratchpad -bg black"
+--manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
+--    where
+--        h = 0.15   -- terminal height, 10%
+--        w = 1      -- terminal width, 100%
+--        t = 1 - h  -- distance from top edge, 90%
+--        l = 1 - w  -- distance from left edge, 0% 
+--
+--manageMusicPad :: ManageHook
+--musicPad = scratchpadSpawnActionCustom "urxvt -name music -bg black -e ncmpcpp"
+--manageMusicPad = scratchpadManageHook (W.RationalRect l t w h)
+--    where
+--        h = 0.5    -- terminal height, 50%
+--        w = 0.8    -- terminal width, 100%
+--        t = 1 - h  -- distance from top edge
+--        l = 1 - w  -- distance from left edge
 -- }}}
 
 -- {{{ Managehook (rules for programs)
@@ -243,6 +281,7 @@ myManageHook = (composeAll . concat $
 	, [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
 	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myCodeS  ]
 	, [className    =? c     --> doShift (myWorkspaces !! 6)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 7)          | c <- myXBMC   ]
 	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
 	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
@@ -250,7 +289,7 @@ myManageHook = (composeAll . concat $
 	, [className    =? c     --> doF W.focusDown                      | c <- myFocusDC] --dont focus on launching by classname
 	, [isFullscreen          --> doFullFloat]
   --, [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
-	]) <+> manageScratchPad
+	]) <+> namedScratchpadManageHook myScratchPads -- <+> manageScratchPad
 	where
 		doShiftAndGo ws = doF (W.greedyView ws) <+> doShift ws
 		role            = stringProperty "WM_WINDOW_ROLE"
@@ -261,6 +300,7 @@ myManageHook = (composeAll . concat $
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
+		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
 		myFloatCC       = ["Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
@@ -277,10 +317,12 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 -- }}}
 
 -- {{{ StatusBars
-myWorkspaceBar, myBottomStatusBar, myTopStatusBar :: String
+myWorkspaceBar, myBottomStatusBar, myTopStatusBar, myLeftTopBar, myLeftBottomBar :: String
 myWorkspaceBar    = "dzen2 -x '1280' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
 myBottomStatusBar = "/home/rolf/bin/bottomstatusbar.dude.sh"
 myTopStatusBar    = "/home/rolf/bin/topstatusbar.dude.sh"
+myLeftBottomBar   = "/home/rolf/bin/statusbar.left.bottom.sh"
+myLeftTopBar      = "/home/rolf/bin/statusbar.left.top.sh"
 -- }}}
 
 -- {{{ myWorkspaceBar config
@@ -359,47 +401,52 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- {{{ Key bindings
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-	[ ((modMask,                 xK_p),      shellPrompt myXPConfig)                                              --Launch Xmonad shell prompt
+	[ ((modMask,                 xK_p),      spawn "dmenu_run -nb black -nf \\#3955c4 -sb \\#3955c4 -sf white -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*")
+	--  ((modMask,                 xK_p),      shellPrompt myXPConfig)                                              --Launch Xmonad shell prompt
 	, ((modMask .|. shiftMask,   xK_p),      xmonadPrompt myXPConfig)                                              --Launch Xmonad prompt
-	, ((modMask,                 xK_g),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
-	, ((modMask,                 xK_bar),    scratchPad)                                                    --Scratchpad
-	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
+	, ((modMask,                 xK_bar),    scratchTerm)                                                    --Scratchpad
+	, ((modMask,                 xK_q),      scratchMusic)
+	, ((0,              xF86XK_AudioMedia),  scratchMusic)
 	, ((modMask,                 xK_space),  sendMessage NextLayout)                                            --Rotate through the available layout algorithms
 	, ((modMask .|. shiftMask,   xK_space),  setLayout $ XMonad.layoutHook conf)                 --Reset the layouts on the current workspace to default
-	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
-	, ((modMask,                 xK_Tab),    windows W.focusDown)                                                 --Move focus to the next window
-	, ((modMask,                 xK_j),      windows W.focusDown)
-	, ((modMask,                 xK_k),      windows W.focusUp)                                                     --Move focus to the previous window
 	, ((modMask,                 xK_Tab),    windows W.focusDown)
-	, ((modMask,                 xK_a),      windows W.focusMaster)                                                 --Move focus to the master window
-	, ((modMask .|. shiftMask,   xK_a),      windows W.swapMaster)                                    --Swap the focused window and the master window
-	, ((modMask .|. shiftMask,   xK_j),      windows W.swapDown  )                                    --Swap the focused window with the next window
-	, ((modMask .|. shiftMask,   xK_k),      windows W.swapUp    )                                    --Swap the focused window with the previous window
+	--, ((modMask,                 xK_a),      windows W.focusMaster)                                                 --Move focus to the master window
+	--, ((modMask .|. shiftMask,   xK_a),      windows W.swapMaster)                                    --Swap the focused window and the master window
+    , ((modMask,                 xK_b),      withFocused toggleBorder)
+	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
+	--, ((modMask,                 xK_f),      sendMessage $ XMonad.Layout.MultiToggle.Toggle TABBED)                 --Push layout into tabbed
+	, ((modMask,                 xK_g),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
+	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
-	, ((modMask .|. shiftMask,   xK_Left),   sendMessage Shrink)
-	, ((modMask,                 xK_l),      sendMessage Expand)                                                    --Expand the master area
-	, ((modMask .|. shiftMask,   xK_Right),  sendMessage Expand)
 	, ((modMask .|. shiftMask,   xK_h),      sendMessage MirrorShrink)                                --MirrorShrink the master area
-	, ((modMask .|. shiftMask,   xK_Down),   sendMessage MirrorShrink)
+	, ((modMask .|. controlMask, xK_h),      withFocused (keysMoveWindow (-1,0)))
+	, ((modMask,                 xK_j),      windows W.focusDown)
+	, ((modMask .|. shiftMask,   xK_j),      windows W.swapDown  )                                    --Swap the focused window with the next window
+	, ((modMask .|. controlMask, xK_j),      withFocused (keysMoveWindow (0,1)))
+	, ((modMask,                 xK_k),      windows W.focusUp)                                                     --Move focus to the previous window
+	, ((modMask .|. shiftMask,   xK_k),      windows W.swapUp    )                                    --Swap the focused window with the previous window
+	, ((modMask .|. controlMask, xK_k),      withFocused (keysMoveWindow (0,-1)))
+	, ((modMask,                 xK_l),      sendMessage Expand)                                                    --Expand the master area
 	, ((modMask .|. shiftMask,   xK_l),      sendMessage MirrorExpand)                                --MirrorExpand the master area
+	, ((modMask .|. controlMask, xK_l),      withFocused (keysMoveWindow (1,0)))
+	, ((modMask,                 xK_m),      withFocused minimizeWindow)                                            --Minimize window
+	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
+	, ((modMask .|. shiftMask,   xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
+	, ((modMask,                 xK_t),      withFocused $ windows . W.sink)                                        --Push window back into tiling
+	, ((modMask .|. shiftMask,   xK_t),      rectFloatFocused)                                        --Push window into float
+	--, ((modMask .|. shiftMask,   xK_x),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX) --Reflect layout by X
+	--, ((modMask .|. shiftMask,   xK_y),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTY) --Reflect layout by Y
+	--, ((modMask .|. shiftMask,   xK_z),      sendMessage $ Toggle MIRROR)                             --Push layout into mirror
+	, ((modMask .|. shiftMask,   xK_Left),   sendMessage Shrink)
+	, ((modMask .|. shiftMask,   xK_Right),  sendMessage Expand)
+	, ((modMask .|. shiftMask,   xK_Down),   sendMessage MirrorShrink)
 	, ((modMask .|. shiftMask,   xK_Up),     sendMessage MirrorExpand)
 	, ((modMask .|. controlMask, xK_Left),   withFocused (keysResizeWindow (-30,0) (0,0)))       --Shrink floated window horizontally by 50 pixels
 	, ((modMask .|. controlMask, xK_Right),  withFocused (keysResizeWindow (30,0) (0,0)))       --Expand floated window horizontally by 50 pixels
 	, ((modMask .|. controlMask, xK_Up),     withFocused (keysResizeWindow (0,-30) (0,0)))         --Shrink floated window verticaly by 50 pixels
 	, ((modMask .|. controlMask, xK_Down),   withFocused (keysResizeWindow (0,30) (0,0)))        --Expand floated window verticaly by 50 pixels
-	, ((modMask,                 xK_t),      withFocused $ windows . W.sink)                                        --Push window back into tiling
-	, ((modMask .|. shiftMask,   xK_t),      rectFloatFocused)                                        --Push window into float
-	, ((modMask,                 xK_f),      sendMessage $ XMonad.Layout.MultiToggle.Toggle TABBED)                 --Push layout into tabbed
-	, ((modMask .|. shiftMask,   xK_z),      sendMessage $ Toggle MIRROR)                             --Push layout into mirror
-	, ((modMask .|. shiftMask,   xK_x),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX) --Reflect layout by X
-	, ((modMask .|. shiftMask,   xK_y),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTY) --Reflect layout by Y
-	, ((modMask,                 xK_m),      withFocused minimizeWindow)                                            --Minimize window
-	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
-    , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
---	, ((modMask,                 xK_d),      spawn "killall dzen2")                                                --Kill dzen2 and trayer
-	, ((modMask,                 xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
-    , ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
+    --, ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
     , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
 	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
@@ -419,7 +466,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_d),      spawn "dogecoin-qt")
 	, ((modMask,                 xK_e),      spawn "eclipse")
 	, ((modMask,                 xK_f),      spawn "firefox")
-	, ((modMask,                 xK_v),      spawn "vimprobable2")
+	, ((modMask,                 xK_v),      spawn "gvim")
 	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
 
      -- keybindings for controlling MPD
@@ -433,7 +480,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --, ((modMask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
   --, ((modMask .|. controlMask, xK_Right), nextWS)
     , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
-    , ((0, xF86XK_AudioMedia),               spawn "/home/rolf/bin/launch-xbmc")
+    --, ((0, xF86XK_AudioMedia),               spawn "/home/rolf/bin/launch-xbmc")
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
@@ -450,7 +497,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((mod1Mask, xK_Left),   spawn "ncmpcpp prev")
 	, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
 	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
-	--, ((0, xF86XK_ScreenSaver), spawn "xscreensaver-command -lock")                            --Lock screen
+	, ((0, xK_Cancel), spawn "xscreensaver-command -lock")                            --Lock screen
 	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
 	]
 	++
@@ -465,6 +512,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	where
 		fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
 		rectFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery (doRectFloat $ RationalRect 0.05 0.05 0.9 0.9) f
+		scratchTerm  = namedScratchpadAction myScratchPads "terminal"
+		scratchMusic = namedScratchpadAction myScratchPads "ncmpcpp"
 -- }}}
 
 -- {{{ Mouse bindings

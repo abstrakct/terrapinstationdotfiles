@@ -6,12 +6,15 @@ set t_Co=256
 "        colorscheme fu
 "        colorscheme tango
 if has("gui_running")
-        colorscheme candycode-custom
+        colorscheme darkZ-custom
+        "colorscheme candycode-custom
         "colorscheme nucolors
+        "colorscheme dante
 endif
 
 if !has("gui_running")
-        colorscheme candycode " wombat256
+        colorscheme inkpot
+        " candycode " wombat256
 endif
 
 "else
@@ -74,6 +77,22 @@ imap jj <Esc>
 filetype indent plugin on
 " set cindent
 
+set tags+=~/.vim/tags/cpp
+map <C-F12> :!ctags -R --sort=yes --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
 "au BufWinLeave juleøltest.txt mkview
 "au BufWinEnter juleøltest.txt silent loadview
 
@@ -133,15 +152,28 @@ function! TwiddleCase(str)
         return result
 endfunction
 
-function FunctionHeading()
-  let s:line=line(".")
-  call setline(s:line,"/*********************************************")
-  call append(s:line,"* Description - ")
-  call append(s:line+1,"* Author - RK")
-  call append(s:line+2,"* Date - ".strftime("%b %d %Y"))
-  call append(s:line+3,"* *******************************************/")
-  unlet s:line
+function! NumberToggle()
+        if(&relativenumber == 1)
+                set norelativenumber
+                set number
+        else
+                set nonumber
+                set relativenumber
+        endif
 endfunction
+
+"nnoremap <C-n> :call NumberToggle()<CR>
+nnoremap <C-n> :set relativenumber!<CR>
+
+"function FunctionHeading()
+"  let s:line=line(".")
+"  call setline(s:line,"/*********************************************")
+"  call append(s:line,"* Description - ")
+"  call append(s:line+1,"* Author - RK")
+"  call append(s:line+2,"* Date - ".strftime("%b %d %Y"))
+"  call append(s:line+3,"* *******************************************/")
+"  unlet s:line
+"endfunction
 
 
 " **** KEYMAPPINGS ****
@@ -200,6 +232,11 @@ map <up> :bnext<CR>
 
 nmap <S-left> :tabm -1<CR>
 nmap <S-right> :tabm +1<CR>
+
+nnoremap <C-o> :FufFile<CR>
+
+nmap S :%s//g<LEFT><LEFT>
+
 "map <F5> 5wiEurope '72 1972-05-
 "map <F3> A -><Esc>j
 
