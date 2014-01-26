@@ -55,3 +55,7 @@ if [ "$1" = "d6"  ]; then
         sudo umount /mnt/d6-500gb
 fi
 
+# Disk X
+if [ "$1" = "x"  ]; then
+       sudo umount /mnt/x
+fi

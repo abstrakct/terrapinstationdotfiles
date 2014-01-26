@@ -6,9 +6,12 @@ filelist=/home/rolf/tmp/flacfiles-donotdelete
 # set the number of seconds to run
 # -h [hours]
 # -m [minutes]
-# -s [seconds
+# -s [seconds]
+# -v (slightly) verbose output
 
-while getopts "h:m:s:" OPTION
+VERBOSE=0
+
+while getopts "h:m:s:v" OPTION
 do
         case $OPTION in
                 h)
@@ -20,12 +23,22 @@ do
                 s)
                         (( seconds_to_run= $OPTARG ))
                         ;;
+                v)
+                        VERBOSE=1
+                        ;;
         esac
 done
 
 if [[ -z $seconds_to_run ]]
 then
-        echo "Bad arguments."
+        echo "timedflactest - test flac files for a specified amount of time"
+        echo "use command line options to set the number of seconds/minutes/hours to run"
+        echo
+        echo " -h [hours]"
+        echo " -m [minutes]"
+        echo " -s [seconds]"
+        echo " -v for slightly verbose output"
+        echo
         exit 1
 fi
 
@@ -34,10 +47,22 @@ echo "Files to process:  " $(wc -l $filelist)
 
 while [ -s $filelist -a $SECONDS -lt $seconds_to_run ] ; do
     file=$(head -1 $filelist)
-    if ! $flac -t --totally-silent "$file" ; then
+
+    
+    $flac -t --totally-silent "$file"
+    RESULT=$?
+
+    if [[ $RESULT != 0 ]]
+    then
         echo $file >> /home/rolf/BAD-FLAC-FILES
-        echo Corrupt: $file
+        echo -e "$(tput setaf 1)$file IS CORRUPT!"
+    else
+        if [[ $VERBOSE != 0 ]]
+        then
+            echo -e "$(tput setaf 2)$file IS OK!"
+        fi
     fi
+
     # remove current file from list
     sed -i.prev '1d' $filelist
 done

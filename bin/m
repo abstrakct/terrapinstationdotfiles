@@ -55,3 +55,7 @@ if [ "$1" = "d6"  ]; then
         sudo mount /mnt/d6-500gb
 fi
 
+# Disk X
+if [ "$1" = "x"  ]; then
+        sudo mount /mnt/x
+fi

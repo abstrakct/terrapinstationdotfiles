@@ -7,6 +7,8 @@
 # -w [weeks]
 # -m [months]
 
+MAXDEPTH=3
+
 while getopts "d:w:m:lo" OPTION
 do
         case $OPTION in
@@ -44,9 +46,9 @@ fi
 
 echo "Here are the additions (changes) for the last $MTIME days:"
 
-if [[ -z $FTYPE ]]
+if [[ $FTYPE -eq 0 ]]
 then
-        find $DIR -daystart -mtime -$MTIME -name "*flac16*"
+        find $DIR -type d -daystart -mtime -$MTIME -name "*flac*"
 else
         find $DIR -daystart -mtime -$MTIME
 fi
