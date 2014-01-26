@@ -60,7 +60,7 @@ setopt completealiases
 export EDITOR=vim
 export VISUAL=vim
 export LESS="-R"
-export PAGER="most"
+export PAGER="less"
 #export LS_COLORS="di=94:fi=0:ln=36:pi=90:so=35:bd=33:cd=33:or=5;31:mi=5;31:ex=0;32:*.jpg=35:*.gif=35:*.png=35:*.mp3=30;41:*.m4a=30;41:*.ogg=0;41:*.flac=30;42:*.wav=30;42:*.c=91:*.h=93:*.cc=91:*.cpp=91:*.hpp=93:*.hs=91"
 
 

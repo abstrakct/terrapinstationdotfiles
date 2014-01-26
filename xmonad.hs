@@ -9,7 +9,6 @@
 -- {{{ Misc
 {-# LANGUAGE DeriveDataTypeable, NoMonomorphismRestriction, TypeSynonymInstances, MultiParamTypeClasses #-}
 -- }}}
-
 -- {{{Imported libraries
 import XMonad
 import XMonad.Core
@@ -53,6 +52,7 @@ import XMonad.Actions.CycleWS (nextWS, prevWS, toggleWS, toggleOrView)
 import XMonad.Actions.GridSelect
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.NoBorders
+import XMonad.Actions.UpdateFocus
 
 import Data.Monoid
 import Data.List
@@ -64,11 +64,10 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 import qualified XMonad.Actions.FlexibleResize as Flex
 -- }}}
-
 -- {{{ Variables
 myTerminal = "urxvtc"
+myBorderWidth = 2
 -- }}}
-
 -- {{{ Main
 main :: IO ()
 main = do
@@ -78,28 +77,30 @@ main = do
 	leftTopStatusBar        <- spawnPipe myLeftTopBar
 	leftBottomStatusBar     <- spawnPipe myLeftBottomBar
 	replace
-	xmonad $ myUrgencyHook $ defaultConfig
+	xmonad $ myUrgencyHook $ ewmh defaultConfig
 		{ terminal           = "urxvtc"
 		, modMask            = mod4Mask
 		, focusFollowsMouse  = True
-		, borderWidth        = 1
+		, borderWidth        = myBorderWidth
 		, normalBorderColor  = myNormalBorderColor
 		, focusedBorderColor = myFocusedBorderColor
 		, layoutHook         = myLayoutHook
 		, workspaces         = myWorkspaces
 		, manageHook         = manageDocks <+> myManageHook
 		, logHook            = (myLogHook workspaceBar) <+> ewmhDesktopsLogHook >> setWMName "LG3D" --ewmh needed so that chromium gain focus
-		, handleEventHook    = fullscreenEventHook                                                  --needed for chromium full screen
+		, handleEventHook    = focusOnMouseMove <+> fullscreenEventHook                             --needed for chromium full screen
 		, keys               = myKeys
 		, mouseBindings      = myMouseBindings
-		, startupHook        = setDefaultCursor xC_left_ptr >> setWMName "LG3D"
+		, startupHook        = do 
+		    setDefaultCursor xC_left_ptr
+		    setWMName "LG3D"
+		    adjustEventInput
 		}
 -- }}}
 
 --------------------------------------------------------------------------------------------
 -- APPEARANCE CONFIG                                                                      --
 --------------------------------------------------------------------------------------------
-
 -- {{{ Colors and fonts
 myFont               = "-xos4-terminus-medium-r-normal-*-12-*-*-*-*-*-*-*"
 dzenFont             = "-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
@@ -113,11 +114,11 @@ colorMagenta         = "#8e82a2"
 colorBlue            = "#3955c4"
 colorRed             = "#d74b73"
 colorGreen           = "#99cc66"
+colorCurrent         = "#64ae38"
 myArrow              = "" -- "^fg(" ++ colorWhiteAlt ++ ")>^fg(" ++ colorBlue ++ ")>^fg(" ++ colorGray ++ ")>"
-myNormalBorderColor  = colorBlackAlt
-myFocusedBorderColor = colorGray
+myNormalBorderColor  = colorGray
+myFocusedBorderColor = colorGreen
 -- }}}
-
 -- {{{ Tab theme
 myTabTheme :: Theme
 myTabTheme = defaultTheme
@@ -133,7 +134,6 @@ myTabTheme = defaultTheme
 	, decoHeight          = 14
 	}
 -- }}}
-
 -- {{{Prompt theme
 myXPConfig :: XPConfig
 myXPConfig = defaultXPConfig
@@ -153,7 +153,6 @@ myXPConfig = defaultXPConfig
 	--, completionKey       = xK_Return
 	}
 -- }}}
-
 -- {{{ GridSelect color scheme
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer = colorRangeFromClassName
@@ -172,7 +171,6 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 	, gs_font        = myFont
 	}
 -- }}}
-
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
 myWorkspaces = ["c&c", "web", "code", "skriv", "misc", "rec", "gfx", "xbmc", "virt", "tx"]
@@ -195,8 +193,6 @@ myFull = named "F"  $ noBorders $ Full
 myFloat = named "FL" $ smartBorders $ simpleFloat
 myFullscr = named "FS" $ avoidStruts $ smartBorders $ Full 
 
---myFull = named "TS" $ smartBorders $ tabbedAlways shrinkText myTabTheme
-
 -- Transformers (W+f)
 data TABBED = TABBED deriving (Read, Show, Eq, Typeable)
 instance Transformer TABBED Window where
@@ -206,12 +202,13 @@ instance Transformer TABBED Window where
 myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ avoidStruts
 	$ minimize
-	$ mkToggle (single TABBED)
-	$ mkToggle (single MIRROR)
-	$ mkToggle (single REFLECTX)
-	$ mkToggle (single REFLECTY)
+	-- $ mkToggle (single TABBED)
+	-- $ mkToggle (single MIRROR)
+	-- $ mkToggle (single REFLECTX)
+	-- $ mkToggle (single REFLECTY)
+	$ onWorkspace (myWorkspaces !! 0) ccLayouts   --Workspace 1 layouts
 	$ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 2 layouts
-	$ onWorkspace (myWorkspaces !! 2) codeLayouts --Workspace 3 layouts
+	$ onWorkspace (myWorkspaces !! 2) allLayouts  --Workspace 3 layouts
 	$ onWorkspace (myWorkspaces !! 4) allLayouts  --Workspace 5 layouts
 	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 7 layouts
 	$ onWorkspace (myWorkspaces !! 7) fullscreenLayout --Workspace 8 (xbmc)
@@ -219,9 +216,10 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ allLayouts
 	where
 		allLayouts  = myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
+		ccLayouts   = myFull ||| myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
 		webLayouts  = myFull ||| myTabs ||| myTabM ||| myObig
-		codeLayouts = myTabM ||| myTile
-		gimpLayouts = myGimp
+		codeLayouts = myTabM ||| myTile ||| myFull
+		gimpLayouts = myGimp ||| myFull
 		fullscreenLayout = myFullscr ||| myFull
 		--chatLayouts = myChat
 -- }}}
@@ -273,7 +271,6 @@ myScratchPads = [ NS "ncmpcpp"  spawnNcmpcpp findNcmpcpp manageNcmpcpp
 --        t = 1 - h  -- distance from top edge
 --        l = 1 - w  -- distance from left edge
 -- }}}
-
 -- {{{ Managehook (rules for programs)
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
@@ -315,7 +312,6 @@ myManageHook = (composeAll . concat $
 myUrgencyHook = withUrgencyHook dzenUrgencyHook
 	{ args = ["-fn", dzenFont, "-bg", colorBlack, "-fg", colorGreen] }
 -- }}}
-
 -- {{{ StatusBars
 myWorkspaceBar, myBottomStatusBar, myTopStatusBar, myLeftTopBar, myLeftBottomBar :: String
 myWorkspaceBar    = "dzen2 -x '1280' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
@@ -324,7 +320,6 @@ myTopStatusBar    = "/home/rolf/bin/topstatusbar.dude.sh"
 myLeftBottomBar   = "/home/rolf/bin/statusbar.left.bottom.sh"
 myLeftTopBar      = "/home/rolf/bin/statusbar.left.top.sh"
 -- }}}
-
 -- {{{ myWorkspaceBar config
 myLogHook :: Handle -> X ()
 myLogHook h = dynamicLogWithPP $ defaultPP
@@ -334,9 +329,9 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 	, ppExtras          = []
 	, ppSep             = "^fg(" ++ colorGray ++ ")|"
 	, ppWsSep           = ""
-	, ppCurrent         = dzenColor colorBlue     colorBlack . pad
+	, ppCurrent         = dzenColor colorCurrent  colorBlack . pad
 	, ppUrgent          = dzenColor colorGreen    colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
-	, ppVisible         = dzenColor colorGray     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppVisible         = dzenColor colorBlue     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppHidden          = dzenColor colorWhiteAlt colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppHiddenNoWindows = dzenColor colorGrayAlt  colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
 	, ppLayout          = dzenColor colorBlue     colorBlack . pad . wrapClickLayout . layoutText
@@ -347,8 +342,8 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		orderText (ws:l:t:_) = [ws,l,t]
 		titleText [] = "Desktop " ++ myArrow
 		titleText x = (shorten 120 x) ++ " " ++ myArrow
-		layoutText "Minimize T"  = "ReTall"
-		layoutText "Minimize O"  = "OneBig"
+		layoutText "Minimize T"  = "ResizeTall"
+		layoutText "Minimize O"  = "One Big"
 		layoutText "Minimize TS" = "Tabbed"
 		layoutText "Minimize TM" = "Master"
 		layoutText "Minimize M"  = "Mosaic"
@@ -401,8 +396,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 -- {{{ Key bindings
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-	[ ((modMask,                 xK_p),      spawn "dmenu_run -nb black -nf \\#3955c4 -sb \\#3955c4 -sf white -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*")
-	--  ((modMask,                 xK_p),      shellPrompt myXPConfig)                                              --Launch Xmonad shell prompt
+	[ ((modMask,                 xK_p),      spawn "dmenu_run -dim 0.7 -nb black -nf \\#3955c4 -sb \\#3955c4 -sf white -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*")
 	, ((modMask .|. shiftMask,   xK_p),      xmonadPrompt myXPConfig)                                              --Launch Xmonad prompt
 	, ((modMask,                 xK_bar),    scratchTerm)                                                    --Scratchpad
 	, ((modMask,                 xK_q),      scratchMusic)
@@ -410,11 +404,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_space),  sendMessage NextLayout)                                            --Rotate through the available layout algorithms
 	, ((modMask .|. shiftMask,   xK_space),  setLayout $ XMonad.layoutHook conf)                 --Reset the layouts on the current workspace to default
 	, ((modMask,                 xK_Tab),    windows W.focusDown)
-	--, ((modMask,                 xK_a),      windows W.focusMaster)                                                 --Move focus to the master window
-	--, ((modMask .|. shiftMask,   xK_a),      windows W.swapMaster)                                    --Swap the focused window and the master window
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
-	--, ((modMask,                 xK_f),      sendMessage $ XMonad.Layout.MultiToggle.Toggle TABBED)                 --Push layout into tabbed
 	, ((modMask,                 xK_g),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
 	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
@@ -434,9 +425,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask,   xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
 	, ((modMask,                 xK_t),      withFocused $ windows . W.sink)                                        --Push window back into tiling
 	, ((modMask .|. shiftMask,   xK_t),      rectFloatFocused)                                        --Push window into float
-	--, ((modMask .|. shiftMask,   xK_x),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX) --Reflect layout by X
-	--, ((modMask .|. shiftMask,   xK_y),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTY) --Reflect layout by Y
-	--, ((modMask .|. shiftMask,   xK_z),      sendMessage $ Toggle MIRROR)                             --Push layout into mirror
 	, ((modMask .|. shiftMask,   xK_Left),   sendMessage Shrink)
 	, ((modMask .|. shiftMask,   xK_Right),  sendMessage Expand)
 	, ((modMask .|. shiftMask,   xK_Down),   sendMessage MirrorShrink)
@@ -446,18 +434,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. controlMask, xK_Up),     withFocused (keysResizeWindow (0,-30) (0,0)))         --Shrink floated window verticaly by 50 pixels
 	, ((modMask .|. controlMask, xK_Down),   withFocused (keysResizeWindow (0,30) (0,0)))        --Expand floated window verticaly by 50 pixels
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
-    --, ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
     , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
 	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
+    , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 	 
 	 -- dmenus
     , ((modMask,                 xK_o),      spawn "/home/rolf/bin/dmenu-mpd -a")
     , ((modMask .|. shiftMask,   xK_o),      spawn "/home/rolf/bin/dmenu-mpd -l")
     , ((modMask .|. controlMask, xK_o),      spawn "/home/rolf/bin/dmenu-mpd -j")
-  --, ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
-  --, ((modMask .|. shiftMask,   xK_f),      fullFloatFocused)                                        --Push window into full screen
-  --, ((modMask,                 xK_comma),  sendMessage (IncMasterN 1))                                        --Increment the number of windows in the master area
 
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
@@ -473,14 +458,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                 xK_Home),      spawn "mpc toggle")
     , ((modMask,                 xK_Page_Down), spawn "mpc next")
     , ((modMask,                 xK_Page_Up),   spawn "mpc prev")
-  --, ((modMask,                 xK_Insert),    spawn "mpc volume +2")
-  --, ((modMask,                 xK_Delete),    spawn "mpc volume -2")
-
-  --, ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
-  --, ((modMask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
-  --, ((modMask .|. controlMask, xK_Right), nextWS)
-    , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
-    --, ((0, xF86XK_AudioMedia),               spawn "/home/rolf/bin/launch-xbmc")
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
@@ -499,6 +476,27 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
 	, ((0, xK_Cancel), spawn "xscreensaver-command -lock")                            --Lock screen
 	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
+	, ((0, xF86XK_Search),    spawn "/home/rolf/bin/dmenulocate")                     -- Use 'locate' with dmenu!
+	, ((0, xF86XK_WWW),       spawn "firefox")
+    
+    -- Old/unused crap
+  --, ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
+  --, ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
+  --, ((modMask,                 xK_a),      windows W.focusMaster)                                                 --Move focus to the master window
+  --, ((modMask .|. shiftMask,   xK_a),      windows W.swapMaster)                                    --Swap the focused window and the master window
+  --, ((modMask .|. shiftMask,   xK_f),      fullFloatFocused)                                        --Push window into full screen
+  --, ((modMask,                 xK_f),      sendMessage $ XMonad.Layout.MultiToggle.Toggle TABBED)                 --Push layout into tabbed
+  --, ((modMask,                 xK_comma),  sendMessage (IncMasterN 1))                                        --Increment the number of windows in the master area
+  --, ((0, xF86XK_AudioMedia),               spawn "/home/rolf/bin/launch-xbmc")
+  --  ((modMask,                 xK_p),      shellPrompt myXPConfig)                                              --Launch Xmonad shell prompt
+  --, ((modMask,                 xK_Insert),    spawn "mpc volume +2")
+  --, ((modMask,                 xK_Delete),    spawn "mpc volume -2")
+  --, ((modMask .|. shiftMask,   xK_x),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTX) --Reflect layout by X
+  --, ((modMask .|. shiftMask,   xK_y),      sendMessage $ XMonad.Layout.MultiToggle.Toggle REFLECTY) --Reflect layout by Y
+  --, ((modMask .|. shiftMask,   xK_z),      sendMessage $ Toggle MIRROR)                             --Push layout into mirror
+  --, ((mod1Mask, xK_masculine), toggleOrView (myWorkspaces !! 0))                             --if ws != 0 then move to workspace 0, else move to latest ws I was
+  --, ((modMask .|. controlMask, xK_Left),  prevWS)                                           --Move to previous Workspace
+  --, ((modMask .|. controlMask, xK_Right), nextWS)
 	]
 	++
 	[((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
@@ -515,7 +513,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 		scratchTerm  = namedScratchpadAction myScratchPads "terminal"
 		scratchMusic = namedScratchpadAction myScratchPads "ncmpcpp"
 -- }}}
-
 -- {{{ Mouse bindings
 myMouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $

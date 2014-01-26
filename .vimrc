@@ -1,5 +1,9 @@
-syntax on
+" .vimrc for Rolf Klausen {{{
+" Adapted from various sources on the internet
+" Thanks to anyone whose code or tips are in this file!
+" }}}
 
+" Colors {{{
 set t_Co=256
 
 "if &t_Co >= 256
@@ -20,13 +24,9 @@ endif
 "else
 "        colorscheme zenburn
 "endif
-
-" let mapleader=","
-
-" Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
+" }}}
+" Settings and variables {{{
+syntax on
 set nocompatible
 set laststatus=2
 set statusline=
@@ -51,15 +51,15 @@ set incsearch " incremental search, search as you type
 set smartcase " Ignore case when searching lowercase
 
 set expandtab
-set tabstop=8
-set shiftwidth=8
+set tabstop=4
+set shiftwidth=4
 set smarttab
 set backspace=indent,eol,start
 set showcmd
 set hidden
 set autoindent
 set copyindent
-
+set lazyredraw
 set nowrap
 set linebreak " Wrap at word
 set number
@@ -67,18 +67,6 @@ set vb t_vb=  " turn off bell!
 set novisualbell
 set dir=~/.vim/tmp
 highlight LineNr ctermfg=lightcyan
-
-" Cool tab completion stuff
-set wildmenu
-set wildmode=list:longest,full
-
-imap jj <Esc>
-
-filetype indent plugin on
-" set cindent
-
-set tags+=~/.vim/tags/cpp
-map <C-F12> :!ctags -R --sort=yes --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
 
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
@@ -93,17 +81,14 @@ let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
-"au BufWinLeave juleøltest.txt mkview
-"au BufWinEnter juleøltest.txt silent loadview
+" Cool tab completion stuff
+set wildmenu
+set wildmode=list:longest,full
 
-" au BufWritePre 2009.nanowrimo let &bex = '-' . strftime("%F-%H.%M.%S") . '~'
-" au BufWinEnter 2009.nanowrimo silent loadview
-" au BufWinLeave 2009.nanowrimo mkview
-" au BufRead,BufNewFile *.nanowrimo set filetype=nanowrimo
-" au! Syntax nanowrimo source /home/rolf/.vim/syntax/nanowrimo.vim
-
-
-" Autocommands
+filetype indent plugin on
+" set cindent
+" }}}
+" Autocommands {{{
 " " Read-only .doc through antiword
 autocmd BufReadPre *.doc silent set ro
 autocmd BufReadPost *.doc silent %!antiword "%"
@@ -117,6 +102,28 @@ au FileType help nnoremap <buffer><bs> <C-T> " Backspace to go back
 
 autocmd FileType c set omnifunc=ccomplete#Complete
 
+" Automatically open, but do not go to (if there are errors) the quickfix /
+" location list window, or close it when is has become empty.
+"
+" Note: Must allow nesting of autocmds to enable any customizations for quickfix
+" buffers.
+" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
+" (but not if it's already open). However, as part of the autocmd, this doesn't
+" seem to happen.
+autocmd QuickFixCmdPost [^l]* nested cwindow
+autocmd QuickFixCmdPost    l* nested lwindow
+
+
+"au BufWinLeave juleøltest.txt mkview
+"au BufWinEnter juleøltest.txt silent loadview
+
+" au BufWritePre 2009.nanowrimo let &bex = '-' . strftime("%F-%H.%M.%S") . '~'
+" au BufWinEnter 2009.nanowrimo silent loadview
+" au BufWinLeave 2009.nanowrimo mkview
+" au BufRead,BufNewFile *.nanowrimo set filetype=nanowrimo
+" au! Syntax nanowrimo source /home/rolf/.vim/syntax/nanowrimo.vim
+" }}}
+" Functions {{{
 " Super Tab Completion stuff
 "function! SuperCleverTab()
 "        if strpart( getline('.'), 0, col('.')-1 ) =~ '^\s*$'
@@ -136,8 +143,6 @@ autocmd FileType c set omnifunc=ccomplete#Complete
 "        endif
 "endfunction
 
-" inoremap <Tab> <C-R>=SuperCleverTab()<CR>
-
 
 " Changing CaSe!
 "
@@ -152,15 +157,15 @@ function! TwiddleCase(str)
         return result
 endfunction
 
-function! NumberToggle()
-        if(&relativenumber == 1)
-                set norelativenumber
-                set number
-        else
-                set nonumber
-                set relativenumber
-        endif
-endfunction
+"function! NumberToggle()
+"        if(&relativenumber == 1)
+"                set norelativenumber
+"                set number
+"        else
+"                set nonumber
+"                set relativenumber
+"        endif
+"endfunction
 
 "nnoremap <C-n> :call NumberToggle()<CR>
 nnoremap <C-n> :set relativenumber!<CR>
@@ -174,9 +179,21 @@ nnoremap <C-n> :set relativenumber!<CR>
 "  call append(s:line+3,"* *******************************************/")
 "  unlet s:line
 "endfunction
+" }}}
+" Keymappings {{{
+imap jj <Esc>
+let mapleader=","
 
+" Quickly edit/reload the vimrc file
+nnoremap <silent> <leader>ev :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
+nnoremap <leader>ez :tabe ~/.zshrc<CR>
 
-" **** KEYMAPPINGS ****
+" Other leader mappings
+nnoremap <silent> <leader>l :nohlsearch<CR>   " Turn of highlighted searches
+nnoremap <leader>u :GundoToggle<CR>
+set tags+=~/.vim/tags/cpp
+map <C-F12> :!ctags -R --sort=yes --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
 nnoremap <space> za
 
 " Put norwegian keys to use :)
@@ -200,7 +217,6 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " noremap <C-s> <C-a>
-nmap <silent> ,l :nohlsearch<CR>
 
 
 " *** FUNCTION KEYS ***
@@ -247,6 +263,8 @@ nmap S :%s//g<LEFT><LEFT>
 " inoremap { {<CR>}<ESC>O
 " inoremap {<CR> {
 " inoremap (<CR> ()<Left>
+" }}}
+" Various plugins and options {{{
 " taglist options
 let Tlist_Use_Right_Window = 1
 let Tlist_WinWidth = 60
@@ -255,7 +273,8 @@ let Tlist_Show_Menu = 1
 
 " settings for plugin "project"
 let g:proj_flags="imstgS"
-
+" }}}
+" Unused crap {{{
 " Help delete character if it is 'empty space'
 " stolen from Vim manual
 " function! Eatchar()
@@ -295,16 +314,6 @@ let g:proj_flags="imstgS"
 "  \ '{<CR>x;<CR>return 0;<CR>}<CR><C-O>?x;<CR><Del><Del>')
 
 " nmap _if ofprintf(0<C-d>stderr, "DEBUG: %s:%d - \n", __FILE__, __LINE__);<Esc>F\i
+" }}}
 
-
-
-" Automatically open, but do not go to (if there are errors) the quickfix /
-" location list window, or close it when is has become empty.
-"
-" Note: Must allow nesting of autocmds to enable any customizations for quickfix
-" buffers.
-" Note: Normally, :cwindow jumps to the quickfix window if the command opens it
-" (but not if it's already open). However, as part of the autocmd, this doesn't
-" seem to happen.
-autocmd QuickFixCmdPost [^l]* nested cwindow
-autocmd QuickFixCmdPost    l* nested lwindow
+" vim:fdm=marker foldlevel=0
