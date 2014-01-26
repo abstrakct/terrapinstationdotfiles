@@ -1,0 +1,3 @@
+#!/bin/sh
+
+wget --content-disposition "http://db.etree.org/shn_downloadtxt.php?shnid=$1"

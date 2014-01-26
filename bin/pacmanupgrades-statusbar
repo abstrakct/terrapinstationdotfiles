@@ -1,0 +1,4 @@
+#!/bin/bash
+
+sudo pacman -Sy >/dev/null 2>&1
+sudo pacman -Qu | wc -l > /home/rolf/tmp/availableupgrades

@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+xset s off
+xset -dpms
+
+xbmc
+
+xset s on
+xset +dpms
+
+setxkbmap -layout no
+setxkbmap -option terminate:ctrl_alt_bksp

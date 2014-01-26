@@ -1,0 +1,27 @@
+#!/bin/sh
+
+if [ -f $HOME/.dmenurc ]; then
+	. $HOME/.dmenurc
+else
+    DMENU="dmenu -i -l 40 -nf #3955c4 -nb #000000 -sf #ffffff -sb #3955c4 -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
+fi
+
+input="$(xsel -o | $DMENU -p "File search:")"
+[[ -z "$input" || $? -ne 0 ]] && exit 1
+
+result="$(echo "$input" | locate -e -i -r "$input")"
+while [[ -z "$result" ]]; do
+    input="$($DMENU -p "[1] File search:" <&- )"
+    [[ -z "$input" || $? -ne 0 ]] && exit 1
+    result="$(echo "$input" | locate -e -i -r "$input")"
+done
+result="$(echo "$result" | sed -e 's,'"${HOME}"',~,g' | $DMENU -l 36 -p "Search result:")"
+
+if [[ "$result" && $? -eq 0 ]]; then
+    result="$(echo "$result" | sed -e 's,^~/,'"${HOME}/"',g')"
+    if [[ -f "$result" ]]; then
+	xdg-open "$result"
+    elif [[ -d "$result" ]]; then
+	urxvt -e ranger "$result"
+    fi
+fi

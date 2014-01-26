@@ -1,0 +1,26 @@
+#!/bin/sh
+tmux new-session -d -s terrapin ranger
+ 
+tmux new-window -t terrapin:2 
+tmux new-window -t terrapin:3 
+tmux new-window -t terrapin:4 
+tmux new-window -t terrapin:5 #-n 'music' 'ncmpcpp'
+tmux new-window -t terrapin:6 #-n 'fm' 'ranger'
+tmux new-window -t terrapin:7 -n 'sysmon' 'htop'
+tmux new-window -t terrapin:8 -n 'music' 'ncmpcpp'
+tmux new-window -t terrapin:9 -n 'root' su
+tmux new-window -t terrapin:10 -n 'tx' alltx
+
+tmux split-window -t terrapin:7 -h 'sudo journalctl -f'
+tmux select-layout -t terrapin:7 even-vertical
+
+tmux rename-window -t terrapin:9 root 
+tmux rename-window -t terrapin:10 tx 
+
+tmux select-window -t terrapin:1
+
+tmux -2 attach-session -t terrapin
+
+#tmux new-window -t terrapin:6 -n 'mail' 'mutt'
+#tmux split-window -t terrapin:7 -v 'mutt -f /var/mail/rolf -F /home/rolf/.mutt/localmuttrc'
+#tmux split-window -t terrapin:7 -h 'sudo tail -n 60 -f /var/log/everything.log'

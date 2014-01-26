@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# *************
+# Path to transmission-remote
+REMOTE="/usr/bin/transmission-remote"
+
+MAXACTIVE="2"
+TMAUTH="--auth rolf:torrenT"
+
+# *************
+# Stop all finished torrents
+#LIST="$($REMOTE -l | tail --lines=+2 | grep 100% | grep -v Stopped | awk '{ print $1; }')"
+#for ID in $LIST; do
+#        NAME="$($REMOTE --torrent $ID --info | grep Name:)"
+#        echo "<<< $ID: ${NAME#*Name: }"
+#        $REMOTE --torrent $ID --stop >/dev/null
+#done
+
+# How many are running?
+ACTIVE="$($REMOTE $TMAUTH -l | tail --lines=+2 | grep -v Stopped | grep -v Idle | grep -v Sum | grep -v Seeding | wc -l)"
+echo "found $ACTIVE active downloads"
+
+if [[ $ACTIVE > $MAXACTIVE ]]; then
+        echo "$ACTIVE downloads - not queueing any more"
+        exit
+fi
+
+echo "queueing up more:"
+# Start new torrents
+LIST="$($REMOTE $TMAUTH -l | grep -v 100% | grep Stopped | shuf | head -n $(expr $MAXACTIVE - $ACTIVE) | awk '{ print $1; }')"
+for ID in $LIST; do
+        TNAME="$($REMOTE $TMAUTH --torrent $ID --info)"
+        echo $ID
+        echo $TNAME
+#        mail -s "Torrent queued" rolf $TNAME
+        $REMOTE $TMAUTH --torrent $ID --start --verify
+done

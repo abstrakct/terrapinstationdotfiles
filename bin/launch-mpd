@@ -1,0 +1,4 @@
+#!/bin/sh
+
+sudo chmod g+w /run/mpd
+sudo systemctl start mpd

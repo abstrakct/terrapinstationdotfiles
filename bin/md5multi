@@ -1,0 +1,72 @@
+#!/bin/bash
+
+#filelist=/home/rolf/tmp/flacfiles-donotdelete
+filelist="$1"
+outputfile="$2"
+
+# set the number of seconds to run
+# -h [hours]
+# -m [minutes]
+# -s [seconds]
+# -v (slightly) verbose output
+
+VERBOSE=1
+
+while getopts "i:o:h:m:s:v" OPTION
+do
+        case $OPTION in
+                h)
+                        (( seconds_to_run= $OPTARG * 3600 ))
+                        ;;
+                m)
+                        (( seconds_to_run= $OPTARG * 60 ))
+                        ;;
+                s)
+                        (( seconds_to_run= $OPTARG ))
+                        ;;
+                i)
+                        filelist=${OPTARG}
+                        ;;
+                o)
+                        outputfile=${OPTARG}
+                        ;;
+                v)
+                        VERBOSE=1
+                        ;;
+        esac
+done
+
+if [[ -z $seconds_to_run ]]
+then
+        echo "md5multi - build md5sums for a list of files"
+        echo ""
+        echo
+        echo " -h [hours]"
+        echo " -m [minutes]"
+        echo " -s [seconds]"
+        echo " -v for slightly verbose output"
+        echo
+        exit 1
+fi
+
+echo "Run duration:       $seconds_to_run seconds"
+echo "Files to process:  " $(wc -l $filelist)
+touch $outputfile
+
+while [ -s $filelist -a $SECONDS -lt $seconds_to_run ] ; do
+    file=$(head -1 $filelist)
+    
+    #$flac -t --totally-silent "$file"
+    if [[ $VERBOSE != 0 ]]
+    then
+            echo "Generating MD5 checksum for" $file
+    fi
+
+    md5sum "$file" >> $outputfile
+    RESULT=$?
+
+    # remove current file from list
+    sed -i.prev '1d' $filelist
+done
+
+exit 0

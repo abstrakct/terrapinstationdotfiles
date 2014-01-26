@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+
+sudo pacman -Syy >/dev/null 2>&1
+_pacPackages=`pacman -Qu | wc -l`
+
+if [ $_pacPackages -eq 0 ];
+then
+        echo "No new packages";
+elif [ $_pacPackages -eq 1 ];
+then
+        echo "1 new package";
+else
+        echo "$_pacPackages new packages";
+fi
+exit 0

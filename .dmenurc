@@ -1,0 +1,2 @@
+DMENU="dmenu -i -l 40 -dim 0.7 -nf #3955c4 -nb #000000 -sf #ffffff -sb #3955c4 -fn Arial-10"
+#DMENU="dmenu -i -l 40 -dim 0.7 -nf #3955c4 -nb #000000 -sf #ffffff -sb #3955c4 -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
