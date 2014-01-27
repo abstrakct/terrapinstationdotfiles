@@ -53,6 +53,7 @@ import XMonad.Actions.GridSelect
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.NoBorders
 import XMonad.Actions.UpdateFocus
+import XMonad.Actions.Submap
 
 import Data.Monoid
 import Data.List
@@ -406,6 +407,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_Tab),    windows W.focusDown)
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
+	, ((modMask,                 xK_f),      spawn "dmenulocate")                     -- Use 'locate' with dmenu!
 	, ((modMask,                 xK_g),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
 	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
@@ -439,10 +441,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
     , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 	 
-	 -- dmenus
-    , ((modMask,                 xK_o),      spawn "/home/rolf/bin/dmenu-mpd -a")
-    , ((modMask .|. shiftMask,   xK_o),      spawn "/home/rolf/bin/dmenu-mpd -l")
-    , ((modMask .|. controlMask, xK_o),      spawn "/home/rolf/bin/dmenu-mpd -j")
+	 -- mpdmenus
+    --, ((modMask,                 xK_o),      spawn "/home/rolf/bin/dmenumpd -a")
+    --, ((modMask .|. shiftMask,   xK_o),      spawn "/home/rolf/bin/dmenumpd -l")
+    --, ((modMask .|. controlMask, xK_o),      spawn "/home/rolf/bin/dmenumpd -j")
+    , ((modMask,                 xK_o), submap . M.fromList $
+        [ ((0, xK_a),                        spawn "/home/rolf/bin/dmenumpd -a")  -- artists
+        , ((0, xK_b),                        spawn "/home/rolf/bin/dmenumpd -l")  -- albums
+        , ((0, xK_c),                        spawn "/home/rolf/bin/dmenumpd -c")  -- current playlist
+        ])
 
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
@@ -450,7 +457,6 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
 	, ((modMask,                 xK_d),      spawn "dogecoin-qt")
 	, ((modMask,                 xK_e),      spawn "eclipse")
-	, ((modMask,                 xK_f),      spawn "firefox")
 	, ((modMask,                 xK_v),      spawn "gvim")
 	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
 
@@ -480,6 +486,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((0, xF86XK_WWW),       spawn "firefox")
     
     -- Old/unused crap
+  --, ((modMask,                 xK_f),      spawn "firefox")
   --, ((modMask, xK_q), restart "xmonad" True)                                                 --Restart xmonad
   --, ((modMask,                 xK_q),      spawn "killall dzen2; cd ~/.xmonad; ghc -threaded xmonad.hs; mv xmonad xmonad-x86_64-linux; xmonad --restart" )
   --, ((modMask,                 xK_a),      windows W.focusMaster)                                                 --Move focus to the master window
