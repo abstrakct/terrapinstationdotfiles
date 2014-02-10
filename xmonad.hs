@@ -300,7 +300,7 @@ myManageHook = (composeAll . concat $
 		myGameS         = ["zsnes"]
 		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "feh", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFullscr       = ["xbmc"]
@@ -459,6 +459,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_e),      spawn "eclipse")
 	, ((modMask,                 xK_v),      spawn "gvim")
 	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
+
+	-- Utilities on F-keys
+	, ((modMask,                 xK_F1),     spawn "/home/rolf/bin/dmenufiles")
 
      -- keybindings for controlling MPD
     , ((modMask,                 xK_Home),      spawn "mpc toggle")

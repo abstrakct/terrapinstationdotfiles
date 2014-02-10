@@ -56,6 +56,7 @@ xset fp rehash
 transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o
+android-receiver &
 
 #unclutter &
 

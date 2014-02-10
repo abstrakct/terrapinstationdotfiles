@@ -112,7 +112,7 @@ alias fuck="wget -qO - rage.thewaffleshop.net"
 alias grep="grep --color=always"
 alias git="nocorrect git"
 alias jackardour="jackd -R -dalsa -Phw:2,0 -r48000 -p128 -n2 -D -Chw:2,1"
-alias ls='ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d %H:%M"' 
+alias ls='LC_COLLATE=en_US.utf8 ls --color=auto -hF --group-directories-first --time-style=+"%Y-%m-%d %H:%M"' 
 alias l='ls -l'
 alias la='ls -la'
 alias lo=locate
