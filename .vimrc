@@ -68,19 +68,6 @@ set novisualbell
 set dir=~/.vim/tmp
 highlight LineNr ctermfg=lightcyan
 
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
-
 " Cool tab completion stuff
 set wildmenu
 set wildmode=list:longest,full
@@ -100,7 +87,7 @@ autocmd BufReadPost *.odt,*.odp silent %!odt2txt "%"
 au FileType help nnoremap <buffer><cr> <C-]> " Enter selects subject
 au FileType help nnoremap <buffer><bs> <C-T> " Backspace to go back
 
-autocmd FileType c set omnifunc=ccomplete#Complete
+" autocmd FileType c set omnifunc=ccomplete#Complete
 
 " Automatically open, but do not go to (if there are errors) the quickfix /
 " location list window, or close it when is has become empty.
@@ -273,6 +260,21 @@ let Tlist_Show_Menu = 1
 
 " settings for plugin "project"
 let g:proj_flags="imstgS"
+
+" OmniCppComplete
+let OmniCpp_NamespaceSearch = 1
+let OmniCpp_GlobalScopeSearch = 1
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" automatically open and close the popup menu / preview window
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+set completeopt=menuone,menu,longest,preview
+
+
 " }}}
 " Unused crap {{{
 " Help delete character if it is 'empty space'

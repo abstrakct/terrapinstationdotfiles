@@ -102,7 +102,8 @@ alias bspc="nocorrect bspc"
 alias df="df -h"
 alias diff=colordiff
 alias el=elinks
-alias feh="feh -F"
+#alias feh="feh -F"
+alias feh="feh"
 alias flexget='nocorrect flexget'
 alias foobar="wine ~/.wine/drive_c/users/rolf/Desktop/foobar2000/foobar2000.exe"
 alias fort="cd /opt/df_linux-ih/; dfhack"
@@ -210,9 +211,10 @@ define() {
         echo
 }
 
-service() {
-   sudo /etc/rc.d/$@
+pgr() {
+    ps aux | nocorrect grep $1 | grep -v grep
 }
+
 
 remindme() {
         (sleep $1 && zenity --info --text "$2") &
