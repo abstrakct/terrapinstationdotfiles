@@ -286,7 +286,7 @@ myManageHook = (composeAll . concat $
 	, [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
 	, [className    =? c     --> doF W.focusDown                      | c <- myFocusDC] --dont focus on launching by classname
 	, [isFullscreen          --> doFullFloat]
-  --, [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
+    , [name         =? n     --> doCenterFloat                        | n <- myFloatCN] --float center geometry by name
 	]) <+> namedScratchpadManageHook myScratchPads -- <+> manageScratchPad
 	where
 		doShiftAndGo ws = doF (W.greedyView ws) <+> doShift ws
@@ -300,9 +300,10 @@ myManageHook = (composeAll . concat $
 		myGameS         = ["zsnes"]
 		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Simplescreenrecorder", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["cataclysm-tiles", "Simplescreenrecorder", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
+		myFloatCN       = ["PlayOnLinux"]
 		myFullscr       = ["xbmc"]
 -- }}}
 
