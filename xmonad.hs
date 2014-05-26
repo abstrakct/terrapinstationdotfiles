@@ -414,15 +414,19 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
 	, ((modMask .|. shiftMask,   xK_h),      sendMessage MirrorShrink)                                --MirrorShrink the master area
 	, ((modMask .|. controlMask, xK_h),      withFocused (keysMoveWindow (-1,0)))
+	, ((modMask .|. mod1Mask,    xK_h),      withFocused (keysResizeWindow (-1,0) (0,0)))
 	, ((modMask,                 xK_j),      windows W.focusDown)
 	, ((modMask .|. shiftMask,   xK_j),      windows W.swapDown  )                                    --Swap the focused window with the next window
 	, ((modMask .|. controlMask, xK_j),      withFocused (keysMoveWindow (0,1)))
+	, ((modMask .|. mod1Mask,    xK_j),      withFocused (keysResizeWindow (0,1) (0,1)))
 	, ((modMask,                 xK_k),      windows W.focusUp)                                                     --Move focus to the previous window
 	, ((modMask .|. shiftMask,   xK_k),      windows W.swapUp    )                                    --Swap the focused window with the previous window
 	, ((modMask .|. controlMask, xK_k),      withFocused (keysMoveWindow (0,-1)))
+	, ((modMask .|. mod1Mask,    xK_k),      withFocused (keysResizeWindow (0,-1) (0,0)))
 	, ((modMask,                 xK_l),      sendMessage Expand)                                                    --Expand the master area
 	, ((modMask .|. shiftMask,   xK_l),      sendMessage MirrorExpand)                                --MirrorExpand the master area
 	, ((modMask .|. controlMask, xK_l),      withFocused (keysMoveWindow (1,0)))
+	, ((modMask .|. mod1Mask,    xK_l),      withFocused (keysResizeWindow (1,0) (0,1)))
 	, ((modMask,                 xK_m),      withFocused minimizeWindow)                                            --Minimize window
 	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
 	, ((modMask .|. shiftMask,   xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen

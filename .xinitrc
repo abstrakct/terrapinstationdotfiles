@@ -27,7 +27,8 @@ systemd --user &
 #feh --bg-scale pictures/wallpapers/winter/o1027033.jpg pictures/wallpapers/rain/o1027636.jpg
 #feh --bg-center pictures/Porn/husøya.natt.jpg 
 #feh --bg-scale pictures/wallpapers/wallpaper-lighthouse-445739.jpg
-feh --bg-scale pictures/wallpapers/blade_runner_tokyo.jpg
+#feh --bg-scale pictures/wallpapers/blade_runner_tokyo.jpg
+feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
 
 
 xsetroot -cursor_name left_ptr
