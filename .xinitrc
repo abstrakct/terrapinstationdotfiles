@@ -53,7 +53,7 @@ xset fp rehash
 #wicd-gtk &
 
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
-(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 12 --expand true --tint 0x000000 --transparent true --alpha 0) &
+(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &
 transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o

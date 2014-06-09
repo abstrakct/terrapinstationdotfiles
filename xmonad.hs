@@ -75,8 +75,8 @@ main = do
 	workspaceBar            <- spawnPipe myWorkspaceBar
 	bottomStatusBar         <- spawnPipe myBottomStatusBar
 	topStatusBar            <- spawnPipe myTopStatusBar
-	leftTopStatusBar        <- spawnPipe myLeftTopBar
-	leftBottomStatusBar     <- spawnPipe myLeftBottomBar
+	secondTopStatusBar      <- spawnPipe mySecondTopBar
+	secondBottomStatusBar   <- spawnPipe mySecondBottomBar
 	replace
 	xmonad $ myUrgencyHook $ ewmh defaultConfig
 		{ terminal           = "urxvtc"
@@ -315,12 +315,12 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 	{ args = ["-fn", dzenFont, "-bg", colorBlack, "-fg", colorGreen] }
 -- }}}
 -- {{{ StatusBars
-myWorkspaceBar, myBottomStatusBar, myTopStatusBar, myLeftTopBar, myLeftBottomBar :: String
-myWorkspaceBar    = "dzen2 -x '1280' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
-myBottomStatusBar = "/home/rolf/bin/bottomstatusbar.dude.sh"
-myTopStatusBar    = "/home/rolf/bin/topstatusbar.dude.sh"
-myLeftBottomBar   = "/home/rolf/bin/statusbar.left.bottom.sh"
-myLeftTopBar      = "/home/rolf/bin/statusbar.left.top.sh"
+myWorkspaceBar, myBottomStatusBar, myTopStatusBar, mySecondTopBar, mySecondBottomBar :: String
+myWorkspaceBar    = "dzen2 -x '0' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
+myBottomStatusBar = "/home/rolf/bin/statusbar.first.bottom.sh"
+myTopStatusBar    = "/home/rolf/bin/statusbar.first.top.sh"
+mySecondBottomBar   = "/home/rolf/bin/statusbar.second.bottom.sh"
+mySecondTopBar      = "/home/rolf/bin/statusbar.second.top.sh"
 -- }}}
 -- {{{ myWorkspaceBar config
 myLogHook :: Handle -> X ()
@@ -520,7 +520,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	++
 	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
 	    -- | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
-	    | (key, sc) <- zip [xK_e, xK_w] [0..]
+	    | (key, sc) <- zip [xK_w, xK_e] [0..]
 		, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 	where
 		fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
