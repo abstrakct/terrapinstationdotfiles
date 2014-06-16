@@ -73,12 +73,13 @@ android-receiver &
 #wmfs #-C /etc/xdg/wmfs/wmfsrc
 
 #ck-launch-session xmonad
-#dbus-launch xmonad
+dbus-launch xmonad
 #exec awesome
 #exec subtle
 #urxvt -e screen
 #exec wmfs
 #exec dwm
+#exec xmonad
 
 #DEFAULT_SESSION=xmonad
 #case $1 in
@@ -104,4 +105,4 @@ android-receiver &
 #exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
 #                ;;
 #esac
-exec xmonad
+#exec xmonad
