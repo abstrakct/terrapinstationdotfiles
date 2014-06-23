@@ -69,11 +69,11 @@ android-receiver &
 
 #exec dbus-launch --sh-syntax --exit-with-session /usr/bin/xmonad
 #exec openbox-session
+dbus-launch xmonad
 #herbstluftwm
 #wmfs #-C /etc/xdg/wmfs/wmfsrc
 
 #ck-launch-session xmonad
-dbus-launch xmonad
 #exec awesome
 #exec subtle
 #urxvt -e screen
@@ -98,6 +98,8 @@ dbus-launch xmonad
 #                ;;
 #
 #        bspwm|*)
+
+
 #export PANEL_FIFO=/tmp/panel-fifo
 #sxhkd &
 #[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
