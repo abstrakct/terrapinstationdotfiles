@@ -409,7 +409,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
 	, ((modMask,                 xK_f),      spawn "dmenulocate")                     -- Use 'locate' with dmenu!
-	, ((modMask,                 xK_g),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
+	, ((modMask,                 xK_s),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
 	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
 	, ((modMask .|. shiftMask,   xK_h),      sendMessage MirrorShrink)                                --MirrorShrink the master area
@@ -462,6 +462,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
 	, ((modMask,                 xK_d),      spawn "dogecoin-qt")
 	, ((modMask,                 xK_e),      spawn "eclipse")
+	, ((modMask,                 xK_g),      spawn "gnucash")
 	, ((modMask,                 xK_v),      spawn "gvim")
 	, ((modMask,                 xK_x),      spawn "/home/rolf/bin/launch-xbmc")
 
