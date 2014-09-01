@@ -57,7 +57,8 @@ xset fp rehash
 transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o
-android-receiver &
+#android-receiver &
+g15-systemtray &
 
 #unclutter &
 
@@ -72,7 +73,6 @@ android-receiver &
 #dbus-launch xmonad
 #herbstluftwm
 #wmfs #-C /etc/xdg/wmfs/wmfsrc 
-exec xmonad
 
 #ck-launch-session xmonad
 #exec awesome
@@ -108,4 +108,5 @@ exec xmonad
 #exec dbus-launch bspwm -c /home/rolf/.config/bspwm/autostart -s "$PANEL_FIFO" -p W
 #                ;;
 #esac
-#exec xmonad
+
+exec dbus-launch xmonad

@@ -32,7 +32,7 @@ set verbose=0
 source /home/rolf/.pentadactyl/color/simple_dark.penta
 "colorscheme simple_dark
 loadplugins
-"set buftabs-elem=nt
+set buftabs-elem=nt
 set showtabline=always
 set hlfind
 
