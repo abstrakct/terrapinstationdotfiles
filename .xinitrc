@@ -70,7 +70,6 @@ g15-systemtray &
 
 #exec dbus-launch --sh-syntax --exit-with-session /usr/bin/xmonad
 #exec openbox-session
-#dbus-launch xmonad
 #herbstluftwm
 #wmfs #-C /etc/xdg/wmfs/wmfsrc 
 
@@ -80,7 +79,6 @@ g15-systemtray &
 #urxvt -e screen
 #exec wmfs
 #exec dwm
-#exec xmonad
 
 #DEFAULT_SESSION=xmonad
 #case $1 in
