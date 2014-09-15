@@ -303,7 +303,7 @@ myManageHook = (composeAll . concat $
 		myFloatCC       = ["G15-config", "cataclysm-tiles", "Simplescreenrecorder", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
-		myFloatCN       = ["PlayOnLinux"]
+		myFloatCN       = ["Volume Control", "PlayOnLinux"]
 		myFullscr       = ["xbmc"]
 -- }}}
 

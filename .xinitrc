@@ -58,6 +58,7 @@ transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o
 #android-receiver &
+g15-desktop-service start
 g15-systemtray &
 
 #unclutter &
