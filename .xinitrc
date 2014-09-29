@@ -48,6 +48,8 @@ setxkbmap -option terminate:ctrl_alt_bksp
 
 xset +fp /usr/share/fonts/local
 xset fp rehash
+xset s off
+xset -dpms
 
 #android-receiver &
 #wicd-gtk &

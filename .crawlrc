@@ -447,131 +447,152 @@ skill_focus = true
 
 
 
-# fra annen dude
-###########
-## Prompts #
+## fra annen dude
 ############
-more := force_more_message
+### Prompts #
+#############
+#more := force_more_message
+#
+## Important features
+#: if you.god() == "Ashenzari" then
+#more += You have a vision of.*gates?
+#: else
+#more += interdimensional caravan
+#more += distant snort
+#more += Found a gateway leading out of the Abyss
+#: end
+#
+#more += Found .* abyssal rune of Zot
+#more += .* weight on your shoulders
+#
+## Interrupts
+##more += You don't.* that spell
+#more += You fail to use your ability
+#more += You miscast Controlled Blink
+#more += You can't (read|drink) that
+#more += That item cannot be evoked
+#more += This wand has no charges
+#more += You are held in a net
+#more += You have disarmed
+#more += You don't have any such object
+#more += do not work when you're silenced
+#
+## Bad things
+#more += Your surroundings flicker
+#more += sense of stasis
+#more += Your amulet of stasis
+#more += You cannot teleport right now
+#more += The writing blurs in front of your eyes
+#more += You fall through a shaft
+#more += A huge blade swings out and slices into you!
+#more += (blundered into a|invokes the power of) Zot
+#more += Ouch! That really hurt!
+#more += dispelling energy hits you
+#more += You convulse
+#more += You are (blasted|electrocuted)!
+#more += You are.*(confused|poisoned)
+#stop += flesh start
+#more += (starving|devoid of blood)
+#more += wrath finds you
+#more += lose consciousness
+#more += You are too injured to fight blindly
+#more += Green shoots are pushing up through the earth
+## more = poison
+#
+## Hell effects
+#more += "You will not leave this place."
+#more += "Die, mortal!"
+#more += "We do not forgive those who trespass against us!"
+#more += "Trespassers are not welcome here!"
+#more += "You do not belong in this place!"
+#more += "Leave now, before it is too late!"
+#more += "We have you now!"
+#more += You smell brimstone.
+#more += Brimstone rains from above.
+#more += You feel lost and a long, long way from home...
+#more += You shiver with fear.
+#more += You feel a terrible foreboding...
+#more += Something frightening happens.   
+#more += You sense an ancient evil watching you...
+#more += You suddenly feel all small and vulnerable.
+#more += You sense a hostile presence.
+#more += A gut-wrenching scream fills the air!
+#more += You hear words spoken in a strange and terrible language...
+#more += You hear diabolical laughter!
+#
+## Expiring effects
+##more += You feel yourself slow down
+##more += less insulated
+#more += You are starting to lose your buoyancy
+#
+#more += You lose control over your flight
+#more += Your hearing returns
+#more += Your transformation is almost over
+#more += You have a feeling this form
+#more += You feel yourself come back to life
+#more += uncertain
+#more += time is quickly running out
+#more += life is in your own hands
+#more += is no longer charmed
+#more += shroud falls apart
+#
+## Monsters with torment
+#more += mummy priest comes into view
+#more += greater mummy comes into view
+#more += Khufu comes into view
+#more += Menkaure comes into view
+#more += Brimstone Fiend comes into view
+#more += Ice Fiend comes into view
+#more += Gloorx Vloq comes into view
+#more += Shadow Fiend comes into view
+#more += Ereshkigal comes into view
+#more += tormentor comes into view
+#more += curse skull comes into view
+#more += curse toe comes into view
+#
+## Others
+#more += You have reached level
+#more += Your scales start
+#more += You feel monstrous
+#more += Jiyva alters your body
+#: if you.god() == "Xom" then
+#more += god:
+#: end
+#
+#hp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
+#mp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
+#stat_colour = 3:red, 7:lightred
+#
+#{
+#add_autopickup_func(function(it, name)
+#        if it.class(true) == "armour" then
+#                local good_slots = {cloak="Cloak", helmet="Helmet", gloves="Gloves", boots="Boots"}
+#                st, _ = it.subtype()
+#                if good_slots[st] ~= nil and items.equipped_at(good_slots[st]) == nil then
+#                        return true
+#                end
+#        end
+#        return false
+#end)
+#}
 
-# Important features
-: if you.god() == "Ashenzari" then
-more += You have a vision of.*gates?
-: else
-more += interdimensional caravan
-more += distant snort
-more += Found a gateway leading out of the Abyss
-: end
+include += .crawl/HilariousDeathArtist.rc 
 
-more += Found .* abyssal rune of Zot
-more += .* weight on your shoulders
-
-# Interrupts
-#more += You don't.* that spell
-more += You fail to use your ability
-more += You miscast Controlled Blink
-more += You can't (read|drink) that
-more += That item cannot be evoked
-more += This wand has no charges
-more += You are held in a net
-more += You have disarmed
-more += You don't have any such object
-more += do not work when you're silenced
-
-# Bad things
-more += Your surroundings flicker
-more += sense of stasis
-more += Your amulet of stasis
-more += You cannot teleport right now
-more += The writing blurs in front of your eyes
-more += You fall through a shaft
-more += A huge blade swings out and slices into you!
-more += (blundered into a|invokes the power of) Zot
-more += Ouch! That really hurt!
-more += dispelling energy hits you
-more += You convulse
-more += You are (blasted|electrocuted)!
-more += You are.*(confused|poisoned)
-stop += flesh start
-more += (starving|devoid of blood)
-more += wrath finds you
-more += lose consciousness
-more += You are too injured to fight blindly
-more += Green shoots are pushing up through the earth
-# more = poison
-
-# Hell effects
-more += "You will not leave this place."
-more += "Die, mortal!"
-more += "We do not forgive those who trespass against us!"
-more += "Trespassers are not welcome here!"
-more += "You do not belong in this place!"
-more += "Leave now, before it is too late!"
-more += "We have you now!"
-more += You smell brimstone.
-more += Brimstone rains from above.
-more += You feel lost and a long, long way from home...
-more += You shiver with fear.
-more += You feel a terrible foreboding...
-more += Something frightening happens.   
-more += You sense an ancient evil watching you...
-more += You suddenly feel all small and vulnerable.
-more += You sense a hostile presence.
-more += A gut-wrenching scream fills the air!
-more += You hear words spoken in a strange and terrible language...
-more += You hear diabolical laughter!
-
-# Expiring effects
-#more += You feel yourself slow down
-#more += less insulated
-more += You are starting to lose your buoyancy
-
-more += You lose control over your flight
-more += Your hearing returns
-more += Your transformation is almost over
-more += You have a feeling this form
-more += You feel yourself come back to life
-more += uncertain
-more += time is quickly running out
-more += life is in your own hands
-more += is no longer charmed
-more += shroud falls apart
-
-# Monsters with torment
-more += mummy priest comes into view
-more += greater mummy comes into view
-more += Khufu comes into view
-more += Menkaure comes into view
-more += Brimstone Fiend comes into view
-more += Ice Fiend comes into view
-more += Gloorx Vloq comes into view
-more += Shadow Fiend comes into view
-more += Ereshkigal comes into view
-more += tormentor comes into view
-more += curse skull comes into view
-more += curse toe comes into view
-
-# Others
-more += You have reached level
-more += Your scales start
-more += You feel monstrous
-more += Jiyva alters your body
-: if you.god() == "Xom" then
-more += god:
-: end
-
-hp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
-mp_colour = 100:green, 99:lightgray, 75:yellow, 50:lightred, 25:red
-stat_colour = 3:red, 7:lightred
-
-{
-add_autopickup_func(function(it, name)
-        if it.class(true) == "armour" then
-                local good_slots = {cloak="Cloak", helmet="Helmet", gloves="Gloves", boots="Boots"}
-                st, _ = it.subtype()
-                if good_slots[st] ~= nil and items.equipped_at(good_slots[st]) == nil then
-                        return true
-                end
-        end
-        return false
-end)
-}
+#For just the damage announcements
+#include += .crawl/HDamage.rc
+#
+## For just the ===HDAtravel autotravel replacement macro
+##include += HDAtravel.rc
+#
+## For just the monster warning messages
+#include += .crawl/SpoilerAlerts.rc
+#
+## For both the Message colors and Item colors
+#include += .crawl/HDAColors.rc
+## For just the Message colors
+#include += .crawl/HDAMessageColors.rc
+## For just the Item colors
+#include += .crawl/HDAItemColors.rc
+#
+## For just the Force More prompts
+#include += .crawl/HDAForceMore.rc

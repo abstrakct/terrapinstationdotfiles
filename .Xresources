@@ -25,7 +25,7 @@ urxvt*shading:            60
 urxvt*depth:             32
 urxvt*buffered: true
 !save n lines of scrollback buffer
-!urxvt*saveLines:          32767
+urxvt*saveLines:          32767
 !flash screen for attention
 !urxvt*visualBell:         true
 !jump to bottom (prompt) on keypress
@@ -79,10 +79,6 @@ XTerm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 XTerm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
 XTerm*scrollBar: false
 XTerm*termName: xterm-256color
-
-xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-xterm*boldFont: -*-terminus-medium-*-*-*-12-*-*-*-*-*-*-*
-
 ! }}}
 
 !transparent=2222 opaque=ffff
