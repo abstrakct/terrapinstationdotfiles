@@ -9,6 +9,13 @@
 # exec startxfce4
 # ...or the Window Manager of your choice
 
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
 #run systemd as user intsance
 systemd --user &
 
@@ -56,7 +63,7 @@ xset -dpms
 
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &
-transmission-remote-gtk &
+#transmission-remote-gtk &
 thunar --daemon &
 urxvtd -q -f -o
 #android-receiver &
