@@ -22,7 +22,7 @@ urxvt*shading:            60
 !tint background with this color
 !urxvt*tintColor:          grey
 !set to 32-bit for real transparency (compositing required)
-urxvt*depth:             32
+!urxvt*depth:             32
 urxvt*buffered: true
 !save n lines of scrollback buffer
 urxvt*saveLines:          32767
