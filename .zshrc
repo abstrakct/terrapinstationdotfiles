@@ -139,6 +139,7 @@ alias rc="sudo rc.d"
 #alias reload="source ~/.bashrc"
 alias sm=smplayer2
 alias sudo='nocorrect sudo'
+alias sy="sudo systemctl"
 alias tv="cd /TheVault/teve/teve"
 alias tx="transmission-remote --auth rolf:torrenT -l"
 alias txa="tx | grep Down"
