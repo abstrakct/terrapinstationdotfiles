@@ -471,29 +471,29 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_F1),     spawn "/home/rolf/bin/dmenufiles")
 
      -- keybindings for controlling MPD
-    , ((modMask,                 xK_Home),      spawn "mpc toggle")
-    , ((modMask,                 xK_Page_Down), spawn "mpc next")
-    , ((modMask,                 xK_Page_Up),   spawn "mpc prev")
+    -- , ((modMask,                 xK_Home),      spawn "mpc -p 6660 toggle")
+    -- , ((modMask,                 xK_Page_Down), spawn "mpc next")
+    -- , ((modMask,                 xK_Page_Up),   spawn "mpc prev")
 
 	, ((modMask, xK_Left), prevWS)
 	, ((modMask, xK_Right), nextWS)                                                            --Move to next Workspace
 	, ((0, xF86XK_AudioRaiseVolume), spawn "sh /home/rolf/bin/dzen/dzen_vol.sh + -d")                --Raise volume
 	, ((0, xF86XK_AudioLowerVolume), spawn "sh /home/rolf/bin/dzen/dzen_vol.sh - -d")                --Lower volume
 	, ((0, xF86XK_AudioMute),        spawn "sh /home/rolf/bin/dzen/dzen_vol.sh t -d")                --Toggle mute
-	, ((0, xF86XK_AudioNext), spawn "ncmpcpp next")                                            --next song
-	, ((0, xF86XK_AudioPrev), spawn "ncmpcpp prev")                                            --prev song
-	, ((0, xF86XK_AudioPlay), spawn "ncmpcpp toggle")                                          --toggle song
-	, ((0, xF86XK_AudioStop), spawn "ncmpcpp stop")                                            --stop song
+	, ((0, xF86XK_AudioNext), spawn "mpc -p 6660 next")                                            --next song
+	, ((0, xF86XK_AudioPrev), spawn "mpc -p 6660 prev")                                            --prev song
+	, ((0, xF86XK_AudioPlay), spawn "mpc -p 6660 toggle")                                          --toggle song
+	, ((0, xF86XK_AudioStop), spawn "mpc -p 6660 stop")                                            --stop song
 	, ((mod1Mask, xK_Up),     spawn "sh /home/rolf/bin/dzen/dzen_vol.sh + -d")
 	, ((mod1Mask, xK_Down),   spawn "sh /home/rolf/bin/dzen/dzen_vol.sh - -d")
-	, ((mod1Mask, xK_Right),  spawn "ncmpcpp next")
-	, ((mod1Mask, xK_Left),   spawn "ncmpcpp prev")
-	, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
-	, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
-	, ((0, xK_Cancel), spawn "xscreensaver-command -lock")                            --Lock screen
-	, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
-	, ((0, xF86XK_Search),    spawn "/home/rolf/bin/dmenulocate")                     -- Use 'locate' with dmenu!
-	, ((0, xF86XK_WWW),       spawn "firefox")
+	--, ((mod1Mask, xK_Right),  spawn "ncmpcpp next")
+	--, ((mod1Mask, xK_Left),   spawn "ncmpcpp prev")
+	--, ((mod1Mask .|. controlMask, xK_Down), spawn "ncmpcpp toggle")
+	--, ((mod1Mask .|. controlMask, xK_Up), spawn "ncmpcpp stop")
+	--, ((0, xK_Cancel), spawn "xscreensaver-command -lock")                            --Lock screen
+	--, ((0, xK_Print), spawn "scrot '%Y-%m-%d_%s_$wx$h.png'")                                      --Take a screenshot
+	--, ((0, xF86XK_Search),    spawn "/home/rolf/bin/dmenulocate")                     -- Use 'locate' with dmenu!
+	--, ((0, xF86XK_WWW),       spawn "firefox")
     
     -- Old/unused crap
   --, ((modMask,                 xK_f),      spawn "firefox")
