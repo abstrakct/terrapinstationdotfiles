@@ -72,6 +72,7 @@ g15-desktop-service start
 g15-systemtray &
 
 compton -b
+urxvtc 
 
 #unclutter &
 

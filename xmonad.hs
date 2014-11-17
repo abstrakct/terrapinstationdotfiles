@@ -68,6 +68,7 @@ import qualified XMonad.Actions.FlexibleResize as Flex
 -- {{{ Variables
 myTerminal = "urxvtc"
 myBorderWidth = 2
+myModKey = modMask
 -- }}}
 -- {{{ Main
 main :: IO ()
