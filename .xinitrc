@@ -35,10 +35,6 @@ systemd --user &
 #feh --bg-center pictures/Porn/husøya.natt.jpg 
 #feh --bg-scale pictures/wallpapers/wallpaper-lighthouse-445739.jpg
 #feh --bg-scale pictures/wallpapers/blade_runner_tokyo.jpg
-feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
-
-
-xsetroot -cursor_name left_ptr
 
 
 if [ -f $HOME/.config/xmodmap ]; then
@@ -58,21 +54,16 @@ xset fp rehash
 xset s off
 xset -dpms
 
+launch-mpd
+
 #android-receiver &
 #wicd-gtk &
 
-launch-mpd
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
-(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &
 #transmission-remote-gtk &
-thunar --daemon &
-urxvtd -q -f -o
-#android-receiver &
-g15-desktop-service start
-g15-systemtray &
 
 compton -b
-urxvtc 
+#urxvtc 
 
 #unclutter &
 
@@ -121,4 +112,16 @@ urxvtc
 #                ;;
 #esac
 
+# Everything for XMonad
+feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
+xsetroot -cursor_name left_ptr
+(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &
+thunar --daemon &
+urxvtd -q -f -o
+g15-desktop-service start
+g15-systemtray &
 exec dbus-launch xmonad
+#android-receiver &
+
+# KDE
+#startkde
