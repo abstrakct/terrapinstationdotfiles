@@ -215,7 +215,7 @@ define() {
 }
 
 pgr() {
-    ps aux | nocorrect grep $1 | grep -v grep
+    ps aux | nocorrect grep -i $1 | grep -v grep
 }
 
 

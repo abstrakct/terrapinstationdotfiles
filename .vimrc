@@ -17,7 +17,7 @@ if has("gui_running")
 endif
 
 if !has("gui_running")
-        colorscheme inkpot
+        colorscheme herald "desertEx "inkpot
         " candycode " wombat256
 endif
 
