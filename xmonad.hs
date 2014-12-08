@@ -460,6 +460,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
 	, ((modMask .|. shiftMask,   xK_Return), spawn "urxvt -e /home/rolf/bin/tm")                 --Launch a terminal with tmux
+	, ((modMask .|. controlMask, xK_Return), spawn "terminology")
 	, ((modMask,                 xK_s),      spawn "steam")
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
 	, ((modMask,                 xK_d),      spawn "dogecoin-qt")
