@@ -191,7 +191,7 @@ map æ @
 map gr gT
 
 " for live show text files
-map g> :%s/>/->/g<CR>
+map g> :%s/>/->/g<CR>,l
 
 " going to the next search hit centers the line
 map N Nzz
