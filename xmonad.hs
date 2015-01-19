@@ -97,6 +97,7 @@ main = do
 		    setDefaultCursor xC_left_ptr
 		    setWMName "LG3D"
 		    adjustEventInput
+		    ewmhDesktopsStartup
 		}
 -- }}}
 
