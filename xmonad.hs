@@ -29,6 +29,7 @@ import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Minimize
 import XMonad.Layout.SimpleFloat
+import XMonad.Layout.Spacing
 
 import XMonad.StackSet (RationalRect (..), currentTag)
 
@@ -205,6 +206,7 @@ instance Transformer TABBED Window where
 myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ avoidStruts
 	$ minimize
+	$ smartSpacing 6
 	-- $ mkToggle (single TABBED)
 	-- $ mkToggle (single MIRROR)
 	-- $ mkToggle (single REFLECTX)
@@ -302,7 +304,7 @@ myManageHook = (composeAll . concat $
 		myGameS         = ["zsnes"]
 		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Simplescreenrecorder", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
@@ -357,6 +359,17 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		layoutText "Minimize F"  = "Full"
 		layoutText "Minimize FS" = "Fullscreen"
 		layoutText "Minimize FL" = "Float"
+		layoutText "Minimize SmartSpacing 6 T"  = "ResizeTall"
+		layoutText "Minimize SmartSpacing 6 O"  = "One Big"
+		layoutText "Minimize SmartSpacing 6 TS" = "Tabbed"
+		layoutText "Minimize SmartSpacing 6 TM" = "Master"
+		layoutText "Minimize SmartSpacing 6 M"  = "Mosaic"
+		layoutText "Minimize SmartSpacing 6 MT" = "Mirror"
+		layoutText "Minimize SmartSpacing 6 G"  = "Mosaic"
+		layoutText "Minimize SmartSpacing 6 C"  = "Mirror"
+		layoutText "Minimize SmartSpacing 6 F"  = "Full"
+		layoutText "Minimize SmartSpacing 6 FS" = "Fullscreen"
+		layoutText "Minimize SmartSpacing 6 FL" = "Float"
 		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
 		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
 		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
@@ -411,8 +424,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                 xK_b),      withFocused toggleBorder)
 	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
 	, ((modMask,                 xK_f),      spawn "dmenulocate")                     -- Use 'locate' with dmenu!
+	--, ((modMask .|. controlMask, xK_g),      sendMessage $ ToggleGaps) 
 	, ((modMask,                 xK_i),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
-	, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
+	--, ((modMask,                 xK_n),      refresh)                                                               --Resize viewed windows to the correct size
 	, ((modMask,                 xK_h),      sendMessage Shrink)                                                    --Shrink the master area
 	, ((modMask .|. shiftMask,   xK_h),      sendMessage MirrorShrink)                                --MirrorShrink the master area
 	, ((modMask .|. controlMask, xK_h),      withFocused (keysMoveWindow (-1,0)))
@@ -431,6 +445,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. mod1Mask,    xK_l),      withFocused (keysResizeWindow (1,0) (0,1)))
 	, ((modMask,                 xK_m),      withFocused minimizeWindow)                                            --Minimize window
 	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
+	, ((modMask,                 xK_n),      sendMessage RestoreNextMinimizedWin)                     --Restore window
 	, ((modMask .|. shiftMask,   xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
 	, ((modMask,                 xK_t),      withFocused $ windows . W.sink)                                        --Push window back into tiling
 	, ((modMask .|. shiftMask,   xK_t),      rectFloatFocused)                                        --Push window into float
