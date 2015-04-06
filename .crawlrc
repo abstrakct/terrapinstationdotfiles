@@ -577,7 +577,7 @@ skill_focus = true
 #}
 
 include += .crawl/HilariousDeathArtist.rc 
-
+language = en
 #For just the damage announcements
 #include += .crawl/HDamage.rc
 #

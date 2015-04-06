@@ -28,8 +28,9 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances
 import XMonad.Layout.PerWorkspace (onWorkspace)
 import XMonad.Layout.Minimize
-import XMonad.Layout.SimpleFloat
+import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing
+import XMonad.Layout.Grid
 
 import XMonad.StackSet (RationalRect (..), currentTag)
 
@@ -194,7 +195,7 @@ myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withI
 myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
 myFull = named "F"  $ noBorders $ Full
 
-myFloat = named "FL" $ smartBorders $ simpleFloat
+myFloat = named "FL" $ smartBorders $ simplestFloat
 myFullscr = named "FS" $ avoidStruts $ smartBorders $ Full 
 
 -- Transformers (W+f)
@@ -220,11 +221,11 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	-- $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
 	$ allLayouts
 	where
-		allLayouts  = myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
-		ccLayouts   = myFull ||| myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
-		webLayouts  = myFull ||| myTabs ||| myTabM ||| myObig
+		allLayouts  = Grid ||| myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
+		ccLayouts   = myFull ||| Grid ||| myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
+		webLayouts  = myFull ||| Grid ||| myTabs ||| myTabM ||| myObig
 		codeLayouts = myTabM ||| myTile ||| myFull
-		gimpLayouts = myGimp ||| myFull
+		gimpLayouts = myGimp ||| Grid ||| myFull
 		fullscreenLayout = myFullscr ||| myFull
 		--chatLayouts = myChat
 -- }}}
@@ -370,6 +371,7 @@ myLogHook h = dynamicLogWithPP $ defaultPP
 		layoutText "Minimize SmartSpacing 6 F"  = "Full"
 		layoutText "Minimize SmartSpacing 6 FS" = "Fullscreen"
 		layoutText "Minimize SmartSpacing 6 FL" = "Float"
+		layoutText "Minimize SmartSpacing 6 Grid"  = "Grid"
 		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
 		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
 		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"

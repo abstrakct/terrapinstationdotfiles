@@ -62,7 +62,7 @@ launch-mpd
 #(sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 80 --heighttype pixel --height 12 --expand true --tint 0x202020 --transparent true --alpha 0) &
 #transmission-remote-gtk &
 
-compton -b
+#compton -b
 #urxvtc 
 
 #unclutter &

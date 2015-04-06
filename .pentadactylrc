@@ -6,8 +6,10 @@ nmap < H
 nmap > L
 nmap ø :
 nmap å odb 
-nmap <Left> <C-x>
-nmap <Right> <C-a>
+nmap <S-Left> <C-x>
+nmap <S-Right> <C-a>
+nmap <Right> ]]
+nmap <Left> [[
 nmap ge <C-S-e>
 
 set runtimepath=/home/rolf/.pentadactyl
@@ -16,6 +18,7 @@ command -nargs=* g open google <args>
 set passkeys+='mail\.google\.com':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
 set passkeys+='youtube\.com':c/jkhnpelxfa#`[]z?\*niIU+-=<Tab><Return><Space><Left><Right>
 set passkeys+=facebook\.com:<CR>
+set passkeys+='crawl\.s-z\.org':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return><ESC>
 "set passkeys+='*\.facebook\.*':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
 
 command local-time -nargs=+ -description "Convert Date to Local Time" -javascript <<EOF
@@ -36,5 +39,8 @@ loadplugins
 "set buftabs-elem=nt
 set showtabline=always
 set hlfind
+
+set complete=slfS
+set maxitems=30
 
 " vim: set ft=vim:
