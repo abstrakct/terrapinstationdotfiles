@@ -31,6 +31,7 @@ import XMonad.Layout.Minimize
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.Spacing
 import XMonad.Layout.Grid
+import XMonad.Layout.IndependentScreens
 
 import XMonad.StackSet (RationalRect (..), currentTag)
 
@@ -56,6 +57,7 @@ import XMonad.Actions.FloatKeys
 import XMonad.Actions.NoBorders
 import XMonad.Actions.UpdateFocus
 import XMonad.Actions.Submap
+import XMonad.Actions.CopyWindow
 
 import Data.Monoid
 import Data.List
@@ -71,6 +73,10 @@ import qualified XMonad.Actions.FlexibleResize as Flex
 myTerminal = "urxvtc"
 myBorderWidth = 2
 myModKey = modMask
+
+type WorkspaceOne = WorkspaceId
+type WorkspaceTwo = WorkspaceId
+
 -- }}}
 -- {{{ Main
 main :: IO ()
@@ -106,6 +112,12 @@ main = do
 --------------------------------------------------------------------------------------------
 -- APPEARANCE CONFIG                                                                      --
 --------------------------------------------------------------------------------------------
+
+-- {{{ Workspaces, independent screens 
+
+
+
+-- }}}
 -- {{{ Colors and fonts
 myFont               = "-xos4-terminus-medium-r-normal-*-12-*-*-*-*-*-*-*"
 dzenFont             = "-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
@@ -178,7 +190,8 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 -- }}}
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
-myWorkspaces = ["1:c&c", "2:web", "3:code", "4:skriv", "5:misc", "6:rec", "7:gfx", "8:xbmc", "9:virt", "0:tx"]
+-- myWorkspaces = withScreens 2 ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
+myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -298,7 +311,7 @@ myManageHook = (composeAll . concat $
 		role            = stringProperty "WM_WINDOW_ROLE"
 		name            = stringProperty "WM_NAME"
 		myIgnores       = ["desktop","desktop_window"]
-		myWebS          = ["Firefox"]
+		myWebS          = ["Firefox", "Chromium"]
 		myGfxS          = ["Gimp", "gimp", "GIMP"]
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
@@ -329,8 +342,8 @@ mySecondTopBar      = "/home/rolf/bin/statusbar.second.top.sh"
 -- }}}
 -- {{{ myWorkspaceBar config
 myLogHook :: Handle -> X ()
-myLogHook h = dynamicLogWithPP $ defaultPP
-	{ ppOutput          = hPutStrLn h
+myLogHook hLeft = dynamicLogWithPP $ defaultPP
+	{ ppOutput          = hPutStrLn hLeft
 	, ppSort            = fmap (namedScratchpadFilterOutWorkspace .) (ppSort defaultPP) -- hide "NSP" from workspace list
 	, ppOrder           = orderText
 	, ppExtras          = []
@@ -424,7 +437,7 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. shiftMask,   xK_space),  setLayout $ XMonad.layoutHook conf)                 --Reset the layouts on the current workspace to default
 	, ((modMask,                 xK_Tab),    windows W.focusDown)
     , ((modMask,                 xK_b),      withFocused toggleBorder)
-	, ((modMask .|. shiftMask,   xK_c),      kill)                                                                  --Close focused window
+	, ((modMask .|. shiftMask,   xK_c),      kill1)                                                                  --Close focused window
 	, ((modMask,                 xK_f),      spawn "dmenulocate")                     -- Use 'locate' with dmenu!
 	--, ((modMask .|. controlMask, xK_g),      sendMessage $ ToggleGaps) 
 	, ((modMask,                 xK_i),      goToSelected $ myGSConfig myColorizer)                                 --Launch GridSelect
@@ -536,14 +549,14 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --, ((modMask .|. controlMask, xK_Right), nextWS)
 	]
 	++
-	[((m .|. modMask, k), windows $ f i)                                                       --Switch to n workspaces and send client to n workspaces
-		| (i, k) <- zip (XMonad.workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
-		, (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+	[((m .|. modMask, k), windows $ onCurrentScreen f i)                                                       --Switch to n workspaces and send client to n workspaces
+		| (i, k) <- zip (workspaces' conf) ([xK_1 .. xK_9] ++ [xK_0])
+		, (f, m) <- [(W.view, 0), (W.shift, shiftMask), (copy, shiftMask .|. mod1Mask)]]
 	++
 	[((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))                --Switch to n screens and send client to n screens
 	    -- | (key, sc) <- zip [xK_e, xK_w, xK_r] [0..]
 	    | (key, sc) <- zip [xK_w, xK_e] [0..]
-		, (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+		, (f, m) <- [(W.view, 0), (W.shift, shiftMask), (copy, shiftMask .|. mod1Mask)]]
 	where
 		fullFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery doFullFloat f
 		rectFloatFocused = withFocused $ \f -> windows =<< appEndo `fmap` runQuery (doRectFloat $ RationalRect 0.05 0.05 0.9 0.9) f

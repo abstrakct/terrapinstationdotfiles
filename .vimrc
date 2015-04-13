@@ -74,6 +74,12 @@ set wildmenu
 set wildmode=list:longest,full
 
 filetype indent plugin on
+
+" Persistent undo 
+set undofile
+set undodir=$HOME/.vim/undo
+set undoreload=10000
+
 " set cindent
 " }}}
 " Autocommands {{{
