@@ -113,13 +113,19 @@ launch-mpd
 #esac
 
 # Everything for XMonad
-feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
+#feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
+
+feh --bg-fill ~/pictures/wallpapers/o1907542.jpg ~/pictures/wallpapers/wallpaper-1403394.jpg
+
 xsetroot -cursor_name left_ptr
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &
 thunar --daemon &
 urxvtd -q -f -o
 g15-desktop-service start
 g15-systemtray &
+twitchnotifier -c rkaidgaming &
+compton -c -r4 -l-6 -t-4 -z -b -G -C -e0.85 -f -D30 -I0.45 -O0.45 --paint-on-overlay --unredir-if-possible --backend glx --glx-no-stencil --glx-no-rebind-pixmap --vsync opengl
+
 exec dbus-launch xmonad
 #android-receiver &
 

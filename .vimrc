@@ -48,6 +48,7 @@ endif
 
 set hlsearch  " highlight search
 set incsearch " incremental search, search as you type
+set ignorecase
 set smartcase " Ignore case when searching lowercase
 
 set expandtab
@@ -186,6 +187,7 @@ nnoremap <space> za
 " Put norwegian keys to use :)
 map ø :
 map æ @
+map å /
 
 " tab navigation made easier
 map gr gT

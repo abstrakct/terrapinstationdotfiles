@@ -305,7 +305,7 @@ myManageHook = (composeAll . concat $
 		myGameS         = ["zsnes"]
 		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["Vlc", "sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
@@ -461,9 +461,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. controlMask, xK_Down),   withFocused (keysResizeWindow (0,30) (0,0)))        --Expand floated window verticaly by 50 pixels
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
     , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
-	, ((modMask .|. shiftMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
-    , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
+	, ((modMask .|. shiftMask .|. controlMask,   xK_q),      io (exitWith ExitSuccess))                               --Quit xmonad
+    -- , ((0, xF86XK_Reload),                   spawn "killall conky dzen2; xmonad --recompile; xmonad --restart")
 	 
 	 -- mpdmenus
     --, ((modMask,                 xK_o),      spawn "/home/rolf/bin/dmenumpd -a")

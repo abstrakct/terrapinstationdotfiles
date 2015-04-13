@@ -445,6 +445,7 @@ pizza            = Salmon
 default_manual_training = true
 skill_focus = true
 
+tile_menu_icons = false
 
 
 ## fra annen dude
