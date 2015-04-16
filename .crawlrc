@@ -366,7 +366,7 @@ force_more_message += You are starting to lose your buoyancy
 # All tiles specific options are in the external file
 #include = tiles_options.txt
 
-tile_full_screen = false
+tile_full_screen = true
 tile_window_width = 1920
 tile_window_height = 1080
 

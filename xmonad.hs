@@ -82,6 +82,7 @@ type WorkspaceTwo = WorkspaceId
 main :: IO ()
 main = do
 	workspaceBar            <- spawnPipe myWorkspaceBar
+	workspaceBarTwo         <- spawnPipe myWorkspaceBarTwo
 	bottomStatusBar         <- spawnPipe myBottomStatusBar
 	topStatusBar            <- spawnPipe myTopStatusBar
 	secondTopStatusBar      <- spawnPipe mySecondTopBar
@@ -97,7 +98,7 @@ main = do
 		, layoutHook         = myLayoutHook
 		, workspaces         = myWorkspaces
 		, manageHook         = manageDocks <+> myManageHook
-		, logHook            = (myLogHook workspaceBar) <+> ewmhDesktopsLogHook >> setWMName "LG3D" --ewmh needed so that chromium gain focus
+		, logHook            = (myLogHook workspaceBar) <+> ewmhDesktopsLogHook >> (myLogHookTwo workspaceBarTwo) <+> setWMName "LG3D" --ewmh needed so that chromium gain focus
 		, handleEventHook    = focusOnMouseMove <+> fullscreenEventHook                             --needed for chromium full screen
 		, keys               = myKeys
 		, mouseBindings      = myMouseBindings
@@ -191,7 +192,7 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
 -- myWorkspaces = withScreens 2 ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
-myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9", "X"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -294,10 +295,10 @@ myScratchPads = [ NS "ncmpcpp"  spawnNcmpcpp findNcmpcpp manageNcmpcpp
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
 	[ [resource     =? r     --> doIgnore                             | r <- myIgnores] --ignore desktop
-	, [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
-	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myCodeS  ]
-	, [className    =? c     --> doShift (myWorkspaces !! 6)          | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
-	, [className    =? c     --> doShift (myWorkspaces !! 7)          | c <- myXBMC   ]
+	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 4)          | c <- myCodeS  ]
+	, [className    =? c     --> doShift (myWorkspaces !! 10)         | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 12)         | c <- myXBMC   ]
 	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
 	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
@@ -333,18 +334,19 @@ myUrgencyHook = withUrgencyHook dzenUrgencyHook
 	{ args = ["-fn", dzenFont, "-bg", colorBlack, "-fg", colorGreen] }
 -- }}}
 -- {{{ StatusBars
-myWorkspaceBar, myBottomStatusBar, myTopStatusBar, mySecondTopBar, mySecondBottomBar :: String
+myWorkspaceBar, myBottomStatusBar, myTopStatusBar, mySecondTopBar, mySecondBottomBar, myWorkspaceBarTwo :: String
 myWorkspaceBar    = "dzen2 -x '0' -y '0' -h '16' -w '1510' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
 myBottomStatusBar = "/home/rolf/bin/statusbar.first.bottom.sh"
 myTopStatusBar    = "/home/rolf/bin/statusbar.first.top.sh"
 mySecondBottomBar   = "/home/rolf/bin/statusbar.second.bottom.sh"
 mySecondTopBar      = "/home/rolf/bin/statusbar.second.top.sh"
+myWorkspaceBarTwo    = "dzen2 -x '1920' -y '0' -h '16' -w '1000' -ta 'l' -fg '" ++ colorWhiteAlt ++ "' -bg '" ++ colorBlack ++ "' -fn '" ++ dzenFont ++ "' -p -e ''"
 -- }}}
 -- {{{ myWorkspaceBar config
 myLogHook :: Handle -> X ()
-myLogHook hLeft = dynamicLogWithPP $ defaultPP
-	{ ppOutput          = hPutStrLn hLeft
-	, ppSort            = fmap (namedScratchpadFilterOutWorkspace .) (ppSort defaultPP) -- hide "NSP" from workspace list
+myLogHook h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marshallPP 0 $ defaultPP
+	{ ppOutput          = hPutStrLn h
+	--, ppSort            = fmap (namedScratchpadFilterOutWorkspace .) (ppSort defaultPP) -- hide "NSP" from workspace list
 	, ppOrder           = orderText
 	, ppExtras          = []
 	, ppSep             = "^fg(" ++ colorGray ++ ")|"
@@ -362,6 +364,85 @@ myLogHook hLeft = dynamicLogWithPP $ defaultPP
 		orderText (ws:l:t:_) = [ws,l,t]
 		titleText [] = "Desktop " ++ myArrow
 		titleText x = (shorten 120 x) ++ " " ++ myArrow
+		layoutText "Minimize T"  = "ResizeTall"
+		layoutText "Minimize O"  = "One Big"
+		layoutText "Minimize TS" = "Tabbed"
+		layoutText "Minimize TM" = "Master"
+		layoutText "Minimize M"  = "Mosaic"
+		layoutText "Minimize MT" = "Mirror"
+		layoutText "Minimize G"  = "Mosaic"
+		layoutText "Minimize C"  = "Mirror"
+		layoutText "Minimize F"  = "Full"
+		layoutText "Minimize FS" = "Fullscreen"
+		layoutText "Minimize FL" = "Float"
+		layoutText "Minimize SmartSpacing 6 T"  = "ResizeTall"
+		layoutText "Minimize SmartSpacing 6 O"  = "One Big"
+		layoutText "Minimize SmartSpacing 6 TS" = "Tabbed"
+		layoutText "Minimize SmartSpacing 6 TM" = "Master"
+		layoutText "Minimize SmartSpacing 6 M"  = "Mosaic"
+		layoutText "Minimize SmartSpacing 6 MT" = "Mirror"
+		layoutText "Minimize SmartSpacing 6 G"  = "Mosaic"
+		layoutText "Minimize SmartSpacing 6 C"  = "Mirror"
+		layoutText "Minimize SmartSpacing 6 F"  = "Full"
+		layoutText "Minimize SmartSpacing 6 FS" = "Fullscreen"
+		layoutText "Minimize SmartSpacing 6 FL" = "Float"
+		layoutText "Minimize SmartSpacing 6 Grid"  = "Grid"
+		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
+		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
+		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
+		--layoutText "Minimize ReflectX TM" = "^fg(" ++ colorGreen ++ ")Master X^fg()"
+		--layoutText "Minimize ReflectX M"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
+		--layoutText "Minimize ReflectX MT" = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
+		--layoutText "Minimize ReflectX G"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
+		--layoutText "Minimize ReflectX C"  = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
+		--layoutText "Minimize ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall Y^fg()"
+		--layoutText "Minimize ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig Y^fg()"
+		--layoutText "Minimize ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed Y^fg()"
+		--layoutText "Minimize ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master Y^fg()"
+		--layoutText "Minimize ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
+		--layoutText "Minimize ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
+		--layoutText "Minimize ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
+		--layoutText "Minimize ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
+		--layoutText "Minimize ReflectX ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
+		--layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
+		layoutText x = "^fg(" ++ colorGreen ++ ")" ++ x ++ "^fg()"
+		--clickable config
+		wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
+		wrapClickTitle content = "^ca(1,xdotool key super+j)" ++ content ++ "^ca()"                                                                --clickable title
+		--wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo "w;" ++ xdo index ++ ")" ++ "^ca(3," ++ xdo "e;" ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
+		wrapClickWorkSpace (idx,str) = "^ca(1," ++ xdo index ++ ")" ++ "^ca(3," ++ xdo index ++ ")" ++ str ++ "^ca()^ca()" --clickable workspaces
+			where
+				wsIdxToString Nothing = "1"
+				wsIdxToString (Just n) = show (n+1)
+				index = wsIdxToString (elemIndex idx myWorkspaces)
+				xdo key = "xdotool key super+" ++ key
+				
+myLogHookTwo h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marshallPP 1 $ defaultPP
+	{ ppOutput          = hPutStrLn h
+	--, ppSort            = fmap (namedScratchpadFilterOutWorkspace .) (ppSort defaultPP) -- hide "NSP" from workspace list
+	, ppOrder           = orderText
+	, ppExtras          = []
+	, ppSep             = "^fg(" ++ colorGray ++ ")|"
+	, ppWsSep           = ""
+	, ppCurrent         = dzenColor colorCurrent  colorBlack . pad . wrap "[" "]" 
+	, ppUrgent          = dzenColor colorGreen    colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppVisible         = dzenColor colorBlue     colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppHidden          = dzenColor colorWhiteAlt colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppHiddenNoWindows = dzenColor colorGrayAlt  colorBlack . pad . wrapClickWorkSpace . (\a -> (a,a))
+	, ppLayout          = dzenColor colorBlue     colorBlack . pad . wrapClickLayout . layoutText
+	, ppTitle           = dzenColor colorWhiteAlt colorBlack . pad . wrapClickTitle . titleText . dzenEscape
+	}
+	where
+		--display config
+		orderText (ws:_:t:_) = [ws,t]
+		titleText [] = "Desktop " ++ myArrow
+		titleText x = (shorten 150 x) ++ " " ++ myArrow
 		layoutText "Minimize T"  = "ResizeTall"
 		layoutText "Minimize O"  = "One Big"
 		layoutText "Minimize TS" = "Tabbed"
