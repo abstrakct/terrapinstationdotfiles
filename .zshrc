@@ -234,6 +234,8 @@ export LS_COLORS="bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;32:do=38;5;127:ex=
 source ~/.oh-my-zsh/zsh-history-substring-search.zsh
 #source ~/bin/f.sh
 
+#sudo iptables-restore < /etc/iptables/terrapinstation.rules
+
 echo
 fortune
 echo
