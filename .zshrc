@@ -131,6 +131,7 @@ alias p2="vlc http://lyd.nrk.no/nrk_radio_p2_mp3_h &"
 alias pac='sudo pacman'
 alias paca=pacaur
 alias pacman='sudo pacman'
+alias pgr="nocorrect pgr"
 alias pico=nano
 alias pinfo="pacman -Qi"
 alias plist="pacman -Ql"
@@ -215,7 +216,7 @@ define() {
 }
 
 pgr() {
-    ps aux | nocorrect grep -i $1 | grep -v grep
+    nocorrect ps aux | nocorrect grep -i $1 | grep -v grep
 }
 
 
@@ -233,6 +234,7 @@ export LS_COLORS="bd=38;5;68:ca=38;5;17:cd=38;5;113;1:di=38;5;32:do=38;5;127:ex=
 # source ~/.oh-my-zsh/zsh-syntax-highlighting.zsh
 source ~/.oh-my-zsh/zsh-history-substring-search.zsh
 #source ~/bin/f.sh
+source ~/.command-not-found.zsh
 
 #sudo iptables-restore < /etc/iptables/terrapinstation.rules
 

@@ -295,10 +295,11 @@ myScratchPads = [ NS "ncmpcpp"  spawnNcmpcpp findNcmpcpp manageNcmpcpp
 myManageHook :: ManageHook
 myManageHook = (composeAll . concat $
 	[ [resource     =? r     --> doIgnore                             | r <- myIgnores] --ignore desktop
-	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myWebS   ] --move myWebS windows to workspace 1 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 2)          | c <- myWebS   ] --move myWebS windows to workspace 0_2 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 1)          | c <- myWebTwo ] --move myWebS windows to workspace 1_1 by classname
 	, [className    =? c     --> doShift (myWorkspaces !! 4)          | c <- myCodeS  ]
-	, [className    =? c     --> doShift (myWorkspaces !! 10)         | c <- myGfxS   ] --move myGfxS windows to workspace 4 by classname
-	, [className    =? c     --> doShift (myWorkspaces !! 12)         | c <- myXBMC   ]
+	, [className    =? c     --> doShift (myWorkspaces !! 12)         | c <- myGfxS   ] --move myGfxS windows to workspace 0_7 by classname
+	, [className    =? c     --> doShift (myWorkspaces !! 14)         | c <- myXBMC   ]
 	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
 	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
@@ -312,18 +313,19 @@ myManageHook = (composeAll . concat $
 		role            = stringProperty "WM_WINDOW_ROLE"
 		name            = stringProperty "WM_NAME"
 		myIgnores       = ["desktop","desktop_window"]
-		myWebS          = ["Firefox", "Chromium"]
+		myWebS          = ["Firefox"]
+		myWebTwo        = ["Chromium"]
 		myGfxS          = ["Gimp", "gimp", "GIMP"]
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
 		myXBMC          = ["xbmc"]
 		myOtherS        = ["Transmission-remote-gtk"]
-		myFloatCC       = ["Vlc", "sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
+		myFloatCC       = ["sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
-		myFullscr       = ["t-engine64", "xbmc"]
+		myFullscr       = ["mpv", "t-engine64", "xbmc"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
