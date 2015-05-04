@@ -135,6 +135,7 @@ alias pgr="nocorrect pgr"
 alias pico=nano
 alias pinfo="pacman -Qi"
 alias plist="pacman -Ql"
+alias plog="less /var/log/pacman.log"
 alias psg="ps aux | grep"
 #alias rbcl="cat ~/bin/cmus/rebuild-library | cmus-remote"
 alias rc="sudo rc.d"

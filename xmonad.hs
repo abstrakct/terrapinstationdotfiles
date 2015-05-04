@@ -301,7 +301,7 @@ myManageHook = (composeAll . concat $
 	, [className    =? c     --> doShift (myWorkspaces !! 12)         | c <- myGfxS   ] --move myGfxS windows to workspace 0_7 by classname
 	, [className    =? c     --> doShift (myWorkspaces !! 14)         | c <- myXBMC   ]
 	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
-	, [className    =? c     --> doShift (myWorkspaces !! 9)          | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
+	, [className    =? c     --> doShift (myWorkspaces !! 19)         | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
 	, [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
 	, [className    =? c     --> doF W.focusDown                      | c <- myFocusDC] --dont focus on launching by classname
@@ -314,7 +314,7 @@ myManageHook = (composeAll . concat $
 		name            = stringProperty "WM_NAME"
 		myIgnores       = ["desktop","desktop_window"]
 		myWebS          = ["Firefox"]
-		myWebTwo        = ["Chromium"]
+		myWebTwo        = ["vimprobable2"]          -- Chromium ?
 		myGfxS          = ["Gimp", "gimp", "GIMP"]
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
@@ -325,7 +325,7 @@ myManageHook = (composeAll . concat $
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
-		myFullscr       = ["mpv", "t-engine64", "xbmc"]
+		myFullscr       = ["mpv", "t-engine64", "xbmc", "crawl-tiles"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
