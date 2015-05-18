@@ -135,7 +135,8 @@ colorGreen           = "#99cc66"
 colorCurrent         = "#64ae38"
 myArrow              = "" -- "^fg(" ++ colorWhiteAlt ++ ")>^fg(" ++ colorBlue ++ ")>^fg(" ++ colorGray ++ ")>"
 myNormalBorderColor  = colorGray
-myFocusedBorderColor = "#0f2a46"
+-- myFocusedBorderColor = "#0f2a46"
+myFocusedBorderColor = "#c0b18b"
 -- }}}
 -- {{{ Tab theme
 myTabTheme :: Theme
@@ -325,7 +326,7 @@ myManageHook = (composeAll . concat $
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
-		myFullscr       = ["mpv", "t-engine64", "xbmc", "crawl-tiles"]
+		myFullscr       = ["adom", "mpv", "t-engine64", "xbmc", "crawl-tiles"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
