@@ -326,7 +326,7 @@ myManageHook = (composeAll . concat $
 		myFloatSN       = ["Event Tester"]
 		myFocusDC       = ["Event Tester", "Notify-osd"]
 		myFloatCN       = ["Volume Control", "PlayOnLinux"]
-		myFullscr       = ["adom", "mpv", "t-engine64", "xbmc", "crawl-tiles"]
+		myFullscr       = ["plugin-container", "adom", "mpv", "t-engine64", "xbmc", "crawl-tiles"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
