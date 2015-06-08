@@ -115,7 +115,8 @@ transmission-remote-gtk &
 # Everything for XMonad
 #feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
 
-feh --bg-fill ~/pictures/wallpapers/o1907542.jpg ~/pictures/wallpapers/wallpaper-1403394.jpg
+#feh --bg-fill ~/pictures/wallpapers/o1907542.jpg ~/pictures/wallpapers/wallpaper-1403394.jpg
+feh --bg-scale ~/pictures/wallpapers/sanfrancisco-painting-cozy-YWzw1ij.jpg 
 
 xsetroot -cursor_name left_ptr
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &

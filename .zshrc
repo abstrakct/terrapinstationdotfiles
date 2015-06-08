@@ -120,6 +120,7 @@ alias l='ls -l'
 alias la='ls -la'
 alias lo=locate
 alias loi='locate -i'
+alias mn="mount | sort | column -t"
 alias mv="mv -vni"
 alias movie=". /home/rolf/bin/choosemovie"
 alias n="sudo /etc/rc.d/network"
