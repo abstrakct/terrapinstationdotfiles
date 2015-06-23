@@ -1,0 +1,19 @@
+#! /bin/sh
+
+flavor=${1:-bar}
+
+bspc control --put-status
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+#clock -sf 'S%a %H:%M' > "$PANEL_FIFO" &
+date +"%H:%M" > "$PANEL_FIFO" &
+case "$flavor" in
+    bar)
+        cat "$PANEL_FIFO" | /home/rolf/bin/panel_bar | bar-aint-recursive
+        ;;
+    dzen2)
+        PANEL_HEIGHT=16
+        FONT_FAMILY='montecarlo'
+        FONT_SIZE=11
+        cat "$PANEL_FIFO" | panel_dzen2 -f "$FONT_FAMILY" -s "$FONT_SIZE" | dzen2 -h $PANEL_HEIGHT -dock -ta l -title-name panel -fn "${FONT_FAMILY}:pixelsize=${FONT_SIZE}" -fg "#9d9d9d" -bg "#020202"
+        ;;
+esac

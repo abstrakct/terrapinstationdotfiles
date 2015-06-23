@@ -1,0 +1,8 @@
+#!/bin/sh 
+
+/home/rolf/bin/pa-game-mix 
+
+simplescreenrecorder --statsfile
+
+pactl unload-module module-loopback
+pactl unload-module module-null-sink

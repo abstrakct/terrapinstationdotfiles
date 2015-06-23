@@ -55,6 +55,11 @@ if [ "$1" = "d6"  ]; then
         sudo umount /mnt/d6-500gb
 fi
 
+# Disk 7
+if [ "$1" = "7"  ]; then
+        sudo umount /mnt/d7-2tb/
+fi
+
 # Disk X
 if [ "$1" = "x"  ]; then
        sudo umount /mnt/x

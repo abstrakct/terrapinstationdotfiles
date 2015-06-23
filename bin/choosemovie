@@ -5,7 +5,7 @@ ALLGOOD="no"
 
 while [ $ALLGOOD = "no" ]; do
         echo "How about:"
-        MOVIE="$(find /home/rolf/TheVault/film/complete -maxdepth 2 -type d | shuf | tail -n 1)"
+        MOVIE="$(find /TheVault/film/complete -maxdepth 2 -type d | shuf | tail -n 1)"
         echo $MOVIE
 
         read answer

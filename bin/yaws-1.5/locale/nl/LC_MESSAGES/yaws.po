@@ -1,0 +1,161 @@
+# YAWS: Yet Another Weather Script
+# Copyright (C) 2013 Boisei0
+# Boisei0 <boisei0@hubsec.eu>, 2013.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: yaws.py 1.5\n"
+"POT-Creation-Date: 2013-12-27 11:04+GMT\n"
+"PO-Revision-Date: 2013-12-27 19:48+1\n"
+"Last-Translator: Boisei0 <boisei0@hubsec.eu>\n"
+"Language-Team: Boisei0 <boisei0@hubsec.eu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: yaws.py:288
+msgid "Stormy"
+msgstr "Stormachtig"
+
+#: yaws.py:289 yaws.py:325
+msgid "Rain"
+msgstr "Regen"
+
+#: yaws.py:290
+msgid "Change"
+msgstr "Verandering"
+
+#: yaws.py:291
+msgid "Fair"
+msgstr "Mooi weer"
+
+#: yaws.py:292
+msgid "Very dry"
+msgstr "Zeer droog"
+
+#: yaws.py:296
+msgid "Monday"
+msgstr "Maandag"
+
+#: yaws.py:297
+msgid "Tuesday"
+msgstr "Dinsdag"
+
+#: yaws.py:298
+msgid "Wednesday"
+msgstr "Woensdag"
+
+#: yaws.py:299
+msgid "Thursday"
+msgstr "Donderdag"
+
+#: yaws.py:300
+msgid "Friday"
+msgstr "Vrijdag"
+
+#: yaws.py:301
+msgid "Saturday"
+msgstr "Zaterdag"
+
+#: yaws.py:302
+msgid "Sunday"
+msgstr "Zondag"
+
+#: yaws.py:306
+msgid "Mon"
+msgstr "Maa"
+
+#: yaws.py:307
+msgid "Tue"
+msgstr "Din"
+
+#: yaws.py:308
+msgid "Wed"
+msgstr "Woe"
+
+#: yaws.py:309
+msgid "Thu"
+msgstr "Don"
+
+#: yaws.py:310
+msgid "Fri"
+msgstr "Vri"
+
+#: yaws.py:311
+msgid "Sat"
+msgstr "Zat"
+
+#: yaws.py:312 yaws.py:316 yaws.py:331
+msgid "Sun"
+msgstr "Zonnig"
+
+#: yaws.py:317 yaws.py:332
+msgid "Light cloudy"
+msgstr "Licht bewolkt"
+
+#: yaws.py:318
+msgid "Partly cloudy"
+msgstr "Deels bewolkt"
+
+#: yaws.py:319
+msgid "Cloudy"
+msgstr "Bewolkt"
+
+#: yaws.py:320 yaws.py:333
+msgid "Light rain and sun"
+msgstr "Lichte regen en zon"
+
+#: yaws.py:321
+msgid "Light rain with thunder and sun"
+msgstr "Lichte regen met onweer en zon"
+
+#: yaws.py:322
+msgid "Sleet and sun"
+msgstr "IJzel en zon"
+
+#: yaws.py:323 yaws.py:334
+msgid "Snow and sun"
+msgstr "Sneeuw en zon"
+
+#: yaws.py:324
+msgid "Light rain"
+msgstr "Lichte regen"
+
+#: yaws.py:326
+msgid "Rain and thunder"
+msgstr "Regen en onweer"
+
+#: yaws.py:327
+msgid "Sleet"
+msgstr "IJzel"
+
+#: yaws.py:328
+msgid "Snow"
+msgstr "Sneeuw"
+
+#: yaws.py:329
+msgid "Snow and thunder"
+msgstr "Sneeuw en onweer"
+
+#: yaws.py:330
+msgid "Fog"
+msgstr "Mist"
+
+#: yaws.py:335
+msgid "Sleet with sun and thunder"
+msgstr "IJzel met zon en onweer"
+
+#: yaws.py:336
+msgid "Snow with sun and thunder"
+msgstr "Sneeuw met zon en onweer"
+
+#: yaws.py:337
+msgid "Light rain and thunder"
+msgstr "Lichte regen en onweer"
+
+#: yaws.py:338
+msgid "Sleet and thunder"
+msgstr "IJzel en onweer"
+

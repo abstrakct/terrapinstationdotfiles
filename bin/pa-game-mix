@@ -1,0 +1,7 @@
+#!/bin/sh 
+
+pactl load-module module-null-sink sink_name=duplex_out sink_properties=device.description="duplex-out"
+pactl load-module module-null-sink sink_name=game_out sink_properties=device.description="game-out"
+pactl load-module module-loopback source=game_out.monitor
+pactl load-module module-loopback source=game_out.monitor sink=duplex_out
+pactl load-module module-loopback sink=duplex_out

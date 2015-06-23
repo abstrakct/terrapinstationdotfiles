@@ -1,0 +1,162 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-12-27 11:05+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: yaws.py:288
+msgid "Stormy"
+msgstr ""
+
+#: yaws.py:289 yaws.py:325
+msgid "Rain"
+msgstr ""
+
+#: yaws.py:290
+msgid "Change"
+msgstr ""
+
+#: yaws.py:291
+msgid "Fair"
+msgstr ""
+
+#: yaws.py:292
+msgid "Very dry"
+msgstr ""
+
+#: yaws.py:296
+msgid "Monday"
+msgstr ""
+
+#: yaws.py:297
+msgid "Tuesday"
+msgstr ""
+
+#: yaws.py:298
+msgid "Wednesday"
+msgstr ""
+
+#: yaws.py:299
+msgid "Thursday"
+msgstr ""
+
+#: yaws.py:300
+msgid "Friday"
+msgstr ""
+
+#: yaws.py:301
+msgid "Saturday"
+msgstr ""
+
+#: yaws.py:302
+msgid "Sunday"
+msgstr ""
+
+#: yaws.py:306
+msgid "Mon"
+msgstr ""
+
+#: yaws.py:307
+msgid "Tue"
+msgstr ""
+
+#: yaws.py:308
+msgid "Wed"
+msgstr ""
+
+#: yaws.py:309
+msgid "Thu"
+msgstr ""
+
+#: yaws.py:310
+msgid "Fri"
+msgstr ""
+
+#: yaws.py:311
+msgid "Sat"
+msgstr ""
+
+#: yaws.py:312 yaws.py:316 yaws.py:331
+msgid "Sun"
+msgstr ""
+
+#: yaws.py:317 yaws.py:332
+msgid "Light cloudy"
+msgstr ""
+
+#: yaws.py:318
+msgid "Partly cloudy"
+msgstr ""
+
+#: yaws.py:319
+msgid "Cloudy"
+msgstr ""
+
+#: yaws.py:320 yaws.py:333
+msgid "Light rain and sun"
+msgstr ""
+
+#: yaws.py:321
+msgid "Light rain with thunder and sun"
+msgstr ""
+
+#: yaws.py:322
+msgid "Sleet and sun"
+msgstr ""
+
+#: yaws.py:323 yaws.py:334
+msgid "Snow and sun"
+msgstr ""
+
+#: yaws.py:324
+msgid "Light rain"
+msgstr ""
+
+#: yaws.py:326
+msgid "Rain and thunder"
+msgstr ""
+
+#: yaws.py:327
+msgid "Sleet"
+msgstr ""
+
+#: yaws.py:328
+msgid "Snow"
+msgstr ""
+
+#: yaws.py:329
+msgid "Snow and thunder"
+msgstr ""
+
+#: yaws.py:330
+msgid "Fog"
+msgstr ""
+
+#: yaws.py:335
+msgid "Sleet with sun and thunder"
+msgstr ""
+
+#: yaws.py:336
+msgid "Snow with sun and thunder"
+msgstr ""
+
+#: yaws.py:337
+msgid "Light rain and thunder"
+msgstr ""
+
+#: yaws.py:338
+msgid "Sleet and thunder"
+msgstr ""

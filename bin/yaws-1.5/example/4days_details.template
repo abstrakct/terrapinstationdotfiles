@@ -1,0 +1,10 @@
+${image [--datatype=WI] -p 0,0 -s 64x64}
+${image [--datatype=WI --startday=1] -p 120,0 -s 64x64}
+${image [--datatype=WI --startday=2] -p 240,0 -s 64x64}
+${image [--datatype=WI --startday=3] -p 360,0 -s 64x64}
+${voffset 15}
+Now: [--datatype=HT]${goto 135}[--datatype=DW --startday=1 --shortweekday]: [--datatype=HT --startday=1]${goto 255}[--datatype=DW --startday=2 --shortweekday]: [--datatype=HT --startday=2]${goto 375}[--datatype=DW --startday=3 --shortweekday]: [--datatype=HT --startday=3]
+Wind: [--datatype=WD] [--datatype=WS]
+Humidity: [--datatype=HM]
+Pressure: [--datatype=BR] [--datatype=BD]
+Moon: [--datatype=MP]

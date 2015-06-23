@@ -18,4 +18,4 @@ cal -m | sed -r -e "1,2 s/.*/^fg(#3955c4)&^fg()/" -e "s/(^| )($TODAY)($| )/\1^bg
 [ $MONTH -eq 12 ] && YEAR=`expr $YEAR + 1`
 cal -m `expr \( $MONTH + 1 \) % 12` $YEAR | sed -e "1,2 s/.*/^fg(#3955c4)&^fg()/" -e "s/^/    /"
 ) \
-| dzen2 -p 60 -fn $FONT -x 2900 -y 16 -w 170 -l 18 -sa l -e 'onstart=uncollapse;button1=exit'
+| dzen2 -p 60 -fn $FONT -x 1635 -y 16 -w 170 -l 18 -sa l -e 'onstart=uncollapse;button1=exit'

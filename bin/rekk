@@ -1,0 +1,6 @@
+#!/bin/sh 
+
+/home/rolf/bin/pa-game-mix-alt 
+simplescreenrecorder --statsfile
+/home/rolf/bin/unpa 
+

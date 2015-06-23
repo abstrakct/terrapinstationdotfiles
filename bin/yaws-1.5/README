@@ -1,0 +1,63 @@
+usage: yaws.py [-h] [--msl MSL] [-t FILE] [-L LOCALE] [-d DATATYPE]
+               [-s NUMBER] [-e NUMBER] [-i] [-b] [-M] [-n] [-x] [-u] [-w]
+               [--version]
+               lat lon
+
+YAWS: Yet Another Weather Script
+
+positional arguments:
+  lat                   latitude of the location
+  lon                   longitude of the location
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --msl MSL             meters above sea level of the location
+  -t FILE, --template FILE
+                        define a template file to generate output in one call.
+                        A displayable item in the file is in the form
+                        [--datatype=HT --startday=1]. The following are
+                        possible options within each item: --datatype,
+                        --startday, --endday, --imperial, --beaufort,
+                        --metrespersecond, --shortweekday, --hideunits,
+                        --hidedegreesymbol, --night. Note that the short forms
+                        of the options are not supported! If any of these
+                        options is set from the commandline, it sets the
+                        default value of the option for all template items.
+  -L LOCALE, --locale LOCALE
+                        override the system locale for language output
+                        (en=english, nl=dutch, more to come)
+  -d DATATYPE, --datatype DATATYPE
+                        [default: HT] The data type options are: DW (Day of
+                        Week), WI (Weather Icon Path), LT (Low Temp), HT (High
+                        Temp), CC (Current Conditions), CT (Conditions Text),
+                        HM (Humidity), WD (Wind Direction), WA (Wind Angle -
+                        in degrees), WS (Wind Speed), CN (City Name), CO
+                        (Country), SR (SunRise), SS (SunSet), DL (DayLight),
+                        MP (Moon Phase), BR (Barometer Reading), BD (Barometer
+                        Description), DP (Dew Point), WM (weather map fetch
+                        and image path returned), LU (Last Update), LF (Last
+                        Fetch). Not applicable at command line when using
+                        templates.
+  -s NUMBER, --startday NUMBER
+                        define the starting day number, if omitted current
+                        conditions are output. Not applicable at command line
+                        when using templates.
+  -e NUMBER, --endday NUMBER
+                        define the ending day number, if omitted only starting
+                        day data is output. Not applicable at command line
+                        when using templates.
+  -i, --imperial        request imperial units, if omitted output is in
+                        metric.
+  -b, --beaufort        request beaufort scale for wind speeds, if omitted
+                        output is either metric/imperial.
+  -M, --metrespersecond
+                        request metres per second for wind speeds, if omitted
+                        output is either metric/imperial.
+  -n, --night           switch output to night data, if omitted day output
+                        will be output.
+  -x, --hidedegreesymbol
+                        Hide the degree symbol used with temperature output
+  -u, --hideunits       Hide units such as mph or C, degree symbols (°) are
+                        still shown.
+  -w, --shortweekday    Shorten the day of week data type to 3 characters.
+  --version             show program's version number and exit

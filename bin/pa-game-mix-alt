@@ -1,0 +1,4 @@
+#!/bin/sh
+pactl load-module module-null-sink sink_name=virtual1 sink_properties=device.description="mic+game"
+pactl load-module module-loopback sink=virtual1
+pactl load-module module-loopback sink=virtual1

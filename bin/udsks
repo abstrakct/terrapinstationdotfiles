@@ -1,0 +1,96 @@
+#!/bin/bash
+# udsks: Un/mounts removable media via udisks
+# Adapted by DMcFadzean from some-guy94's script at: https://bbs.archlinux.org/viewtopic.php?pid=877272#p877272
+# udsks is free software: you can redistribute it and/or modify it under the terms of the
+# GNU General Public License Version 3 as published by the Free Software Foundation. 
+# Arch Linux dependencies: dmenu, udisks[, notification program eg. zenity]
+# Removable media criteria: not system internal, has media, not partition table[, usage filesystem] 
+# Note that 'label:' tag is not unique; we require the first as second is subsection of 'partition:'
+
+# Get program name and set default notification flag
+pgm=${0##*/}; flg="Removable media"
+##Customize notification programs
+Fnotify()
+{
+  f1=$1; f2=$2; shift 2; if [ "$f1" = "msg" ]; then m="info"; else m="error"; fi
+  zenity --title="$f2" --$m --text="$@"
+}
+##Fnotify()
+##{
+##  f1=$1; f2=$2; shift 2; if [ "$f1" = "msg" ]; then m="normal"; else m="critical"; fi
+##  notify-send -u $m "$f2" "$@"
+##}
+
+# Parse command line
+while getopts 'hfF:u:O:' OPTION
+do
+  case $OPTION in
+    f) if [ -n "$FILEMANAGER" ]; then flm="$FILEMANAGER"; else flm="thunar"; fi ;;  ## Default file manager
+    F) flm="$OPTARG" ;;
+    u) dir="$OPTARG" ;;
+    O) opt="$OPTARG" ;;
+    ? | h) cat <<EOF
+udsks 2.11: Mounts and unmounts removable media via udisks
+Usage: udsks [-f] [-F filemanager] [-u directory] [-O options]
+Options:
+  -f opens the mounted media directory in the default file manager
+  -F opens the mounted media directory in the specified file manager
+  -u unmounts the media mounted at the specified directory
+  -O specifies a string of additional options for Dmenu
+If -u is not specified, a menu of all possible un/mount actions is shown
+EOF
+       exit 1 ;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ -n "$dir" ]; then
+  # Unmount media from specified directory
+  dev=$(mount | grep -m 1 " on $dir type " | awk '{print $1}')
+  if [ -n "$dev" ]; then drv="unmount: $dev"; else Fnotify err "$flg" "No media mounted at: $dir"; exit 2; fi
+else
+  # Provide a menu of possible un/mount actions and media
+  if [ -n "$DMENU" ]; then dmenu="$DMENU -p Media -b -fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-u -nf #D37E2C -nb #000000 -sf #FF0000 -sb #000000"; else dmenu="dmenu -i -p Media -b -fn -*-terminus-*-*-*-*-12-*-*-*-*-*-*-u -nf #D37E2C -nb #000000 -sf #FF0000 -sb #000000"; fi  # Dmenu command
+  zi="system internal:"; za="has media:"; zt="partition table:"; zu="usage:"; zm="is mounted:"; zp="mount paths:"; zl="label:"
+  fst=""  # Store string of devices handled by fstab, converting any UUIDs to devices
+  while read dev x; do
+    case "$dev" in /dev/*) fst="$fst$dev ";; UUID=*) fst="$fst$(findfs $dev) ";; *) continue;; esac
+    done < /etc/fstab  #; echo $fst >&2  # debug
+  # Select removable media device
+  drv=$(udisks --enumerate-device-files | grep -e "/dev/sd" -e "/dev/sr" | \
+    (while read dev; do
+      [[ $fst == *"$dev "* ]] && continue  # Reject any device handled by fstab
+      # Test against removable media criteria and get whether mounted, mountpoint and label
+      inf=$(udisks --show-info $dev | grep -e "$zi" -e "$za" -e "$zt" -e "$zu" -e "$zm" -e "$zp" -e "$zl")
+      [[ $(awk "/$zi/ {print \$3}"<<<"$inf") != "0"          ]] && continue  #; echo $dev: "$inf" >&2  # debug
+      [[ $(awk "/$za/ {print \$3}"<<<"$inf") != "1"          ]] && continue
+      [[ $(awk "/$zt/ {print \$2}"<<<"$inf") == "table:"     ]] && continue
+     #[[ $(awk "/$zu/ {print \$2}"<<<"$inf") != "filesystem" ]] && continue
+      # If unmounted then show device with label else show device with mountpoint
+      if [[ $(awk "/$zm/ {print \$3}"<<<"$inf") == "0" ]]; then echo "mount: $dev," $(grep -m 1 "$zl"<<<"$inf")
+      else echo "unmount: $dev," $(grep "$zp"<<<"$inf"); fi
+    done) | sort | $dmenu $opt)
+  if [[ $drv ]]; then drv=${drv%,*}; else exit; fi  # Strip ", etc" from selection
+fi
+
+# Call udisks and notify according to output
+if [[ $drv == mount:* ]]; then
+  # Mount media and optionally open with file manager
+  x=$(udisks --mount ${drv#mount: })
+  Fnotify msg "$flg" "$x" &
+  if [ -n "$flm" ] && [[ "$x" == Mounted*at* ]]; then exec $flm "${x##* at }"; fi
+else
+  # Flush buffers and unmount media
+  sync; x=$(udisks --unmount ${drv#unmount: })
+  if [ -z "$x" ]; then Fnotify msg "$flg" "Successful $drv"; else Fnotify err "$flg" "$x"; exit 2; fi
+fi
+exit
+
+# Changelog:
+# 12/06/11 v2.11: Add new options -f and -F to open mounted media directory in default or specified file manager
+# 02/06/11 v2.01: More user-friendly notification flag $flg
+# 22/05/11 v2.00: Add new options -u to unmount from specific directory and -O for additional Dmenu options
+# 03/05/11 v1.40: Display unmount error message from udisks; dynamically determine script name
+# 02/05/11 v1.30: Source Func and replace notify-send with Fnotify() calling zenity or other notification program
+# 30/03/11 v1.20: Default dmenu options to $DMENU environment variable
+# 25/02/11 v1.11: To speed up, reject devices handled by fstab

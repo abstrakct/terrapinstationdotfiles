@@ -4,15 +4,16 @@ tmux new-session -d -s terrapin ranger
 tmux new-window -t terrapin:2 
 tmux new-window -t terrapin:3 
 tmux new-window -t terrapin:4 
-tmux new-window -t terrapin:5 #-n 'music' 'ncmpcpp'
-tmux new-window -t terrapin:6 #-n 'fm' 'ranger'
-tmux new-window -t terrapin:7 -n 'sysmon' 'htop'
+tmux new-window -t terrapin:5 #-n 'music' 'launch-mpd; ncmpcpp'
+tmux new-window -t terrapin:6 -n 'sys1' 'glances'
+tmux new-window -t terrapin:7 -n 'sys2' 'htop'
 tmux new-window -t terrapin:8 -n 'music' 'ncmpcpp'
 tmux new-window -t terrapin:9 -n 'root' su
-tmux new-window -t terrapin:10 -n 'tx' alltx
+tmux new-window -t terrapin:10 -n 'tx' #alltx
 
 tmux split-window -t terrapin:7 -h 'sudo journalctl -f'
-tmux select-layout -t terrapin:7 even-vertical
+tmux set-window-option -t terrapin:7 main-pane-height 55
+tmux select-layout -t terrapin:7 main-horizontal
 
 tmux rename-window -t terrapin:9 root 
 tmux rename-window -t terrapin:10 tx 

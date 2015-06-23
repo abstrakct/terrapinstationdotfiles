@@ -23,15 +23,15 @@ HEIGHT="15"
 WIDTH="20"
 LINES="13"
 
-vol=$(amixer get Master | egrep -o "[0-9]+%" | head -1 | egrep -o "[0-9]*")
+vol=$(pulseaudio-ctl | grep "Volume level" | awk '{print $4}')
 val=()
 
 for i in {0..100..10}; do
 if [ $vol -gt $i ]
 then
-val+=("^bg(#6e98b8)^ca(1,amixer set Master $i) ^ca()")	
+val+=("^bg(#6e98b8)^ca(1, pulseaudio-ctl set $i) ^ca()")	
 else
-val+=("^bg(#000000)^ca(1,amixer set Master $i) ^ca()")
+val+=("^bg(#000000)^ca(1, pulseaudio-ctl set $i) ^ca()")
 fi
 done
 

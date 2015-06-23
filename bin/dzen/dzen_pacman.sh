@@ -20,7 +20,7 @@ FONT="-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
 XPOS=$(xdotool getmouselocation | awk -F " " '{print $1}' | cut -d ":" -f 2)
 YPOS="1066"
 HEIGHT="15"
-WIDTH="150"
+WIDTH="400"
 pacmanlines=$(pacman -Qu | wc -l)
 LINES=$(( $pacmanlines + 2 ))
 

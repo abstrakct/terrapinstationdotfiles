@@ -5,6 +5,7 @@ mrip="VHSRip"
 myear="1985"
 mtags="[awesome]"
 mdir="."
+declare -a extratags
 
 rootdir=$(pwd)
 
@@ -38,20 +39,41 @@ for filename in *; do
                         * )     mrip=$whatrip
                                 ;;
                 esac
+
                 echo "What year is it from?"
                 read -e myear
+
                 echo "Any other tags you want?"
                 read -e mtags
 
                 if [ -z "$mtags" ]; then
                         mdir="$mname ($myear) ($mrip)"
                 else
-                        mdir="$mname ($myear) ($mrip) $mtags"
+                    finished=0
+                    i=1
+                    extratags[0]=$mtags
+                    while [ $finished -eq 0 ]
+                    do
+                        echo "Next tag:"
+                        read -e mtags
+                        if [ -z "$mtags" ]; then
+                            finished=1
+                        else
+                            extratags[$i]=$mtags
+                            i=$[$i+1]
+                        fi
+                    done
+
+                    mdir="$mname ($myear) ($mrip)"
+                    for j in `seq 0 $[$i-1]`;
+                    do
+                        mdir="$mdir [${extratags[$j]}]"
+                    done
                 fi
 
                 echo
                 echo "OK, directory name will be"
-                echo $mdir
+                echo "    $mdir"
 
                 mkdir "ALLOK/$mdir"
                 mv "$filename" "ALLOK/$mdir"

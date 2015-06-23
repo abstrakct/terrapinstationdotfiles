@@ -1,0 +1,40 @@
++- [--datatype=CN], [--datatype=CO] ${color8}${time %a, %b. %Y} at: ${time %T}${color}
+|${image [--datatype=WI] -p 180,60 -s 90x90}
++- [--datatype=DW]${goto 115}[--datatype=HT] ([--datatype=LT])
++--> ${color8}[--datatype=CC]${color}
+|
++- Maximum:${goto 115}[--datatype=HT --startday=0]
++- Minimum:${goto 115}[--datatype=LT --startday=0]
+|
++- Humidity:${goto 115}[--datatype=HM]
++- Dew Point:${goto 115}[--datatype=DP]
++- Pressure:${goto 115}[--datatype=BR] - [--datatype=BD]
+|
++- Sun:${goto 115}[--startday=0 --datatype=SR] ${color8}| [--startday=0 --datatype=DL] |${color} [--startday=0 --datatype=SS]${goto 603}+- Wind:${goto 715}[--hideunits --datatype=WS] km/h | [--datatype=WA] | [--datatype=WD]${goto 904}+- Moon: [--datatype=MP]
+|
+|
++------------------------------------------+------------------------------------------+------------------------------------------+
+|${goto 302}|${goto 603}|${goto 904}|${image [--datatype=WI --startday=1] -p 180,300 -s 60x60}${image [--datatype=WI --startday=2] -p 483,300 -s 60x60}${image [--datatype=WI --startday=3] -p 780,300 -s 60x60}${image [--datatype=WI --startday=4] -p 1080,300 -s 60x60}
++- [--datatype=DW --startday=1]${goto 302}+- [--datatype=DW --startday=2]${goto 604}+- [--datatype=DW --startday=3]${goto 904}+- [--datatype=DW --startday=4]
++--> ${color8}[--datatype=CC --startday=1]${color}${goto 302}+--> ${color8}[--datatype=CC --startday=2]${color}${goto 604}+--> ${color8}[--datatype=CC --startday=3]${color}${goto 904}+--> ${color8}[--datatype=CC --startday=4]${color}
+|${goto 302}|${goto 604}|${goto 904}|
++- Maximum:${goto 115}[--datatype=HT --startday=1]${goto 302}+- Maximum:${goto 415}[--datatype=HT --startday=2]${goto 604}+- Maximum:${goto 715}[--datatype=HT --startday=3]${goto 904}+- Maximum:${goto 1015}[--datatype=HT --startday=4]
++- Minimum:${goto 115}[--datatype=LT --startday=1]${goto 302}+- Minimum:${goto 415}[--datatype=LT --startday=2]${goto 604}+- Minimum:${goto 715}[--datatype=LT --startday=3]${goto 904}+- Minimum:${goto 1015}[--datatype=LT --startday=4]
++- Humidity:${goto 115}[--datatype=HM --hideunits --startday=1]${goto 302}+- Humidity:${goto 415}[--datatype=HM --hideunits --startday=2]${goto 604}+- Humidity:${goto 715}[--datatype=HM --hideunits --startday=3]${goto 904}|+- Humidity:${goto 1015}[--datatype=HM --hideunits --startday=4]
++- Wind:${goto 115}[--hideunits --datatype=WS --startday=1] km/h | [--datatype=WA --startday=1] | [--datatype=WD --startday=1]${goto 302}+- Wind:${goto 415}[--hideunits --datatype=WS --startday=2] km/h | [--datatype=WA --startday=2] | [--datatype=WD --startday=2]${goto 604}+- Wind:${goto 715}[--hideunits --datatype=WS --startday=3] km/h | [--datatype=WA --startday=3] | [--datatype=WD --startday=3]${goto 904}+- Wind:${goto 1015}[--hideunits --datatype=WS --startday=4] km/h | [--datatype=WA --startday=4] | [--datatype=WD --startday=4]
++- Sun:${goto 115}[--startday=1 --datatype=SR] ${color8}| [--startday=1 --datatype=DL] |${color} [--startday=1 --datatype=SS]${goto 302}+- Sun:${goto 415}[--startday=2 --datatype=SR] ${color8}| [--startday=2 --datatype=DL] |${color} [--startday=2 --datatype=SS]${goto 604}+- Sun:${goto 715}[--startday=3 --datatype=SR] ${color8}| [--startday=3 --datatype=DL] |${color} [--startday=3 --datatype=SS]${goto 904}+- Sun:${goto 1015}[--startday=4 --datatype=SR] ${color8}| [--startday=4 --datatype=DL] |${color} [--startday=4 --datatype=SS]
+|
+|
++------------------------------------------+------------------------------------------+------------------------------------------+
+|${goto 302}|${goto 603}|${goto 904}|${image [--datatype=WI --startday=5] -p 180,480 -s 60x60}${image [--datatype=WI --startday=6] -p 483,480 -s 60x60}${image [--datatype=WI --startday=7] -p 780,480 -s 60x60}${image [--datatype=WI --startday=8] -p 1080,480 -s 60x60}
++- [--datatype=DW --startday=5]${goto 302}+- [--datatype=DW --startday=6]${goto 604}+- [--datatype=DW --startday=7]${goto 904}+- [--datatype=DW --startday=8]
++--> ${color8}[--datatype=CC --startday=5]${color}${goto 302}+--> ${color8}[--datatype=CC --startday=6]${color}${goto 604}+--> ${color8}[--datatype=CC --startday=7]${color}${goto 904}+--> ${color8}[--datatype=CC --startday=8]${color}
+|${goto 302}|${goto 604}|${goto 904}|
++- Maximum:${goto 115}[--datatype=HT --startday=5]${goto 302}+- Maximum:${goto 415}[--datatype=HT --startday=6]${goto 604}+- Maximum:${goto 715}[--datatype=HT --startday=7]${goto 904}+- Maximum:${goto 1015}[--datatype=HT --startday=8]
++- Minimum:${goto 115}[--datatype=LT --startday=5]${goto 302}+- Minimum:${goto 415}[--datatype=LT --startday=6]${goto 604}+- Minimum:${goto 715}[--datatype=LT --startday=7]${goto 904}+- Minimum:${goto 1015}[--datatype=LT --startday=7]
++- Humidity:${goto 115}[--datatype=HM --hideunits --startday=5]${goto 302}+- Humidity:${goto 415}[--datatype=HM --hideunits --startday=6]${goto 604}+- Humidity:${goto 715}[--datatype=HM --hideunits --startday=7]${goto 904}|+- Humidity:${goto 1015}[--datatype=HM --hideunits --startday=7]
++- Wind:${goto 115}[--hideunits --datatype=WS --startday=5] km/h | [--datatype=WA --startday=5] | [--datatype=WD --startday=5]${goto 302}+- Wind:${goto 415}[--hideunits --datatype=WS --startday=6] km/h | [--datatype=WA --startday=6] | [--datatype=WD --startday=6]${goto 604}+- Wind:${goto 715}[--hideunits --datatype=WS --startday=7] km/h | [--datatype=WA --startday=7] | [--datatype=WD --startday=7]${goto 904}+- Wind:${goto 1015}[--hideunits --datatype=WS --startday=7] km/h | [--datatype=WA --startday=7] | [--datatype=WD --startday=7]
++- Sun:${goto 115}[--startday=5 --datatype=SR] ${color8}| [--startday=5 --datatype=DL] |${color} [--startday=5 --datatype=SS]${goto 302}+- Sun:${goto 415}[--startday=6 --datatype=SR] ${color8}| [--startday=6 --datatype=DL] |${color} [--startday=6 --datatype=SS]${goto 604}+- Sun:${goto 715}[--startday=7 --datatype=SR] ${color8}| [--startday=7 --datatype=DL] |${color} [--startday=7 --datatype=SS]${goto 904}+- Sun:${goto 1015}[--startday=7 --datatype=SR] ${color8}| [--startday=7 --datatype=DL] |${color} [--startday=7 --datatype=SS]
+|
+|
++---- Updated: [--datatype=LU] ---- Fetched: [--datatype=LF]

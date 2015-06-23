@@ -1,0 +1,16 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 1.0
+update_interval_on_battery 1.0
+mpd_port 6660
+
+TEXT
+${cpu}|\
+${freq_g}|\
+${mem}|\
+${memperc}|\
+^fg()${if_match "${mpd_status}" != "Stopped"}^fg(\#9d9d9d)${mpd_status} ^fg(\#444444)\- ^fg(\#225599)${mpd_artist} ^fg(\#444444)playing ^fg(\#225599)${mpd_title} ^fg(\#444444)from ^fg(\#225599)${mpd_album}^fg(\#444444)\ (^fg(\#9d9d9d)${mpd_elapsed}^fg(\#444444)/^fg(\#9d9d9d)${mpd_length})${else}^fg(\#9d9d9d)Stopped${endif}|\
+${downspeed eth0}|\
+${upspeed eth0}|\
+${uptime}|\

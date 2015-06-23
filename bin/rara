@@ -1,0 +1,17 @@
+#!/bin/sh
+
+FILENAME="$1"
+
+if [[ -z $2 ]]; then
+        FILES="$1"
+else
+        FILES=$2
+        # FILES=$(find . *$2*)
+fi
+
+if [[ ! -d trash ]]; then
+        mkdir trash
+fi
+
+rar a "$FILENAME.rar" "$FILES" 
+mv "$FILES" trash

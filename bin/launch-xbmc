@@ -1,13 +1,29 @@
 #!/bin/sh
 
 
-xset s off
-xset -dpms
+pacmd set-default-sink 1
 
-xbmc
+#xset s off
+#xset -dpms
 
-xset s on
-xset +dpms
+move_and_fullscreen(){
+    #NAME='XBMC Media Center'
+    NAME='Kodi'
 
+    while [ -z "`wmctrl -l | grep \"$NAME\" | grep -v grep`" ]
+    do
+        sleep 1
+    done
+
+    wmctrl -r "$NAME" -e '0,1280,-1,-1,-1'
+    wmctrl -r "$NAME" -b toggle,fullscreen
+}
+
+move_and_fullscreen &
+exec kodi
+
+#__GL_SYNC_TO_VBLANK=1 __GL_SYNC_DISPLAY_DEVICE=DFP-0 SDL_VIDEO_ALLOW_SCREENSAVER=0 exec xbmc
+
+pacmd set-default-sink 3
 setxkbmap -layout no
 setxkbmap -option terminate:ctrl_alt_bksp

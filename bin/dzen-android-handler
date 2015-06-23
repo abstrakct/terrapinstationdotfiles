@@ -15,9 +15,9 @@ handle_dzen() {
   local pipe='/tmp/android-receiver.fifo'
   local delay=30
   local x_offset=0
-  local y_offset=0
+  local y_offset=500
   local height=17
-  local font='Verdana-8'
+  local font='Verdana-10'
   local foreground='#ff0000'
   local background='#303030'
 

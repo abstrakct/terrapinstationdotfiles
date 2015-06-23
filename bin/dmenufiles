@@ -1,0 +1,50 @@
+#!/bin/sh 
+
+if [ -f $HOME/.dmenurc ]; then
+  . $HOME/.dmenurc
+else
+  DMENU='dmenu -i -l 40 -nf #3955c4 -nb #000000 -sf #ffffff -sb #3955c4 -fn -*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*'
+fi
+
+#LISTE="Middagskalender\nVakter per måned\nDogecoin\nDCSS Macro Sheet\n"
+LISTE=/home/rolf/bin/.dmenufilelist
+
+#VALG=$(echo -e $LISTE | $DMENU)
+VALG=$(cat $LISTE | $DMENU)
+
+echo "Valg er *"$VALG"*"
+
+if [[ "$VALG" == "Middagskalender" ]]
+then
+    xdg-open /home/rolf/Documents/Middagskalender.odt 
+fi
+
+if [[ "$VALG" == "In Da Freeza" ]]
+then
+    xdg-open /home/rolf/Documents/indafreeza.odt
+fi
+
+if [[ "$VALG" == "Oppskrifter på suksess" ]]
+then
+    xdg-open /home/rolf/Documents/Oppskrifter.odt
+fi
+
+if [[ "$VALG" == "Cups til metrisk" ]]
+then
+    feh /home/rolf/pictures/cups-to-sane-conversionchart.png
+fi
+
+if [[ "$VALG" == "Vakter per måned" ]]
+then
+    xdg-open /home/rolf/Documents/Vakter.ods
+fi
+
+if [[ "$VALG" == "Dogecoin" ]]
+then
+    xdg-open /home/rolf/Documents/dogecoin.ods
+fi
+
+if [[ "$VALG" == "DCSS Macro Sheet" ]]
+then
+    xdg-open /home/rolf/Documents/dcss-macros.ods
+fi

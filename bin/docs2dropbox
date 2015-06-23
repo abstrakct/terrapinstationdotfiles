@@ -1,0 +1,8 @@
+#!/bin/bash
+
+mkdir tmp/backup
+cd /home/rolf/
+rsync -av --exclude="heart art" --exclude=Arkivert --exclude=eBooks --exclude=Comics --exclude=Japansk Documents /tmp/backup
+tar cvJf ./Documents.tar.xz /tmp/backup
+mv Documents.tar.xz Dropbox/backup
+rm -rf /tmp/backup

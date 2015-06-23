@@ -1,0 +1,54 @@
+#!/bin/bash
+
+basedir=$HOME
+gitdir=$basedir/.config/terrapinstationdotfiles
+
+gitcp=(".vimrc .vimprojects .xinitrc .pentadactylrc .Xresources .zshrc .crawlrc .xmonad/xmonad.hs .config/.dzen2conkyrcleft .config/.dzen2conkyrcright")
+gitadd=(".vimrc .vimprojects .xinitrc .pentadactylrc .Xresources .zshrc .crawlrc xmonad.hs .dzen2conkyrcleft .dzen2conkyrcright")
+
+#cp $basedir/.xmonad/xmonad.hs .
+#cp $basedir/.config/.dzen2conkyrcleft .
+#cp $basedir/.config/.dzen2conkyrcright .
+#cp $basedir/.vimrc .
+#cp $basedir/.xinitrc .
+#cp $basedir/.pentadactylrc .
+#cp $basedir/.zshrc .
+#cp $basedir/.uuuu
+
+echo "Copying files to repository directory"
+cd $gitdir
+for i in ${gitcp[@]}; do
+        cp -r /home/rolf/$i .
+        echo "  "$i
+done
+
+echo
+
+for i in ${gitadd[@]}; do
+    echo "Adding "$i" to git index"
+    git add $i
+done
+
+echo
+
+git commit -a -m "update - $(date "+%F %R")"
+echo "Recorded repository contents, created commit message"
+
+#echo "Starting ssh-agent, auto-entering password"
+#eval $(ssh-agent)
+#
+#entpass=$(echo "spawn ssh-add /home/rolf/.ssh/id_rsa
+#expect \"Enter passphrase for key.*\"
+#send \"passord\\n\"
+#expect eof" | expect -f -)
+#
+#echo $entpass || exit
+
+echo "Syncing local repository to github"
+git push
+echo "All done!"
+
+#cd $basedir
+#rm xmonad.hs
+#rm .dzen2conkyrcleft
+#rm .dzen2conkyrcright

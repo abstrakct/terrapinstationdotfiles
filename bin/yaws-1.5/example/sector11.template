@@ -1,0 +1,13 @@
+ ${time %T} | [--datatype=CN]
+${color4}${font monospace:bold:size=9}[--datatype=CC]${font}${color}
+${voffset 3} ${color3}Wind: ${color}[--datatype=WA]([--datatype=WD]) ${color3}@ ${color}[--datatype=WS]${goto 215}${color3} FL: ${color}[--datatype=LT --hideunits]${image [--datatype=WI] -p 15,50 -s 65x65}
+${goto 100}${font Zekton:size=20}${color}[--datatype=HT --hideunits]${font}${voffset -15}${goto 215}${color3}Max: ${color}[--datatype=HT --startday=0 --hideunits]
+${goto 215}${color3}Min: ${color}[--datatype=LT --startday=0 --hideunits]
+${voffset 5}${goto 215}${color3}Hum: ${color}[--datatype=HM --hideunits]
+                ${goto 215}${color3}DP: ${color}[--datatype=DP --hideunits]
+       ${color3}Pressure: ${color}[--datatype=BR] - [--datatype=BD]${color}
+${color3} Moon Phase:     ${color}[--datatype=MP]${color}
+${voffset 5}    ${color3}Sunrise:${color}   [--datatype=SR]
+     ${color3}Sunset:${color}   [--datatype=SS]
+   ${color3}Daylight:${color}   [--datatype=DL]
+${color4}${hr 1}${color}

@@ -12,6 +12,7 @@ red1="#7791e0"
 
 green0="#424242"
 green1="#828a8c"
+green2="#10523b"
 
 yellow0="#6b8ba3"
 yellow1="#8ebdde"

@@ -5,7 +5,7 @@
 REMOTE="/usr/bin/transmission-remote"
 
 MAXACTIVE="2"
-TMAUTH="--auth rolf:torrenT"
+TMAUTH="--auth user:password"
 
 # *************
 # Stop all finished torrents

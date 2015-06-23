@@ -45,6 +45,8 @@ then
         echo " -m [minutes]"
         echo " -s [seconds]"
         echo " -v for slightly verbose output"
+        echo " -i input (text file with filenames)"
+        echo " -o output - output file name"
         echo
         exit 1
 fi
