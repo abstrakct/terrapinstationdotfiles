@@ -17,7 +17,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 #run systemd as user intsance
-systemd --user &
+#systemd --user &
 
 
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
@@ -116,7 +116,10 @@ transmission-remote-gtk &
 #feh --bg-center ~/pictures/Porn/cityporn/coruscant.jpg
 
 #feh --bg-fill ~/pictures/wallpapers/o1907542.jpg ~/pictures/wallpapers/wallpaper-1403394.jpg
-feh --bg-scale ~/pictures/wallpapers/sanfrancisco-painting-cozy-YWzw1ij.jpg 
+#feh --bg-scale ~/pictures/wallpapers/sanfrancisco-painting-cozy-YWzw1ij.jpg 
+
+# wallpaper across both screens!
+feh --no-xinerama --bg-scale ~/pictures/wallpapers/SerialExperimentsLain/1347198861461.jpg
 
 xsetroot -cursor_name left_ptr
 (sleep 2s && trayer --edge top --align right --SetDockType true --expand true --widthtype pixel --width 100 --heighttype pixel --height 16 --expand true --tint 0x000000 --transparent true --alpha 0) &

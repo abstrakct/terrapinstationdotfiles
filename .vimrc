@@ -283,7 +283,7 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
 " VimWiki
-let g:vimwiki_list = [{'path': '~/Dropbox/vimwiki/', 'path_html': '~/Dropbox/vimwiki_html', 'auto_export': 1}]
+let g:vimwiki_list = [{'path': '/TheVault/.dropbox/vimwiki/', 'path_html': '/TheVault/.dropbox/vimwiki_html', 'auto_export': 1}]
 let g:vimwiki_hl_headers = 1
 
 " }}}

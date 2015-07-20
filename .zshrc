@@ -161,7 +161,7 @@ alias j='f -d -e cd' # quick cd into directories, mimicing autojump and z
 alias o='f -e xdg-open' # quick opening files with xdg-open
 
 
-PATH=$PATH:/home/rolf/bin:/home/rolf/.lib/pyroscope/bin/:/opt/java/bin:/usr/bin/site_perl:.
+PATH=$PATH:/home/rolf/bin:/opt/java/bin:/usr/bin/site_perl:.
 export VMAIL_HTML_PART_READER='elinks -dump'
 
 SSH_ENV="$HOME/.ssh/environment"
