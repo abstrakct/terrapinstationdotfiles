@@ -219,10 +219,10 @@ map <C-l> <C-w>l
 " not perfect, but functional way of opening corresponding .c/.h file in a new
 " tab
 map  <F2> :tabe %:p:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
-
+map  <F3> "+y
 imap <F4> <Esc>mz:execute FunctionHeading()<CR>`zjA
 nmap <F4> mz:execute FunctionHeading()<CR>`zjA
-map <F5> :make<CR>
+map  <F5> :make<CR>
 nmap <F6> :make<CR>:!heritage<CR>
 imap <F6> <ESC>:make<CR>:!heritage<CR>
 vnoremap <F5> ygv"=TwiddleCase(@")<CR>Pgv

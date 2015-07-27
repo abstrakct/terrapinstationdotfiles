@@ -6,10 +6,10 @@ nmap < H
 nmap > L
 nmap ø :
 nmap å odb 
-nmap <S-Left> <C-x>
-nmap <S-Right> <C-a>
-nmap <Right> ]]
-nmap <Left> [[
+nmap <Left> <C-x>
+nmap <Right> <C-a>
+nmap <S-Right> ]]
+nmap <S-Left> [[
 nmap ge <C-S-e>
 
 set runtimepath=/home/rolf/.pentadactyl
