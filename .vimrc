@@ -184,7 +184,7 @@ nnoremap <silent> <leader>sv :so $MYVIMRC<CR>
 nnoremap <leader>ez :tabe ~/.zshrc<CR>
 
 " Other leader mappings
-nnoremap <silent> <leader>l :nohlsearch<CR>   " Turn of highlighted searches
+nnoremap <silent> <leader>l :nohlsearch<CR>
 nnoremap <leader>u :GundoToggle<CR>
 set tags+=~/.vim/tags/cpp
 map <C-F12> :!ctags -R --sort=yes --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>

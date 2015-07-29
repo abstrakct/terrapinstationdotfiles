@@ -7,7 +7,7 @@
 --------------------------------------------------------------------------------------------
 
 -- {{{ Misc
-{-# LANGUAGE DeriveDataTypeable, NoMonomorphismRestriction, TypeSynonymInstances, MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleContexts, DeriveDataTypeable, NoMonomorphismRestriction, TypeSynonymInstances, MultiParamTypeClasses #-}
 -- }}}
 -- {{{Imported libraries
 import XMonad
@@ -87,7 +87,6 @@ main = do
 	topStatusBar            <- spawnPipe myTopStatusBar
 	secondTopStatusBar      <- spawnPipe mySecondTopBar
 	secondBottomStatusBar   <- spawnPipe mySecondBottomBar
-	replace
 	xmonad $ myUrgencyHook $ ewmh defaultConfig
 		{ terminal           = "urxvtc"
 		, modMask            = mod4Mask
@@ -102,11 +101,11 @@ main = do
 		, handleEventHook    = focusOnMouseMove <+> fullscreenEventHook                             --needed for chromium full screen
 		, keys               = myKeys
 		, mouseBindings      = myMouseBindings
-		, startupHook        = do 
-		    setDefaultCursor xC_left_ptr
-		    setWMName "LG3D"
-		    adjustEventInput
-		    ewmhDesktopsStartup
+		, startupHook        = myStartupHook
+		--    setDefaultCursor xC_left_ptr
+		--    setWMName "LG3D"
+		--    adjustEventInput
+		--    ewmhDesktopsStartup
 		}
 -- }}}
 
@@ -190,10 +189,16 @@ myGSConfig colorizer = (buildDefaultGSConfig myColorizer)
 	, gs_font        = myFont
 	}
 -- }}}
+-- {{{ Startuphook
+myStartupHook =
+	(setDefaultCursor xC_left_ptr) <+>
+	(adjustEventInput) <+>
+	(ewmhDesktopsStartup)
+-- }}}
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
 -- myWorkspaces = withScreens 2 ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
-myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9", "X"]
+myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -204,10 +209,10 @@ myTile = named "T"  $ smartBorders $ ResizableTall 1 0.03 0.5 []
 myMirr = named "MT" $ smartBorders $ Mirror myTile
 myMosA = named "M"  $ smartBorders $ MosaicAlt M.empty
 myObig = named "O"  $ smartBorders $ OneBig 0.75 0.65
-myTabs = named "TS" $ smartBorders $ tabbed shrinkText myTabTheme
-myTabM = named "TM" $ smartBorders $ mastered 0.01 0.4 $ tabbed shrinkText myTabTheme
-myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") myMosA
-myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
+--myTabs = named "TS" $ smartBorders $ tabbed shrinkText myTabTheme
+--myTabM = named "TM" $ smartBorders $ mastered 0.01 0.4 $ tabbed shrinkText myTabTheme
+--myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") myMosA
+--myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
 myFull = named "F"  $ noBorders $ Full
 
 myFloat = named "FL" $ smartBorders $ simplestFloat
@@ -231,16 +236,15 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 2 layouts
 	$ onWorkspace (myWorkspaces !! 2) allLayouts  --Workspace 3 layouts
 	$ onWorkspace (myWorkspaces !! 4) allLayouts  --Workspace 5 layouts
-	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 7 layouts
+--	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 7 layouts
 	$ onWorkspace (myWorkspaces !! 7) fullscreenLayout --Workspace 8 (xbmc)
 	-- $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
 	$ allLayouts
 	where
-		allLayouts  = Grid ||| myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
-		ccLayouts   = myFull ||| Grid ||| myTile ||| myObig ||| myMirr ||| myMosA ||| myTabM ||| myFloat
-		webLayouts  = myFull ||| Grid ||| myTabs ||| myTabM ||| myObig
-		codeLayouts = myTabM ||| myTile ||| myFull
-		gimpLayouts = myGimp ||| Grid ||| myFull
+		allLayouts  = Grid ||| myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myFloat
+		ccLayouts   = myFull ||| Grid ||| myTile ||| myObig ||| myMirr ||| myMosA ||| myFloat
+		webLayouts  = myFull ||| Grid ||| myObig
+		codeLayouts = myTile ||| Grid ||| myFull
 		fullscreenLayout = myFullscr ||| myFull
 		--chatLayouts = myChat
 -- }}}
@@ -302,7 +306,7 @@ myManageHook = (composeAll . concat $
 	, [className    =? c     --> doShift (myWorkspaces !! 12)         | c <- myGfxS   ] --move myGfxS windows to workspace 0_7 by classname
 	, [className    =? c     --> doShift (myWorkspaces !! 14)         | c <- myXBMC   ]
 	, [className    =? c     --> doFullFloat                          | c <- myFullscr]
-	, [className    =? c     --> doShift (myWorkspaces !! 19)         | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
+	, [className    =? c     --> doShift (myWorkspaces !! 17)         | c <- myOtherS ] --move myOtherS windows to workspace 5 by classname and shift (was doShiftAndGo)
 	, [className    =? c     --> doCenterFloat                        | c <- myFloatCC] --float center geometry by classname
 	, [name         =? n     --> doSideFloat NW                       | n <- myFloatSN] --float side NW geometry by name
 	, [className    =? c     --> doF W.focusDown                      | c <- myFocusDC] --dont focus on launching by classname
