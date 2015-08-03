@@ -16,7 +16,7 @@ set runtimepath=/home/rolf/.pentadactyl
 
 command -nargs=* g open google <args>
 set passkeys+='mail\.google\.com':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>
-set passkeys+='youtube\.com':c/jkhnpelxfa#`[]z?\*niIU+-=<Tab><Return><Space><Left><Right>
+set passkeys+='youtube\.com':c/jkhnpelxa#`[]z?\*niIU+-=<Tab><Return><Space><Left><Right>
 set passkeys+=facebook\.com:<CR>
 set passkeys+='crawl\.s-z\.org':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return><ESC>
 "set passkeys+='*\.facebook\.*':c/jkhnpouelxsfra#`[]z?\*nrtgidIU+-=<Tab><Return>

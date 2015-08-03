@@ -102,10 +102,6 @@ main = do
 		, keys               = myKeys
 		, mouseBindings      = myMouseBindings
 		, startupHook        = myStartupHook
-		--    setDefaultCursor xC_left_ptr
-		--    setWMName "LG3D"
-		--    adjustEventInput
-		--    ewmhDesktopsStartup
 		}
 -- }}}
 
@@ -113,11 +109,6 @@ main = do
 -- APPEARANCE CONFIG                                                                      --
 --------------------------------------------------------------------------------------------
 
--- {{{ Workspaces, independent screens 
-
-
-
--- }}}
 -- {{{ Colors and fonts
 myFont               = "-xos4-terminus-medium-r-normal-*-12-*-*-*-*-*-*-*"
 dzenFont             = "-*-montecarlo-medium-r-normal-*-11-*-*-*-*-*-*-*"
@@ -197,7 +188,6 @@ myStartupHook =
 -- }}}
 -- {{{ Workspaces
 myWorkspaces :: [WorkspaceId]
--- myWorkspaces = withScreens 2 ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"]
 myWorkspaces = withScreens 2 ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 -- }}}
 
@@ -209,12 +199,7 @@ myTile = named "T"  $ smartBorders $ ResizableTall 1 0.03 0.5 []
 myMirr = named "MT" $ smartBorders $ Mirror myTile
 myMosA = named "M"  $ smartBorders $ MosaicAlt M.empty
 myObig = named "O"  $ smartBorders $ OneBig 0.75 0.65
---myTabs = named "TS" $ smartBorders $ tabbed shrinkText myTabTheme
---myTabM = named "TM" $ smartBorders $ mastered 0.01 0.4 $ tabbed shrinkText myTabTheme
---myGimp = named "G"  $ withIM (0.15) (Role "gimp-toolbox") $ reflectHoriz $ withIM (0.20) (Role "gimp-dock") myMosA
---myChat = named "C"  $ withIM (0.20) (Title "Buddy List") $ Mirror $ ResizableTall 1 0.03 0.5 []
 myFull = named "F"  $ noBorders $ Full
-
 myFloat = named "FL" $ smartBorders $ simplestFloat
 myFullscr = named "FS" $ avoidStruts $ smartBorders $ Full 
 
@@ -228,17 +213,11 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 	$ avoidStruts
 	$ minimize
 	$ smartSpacing 6
-	-- $ mkToggle (single TABBED)
-	-- $ mkToggle (single MIRROR)
-	-- $ mkToggle (single REFLECTX)
-	-- $ mkToggle (single REFLECTY)
 	$ onWorkspace (myWorkspaces !! 0) ccLayouts   --Workspace 1 layouts
 	$ onWorkspace (myWorkspaces !! 1) webLayouts  --Workspace 2 layouts
 	$ onWorkspace (myWorkspaces !! 2) allLayouts  --Workspace 3 layouts
 	$ onWorkspace (myWorkspaces !! 4) allLayouts  --Workspace 5 layouts
---	$ onWorkspace (myWorkspaces !! 6) gimpLayouts --Workspace 7 layouts
 	$ onWorkspace (myWorkspaces !! 7) fullscreenLayout --Workspace 8 (xbmc)
-	-- $ onWorkspace (myWorkspaces !! 4) chatLayouts --Workspace 4 layouts
 	$ allLayouts
 	where
 		allLayouts  = Grid ||| myTile ||| myFull ||| myObig ||| myMirr ||| myMosA ||| myFloat
@@ -246,7 +225,6 @@ myLayoutHook = gaps [(U,16), (D,16), (L,0), (R,0)]
 		webLayouts  = myFull ||| Grid ||| myObig
 		codeLayouts = myTile ||| Grid ||| myFull
 		fullscreenLayout = myFullscr ||| myFull
-		--chatLayouts = myChat
 -- }}}
 
 --------------------------------------------------------------------------------------------
@@ -277,24 +255,6 @@ myScratchPads = [ NS "ncmpcpp"  spawnNcmpcpp findNcmpcpp manageNcmpcpp
                         l = 1 - w  -- distance from left edge, 0% 
 
 
---manageScratchPad :: ManageHook
-----manageScratchPad = scratchpadManageHook (W.RationalRect (0.15) (1/50) (1) (3/4))
---scratchPad = scratchpadSpawnActionCustom "urxvtc -name scratchpad -bg black"
---manageScratchPad = scratchpadManageHook (W.RationalRect l t w h)
---    where
---        h = 0.15   -- terminal height, 10%
---        w = 1      -- terminal width, 100%
---        t = 1 - h  -- distance from top edge, 90%
---        l = 1 - w  -- distance from left edge, 0% 
---
---manageMusicPad :: ManageHook
---musicPad = scratchpadSpawnActionCustom "urxvt -name music -bg black -e ncmpcpp"
---manageMusicPad = scratchpadManageHook (W.RationalRect l t w h)
---    where
---        h = 0.5    -- terminal height, 50%
---        w = 0.8    -- terminal width, 100%
---        t = 1 - h  -- distance from top edge
---        l = 1 - w  -- distance from left edge
 -- }}}
 -- {{{ Managehook (rules for programs)
 myManageHook :: ManageHook
@@ -324,7 +284,7 @@ myManageHook = (composeAll . concat $
 		myCodeS         = ["Gvim"]
 		myChatS         = ["Pidgin", "Xchat"]
 		myGameS         = ["zsnes"]
-		myXBMC          = ["xbmc"]
+		myXBMC          = ["xbmc", "kodi"]
 		myOtherS        = ["Transmission-remote-gtk"]
 		myFloatCC       = ["Trackma-gtk", "sun-applet-AppletViewer", "G15-config", "cataclysm-tiles", "Dogecoin-qt", "Bitcoin-qt", "Steam", "Thunar", "ds", "t-engine", "MPlayer", "Smplayer", "mplayer2", "Smplayer2", "File-roller", "zsnes", "Gcalctool", "Exo-helper-1", "Gksu", "PSX", "Galculator", "Nvidia-settings", "Vidalia", "XFontSel", "XCalc", "XClock"]
 		myFloatSN       = ["Event Tester"]
@@ -394,30 +354,6 @@ myLogHook h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marshallP
 		layoutText "Minimize SmartSpacing 6 FS" = "Fullscreen"
 		layoutText "Minimize SmartSpacing 6 FL" = "Float"
 		layoutText "Minimize SmartSpacing 6 Grid"  = "Grid"
-		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
-		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
-		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
-		--layoutText "Minimize ReflectX TM" = "^fg(" ++ colorGreen ++ ")Master X^fg()"
-		--layoutText "Minimize ReflectX M"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		--layoutText "Minimize ReflectX MT" = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		--layoutText "Minimize ReflectX G"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		--layoutText "Minimize ReflectX C"  = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		--layoutText "Minimize ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall Y^fg()"
-		--layoutText "Minimize ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig Y^fg()"
-		--layoutText "Minimize ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed Y^fg()"
-		--layoutText "Minimize ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master Y^fg()"
-		--layoutText "Minimize ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		--layoutText "Minimize ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		--layoutText "Minimize ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		--layoutText "Minimize ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		--layoutText "Minimize ReflectX ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
 		layoutText x = "^fg(" ++ colorGreen ++ ")" ++ x ++ "^fg()"
 		--clickable config
 		wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
@@ -473,30 +409,6 @@ myLogHookTwo h = dynamicLogWithPP . namedScratchpadFilterOutWorkspacePP . marsha
 		layoutText "Minimize SmartSpacing 6 FS" = "Fullscreen"
 		layoutText "Minimize SmartSpacing 6 FL" = "Float"
 		layoutText "Minimize SmartSpacing 6 Grid"  = "Grid"
-		--layoutText "Minimize ReflectX T"  = "^fg(" ++ colorGreen ++ ")ReTall X^fg()"
-		--layoutText "Minimize ReflectX O"  = "^fg(" ++ colorGreen ++ ")OneBig X^fg()"
-		--layoutText "Minimize ReflectX TS" = "^fg(" ++ colorGreen ++ ")Tabbed X^fg()"
-		--layoutText "Minimize ReflectX TM" = "^fg(" ++ colorGreen ++ ")Master X^fg()"
-		--layoutText "Minimize ReflectX M"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		--layoutText "Minimize ReflectX MT" = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		--layoutText "Minimize ReflectX G"  = "^fg(" ++ colorGreen ++ ")Mosaic X^fg()"
-		--layoutText "Minimize ReflectX C"  = "^fg(" ++ colorGreen ++ ")Mirror X^fg()"
-		--layoutText "Minimize ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall Y^fg()"
-		--layoutText "Minimize ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig Y^fg()"
-		--layoutText "Minimize ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed Y^fg()"
-		--layoutText "Minimize ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master Y^fg()"
-		--layoutText "Minimize ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		--layoutText "Minimize ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		--layoutText "Minimize ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic Y^fg()"
-		--layoutText "Minimize ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror Y^fg()"
-		--layoutText "Minimize ReflectX ReflectY T"  = "^fg(" ++ colorGreen ++ ")ReTall XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY O"  = "^fg(" ++ colorGreen ++ ")OneBig XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY TS" = "^fg(" ++ colorGreen ++ ")Tabbed XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY TM" = "^fg(" ++ colorGreen ++ ")Master XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY M"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY MT" = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY G"  = "^fg(" ++ colorGreen ++ ")Mosaic XY^fg()"
-		--layoutText "Minimize ReflectX ReflectY C"  = "^fg(" ++ colorGreen ++ ")Mirror XY^fg()"
 		layoutText x = "^fg(" ++ colorGreen ++ ")" ++ x ++ "^fg()"
 		--clickable config
 		wrapClickLayout content = "^ca(1,xdotool key super+space)" ++ content ++ "^ca()"                                                           --clickable layout
@@ -560,6 +472,11 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask .|. controlMask, xK_Right),  withFocused (keysResizeWindow (30,0) (0,0)))       --Expand floated window horizontally by 50 pixels
 	, ((modMask .|. controlMask, xK_Up),     withFocused (keysResizeWindow (0,-30) (0,0)))         --Shrink floated window verticaly by 50 pixels
 	, ((modMask .|. controlMask, xK_Down),   withFocused (keysResizeWindow (0,30) (0,0)))        --Expand floated window verticaly by 50 pixels
+	, ((modMask .|. mod1Mask,    xK_Up),     spawn "xdotool mousemove_relative -- 0 -15") 
+	, ((modMask .|. mod1Mask,    xK_Down),   spawn "xdotool mousemove_relative 0 15") 
+	, ((modMask .|. mod1Mask,    xK_Left),   spawn "xdotool mousemove_relative -- -15 0") 
+	, ((modMask .|. mod1Mask,    xK_Right),  spawn "xdotool mousemove_relative 15 0") 
+	, ((modMask .|. mod1Mask,    xK_Return), spawn "xdotool click 1") 
 	, ((modMask,                 xK_period), sendMessage (IncMasterN (-1)))                                    --Deincrement the number of windows in the master area
     , ((modMask .|. controlMask, xK_q),      spawn "killall dzen2; xmonad --recompile; xmonad --restart")
 	, ((modMask,                 xK_comma),  toggleWS)                                                          --Toggle to the workspace displayed previously
@@ -656,9 +573,9 @@ myMouseBindings :: XConfig Layout -> M.Map (KeyMask, Button) (Window -> X ())
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
 	[ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w >> windows W.shiftMaster)) -- set the window to floating mode and move by dragging
 	, ((modMask, button2), (\w -> focus w >> windows W.shiftMaster))                      -- raise the window to the top of the stack
-	, ((modMask, button3), (\w -> focus w >> Flex.mouseResizeWindow w))                   -- set the window to floating mode and resize by dragging
-	, ((modMask, button4), (\_ -> prevWS))                                                -- switch to previous workspace
-	, ((modMask, button5), (\_ -> nextWS))                                                -- switch to next workspace
+	--, ((modMask, button3), (\w -> focus w >> Flex.mouseResizeWindow w))                   -- set the window to floating mode and resize by dragging
+	--, ((modMask, button4), (\_ -> prevWS))                                                -- switch to previous workspace
+	--, ((modMask, button5), (\_ -> nextWS))                                                -- switch to next workspace
 	]
 -- }}}
 

@@ -132,6 +132,7 @@ compton -c -r4 -l-6 -t-4 -z -b -G -C -e0.85 -f -D30 -I0.45 -O0.45 --paint-on-ove
 
 #exec dbus-launch xmonad
 exec xmonad
+echo "ferdig"
 #android-receiver &
 
 # KDE
