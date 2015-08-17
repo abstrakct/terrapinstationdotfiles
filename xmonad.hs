@@ -461,6 +461,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 	, ((modMask,                 xK_m),      withFocused minimizeWindow)                                            --Minimize window
 	, ((modMask .|. shiftMask,   xK_m),      sendMessage RestoreNextMinimizedWin)                     --Restore window
 	, ((modMask,                 xK_n),      sendMessage RestoreNextMinimizedWin)                     --Restore window
+	, ((modMask,                 xK_r),      spawn "xset s on;  xset +dpms")
+	, ((modMask .|. shiftMask,   xK_r),      spawn "xset s off; xset -dpms")
 	, ((modMask .|. shiftMask,   xK_s),      spawn "xscreensaver-command -lock")                                   --Lock screen
 	, ((modMask,                 xK_t),      withFocused $ windows . W.sink)                                        --Push window back into tiling
 	, ((modMask .|. shiftMask,   xK_t),      rectFloatFocused)                                        --Push window into float
@@ -495,7 +497,8 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
 	-- Keys to launch programs
 	, ((modMask,                 xK_Return), spawn $ XMonad.terminal conf)                       --Launch a terminal
-	, ((modMask .|. shiftMask,   xK_Return), spawn "urxvt -e /home/rolf/bin/tm")                 --Launch a terminal with tmux
+	, ((modMask .|. mod1Mask ,   xK_Return), spawn "urxvt -e tmux new-session")                       --Launch a terminal with tmux
+	, ((modMask .|. shiftMask,   xK_Return), spawn "urxvt -e /home/rolf/bin/tm")                 --Launch a terminal with standard tmux session
 	, ((modMask .|. controlMask, xK_Return), spawn "terminology")
 	, ((modMask,                 xK_s),      spawn "steam")
 	, ((modMask,                 xK_c),      spawn "crawl-tiles")
