@@ -17,7 +17,7 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
 fi
 
 #run systemd as user intsance
-#systemd --user &
+systemd --user &
 
 
 #exec xcompmgr -cC -t-5 -l-6 -r5 &
@@ -130,9 +130,9 @@ g15-systemtray &
 twitchnotifier -c rkaidgaming &
 compton -c -r4 -l-6 -t-4 -z -b -G -C -e0.85 -f -D30 -I0.45 -O0.45 --paint-on-overlay --unredir-if-possible --backend glx --glx-no-stencil --glx-no-rebind-pixmap --vsync opengl
 
-#exec dbus-launch xmonad
-exec xmonad
-echo "ferdig"
+exec dbus-launch xmonad
+#exec xmonad
+#echo "ferdig"
 #android-receiver &
 
 # KDE
